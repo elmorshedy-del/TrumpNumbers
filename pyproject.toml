@@ -1,0 +1,30 @@
+[project]
+name = "trump-truth-forecast"
+version = "0.1.0"
+description = "Tracks Donald Trump's Truth Social posting volume and forecasts the weekly total with a backtested zoo of statistical models."
+requires-python = ">=3.10"
+dependencies = [
+    "requests>=2.31",
+    "selectolax>=0.3.21",
+    "numpy>=1.26",
+    "scipy>=1.11",
+    "pandas>=2.1",
+    "statsmodels>=0.14",
+    "hmmlearn>=0.3",
+    "lightgbm>=4.0",
+    "ruptures>=1.1.9",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.4"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["truthforecast*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["ignore::FutureWarning", "ignore::UserWarning"]

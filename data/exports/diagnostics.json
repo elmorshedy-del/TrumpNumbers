@@ -1,0 +1,1063 @@
+{
+  "window": {
+    "start": "2025-01-20",
+    "end": "2026-07-30",
+    "days": 557
+  },
+  "dispersion": {
+    "n": 557,
+    "mean": 18.826,
+    "median": 15.0,
+    "variance": 295.691,
+    "sd": 17.196,
+    "dispersion_ratio": 15.71,
+    "chi2": 8732.9,
+    "p_value": 0.0,
+    "poisson_plausible": false,
+    "poisson_sd": 4.34,
+    "poisson_range_95": [
+      10,
+      28
+    ],
+    "actual_range": [
+      0,
+      168
+    ],
+    "actual_range_95": [
+      2.0,
+      63.10000000000002
+    ]
+  },
+  "tail": {
+    "mean_over_median": 1.26,
+    "max_over_median": 11.2,
+    "skewness": 3.56,
+    "top_1pct_share_of_all_posts": 0.062,
+    "zero_days": 2,
+    "zero_share": 0.004,
+    "quantiles": {
+      "0.05": 3.0,
+      "0.25": 9.0,
+      "0.5": 15.0,
+      "0.75": 23.0,
+      "0.9": 34.400000000000034,
+      "0.95": 47.0,
+      "0.99": 92.51999999999953
+    }
+  },
+  "day_of_week": {
+    "days": [
+      {
+        "day": "Mon",
+        "n": 80,
+        "mean": 25.5,
+        "median": 19.0,
+        "sd": 27.01,
+        "index_vs_overall": 1.355
+      },
+      {
+        "day": "Tue",
+        "n": 80,
+        "mean": 20.65,
+        "median": 18.0,
+        "sd": 12.75,
+        "index_vs_overall": 1.097
+      },
+      {
+        "day": "Wed",
+        "n": 80,
+        "mean": 16.81,
+        "median": 15.0,
+        "sd": 10.27,
+        "index_vs_overall": 0.893
+      },
+      {
+        "day": "Thu",
+        "n": 80,
+        "mean": 18.26,
+        "median": 14.0,
+        "sd": 18.29,
+        "index_vs_overall": 0.97
+      },
+      {
+        "day": "Fri",
+        "n": 79,
+        "mean": 18.09,
+        "median": 15.0,
+        "sd": 15.31,
+        "index_vs_overall": 0.961
+      },
+      {
+        "day": "Sat",
+        "n": 79,
+        "mean": 15.24,
+        "median": 11.0,
+        "sd": 13.77,
+        "index_vs_overall": 0.81
+      },
+      {
+        "day": "Sun",
+        "n": 79,
+        "mean": 17.15,
+        "median": 11.0,
+        "sd": 16.27,
+        "index_vs_overall": 0.911
+      }
+    ],
+    "overall_mean": 18.83
+  },
+  "autocorrelation": {
+    "lags": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
+    ],
+    "acf": [
+      1.0,
+      0.1064,
+      0.0113,
+      -0.042,
+      -0.0653,
+      0.0454,
+      0.0456,
+      0.0074,
+      0.039,
+      0.061,
+      -0.0936,
+      0.0411,
+      -0.017,
+      0.0363,
+      0.0368,
+      -0.0401,
+      -0.0434,
+      -0.0119,
+      -0.0322,
+      -0.0088,
+      0.0565,
+      0.0067
+    ],
+    "pacf": [
+      1.0,
+      0.1064,
+      -0.0,
+      -0.0437,
+      -0.057,
+      0.0599,
+      0.0346,
+      -0.0074,
+      0.0389,
+      0.0641,
+      -0.1079,
+      0.0616,
+      -0.0176,
+      0.0365,
+      0.0107,
+      -0.0364,
+      -0.0348,
+      -0.0029,
+      -0.0307,
+      -0.0048,
+      0.0421,
+      0.0105
+    ],
+    "acf_raw_with_weekly_cycle": [
+      1.0,
+      0.1065,
+      0.005,
+      -0.0424,
+      -0.0751,
+      0.0208,
+      0.0375,
+      0.0274,
+      0.045,
+      0.0276,
+      -0.0949,
+      0.0452,
+      -0.0286,
+      0.0289,
+      0.0629,
+      -0.0263,
+      -0.0607,
+      -0.0099,
+      -0.0261,
+      -0.0322,
+      0.041,
+      0.0366
+    ],
+    "conf": 0.083,
+    "note": "ACF/PACF computed after removing the weekly cycle; the raw series is shown for contrast."
+  },
+  "structural_breaks": {
+    "available": true,
+    "segments": [
+      {
+        "start": "2025-01-26",
+        "end": "2025-08-24",
+        "weeks": 30,
+        "mean_posts_per_day": 17.38
+      },
+      {
+        "start": "2025-08-24",
+        "end": "2026-01-11",
+        "weeks": 20,
+        "mean_posts_per_day": 16.87
+      },
+      {
+        "start": "2026-01-11",
+        "end": "2026-02-15",
+        "weeks": 5,
+        "mean_posts_per_day": 25.11
+      },
+      {
+        "start": "2026-02-15",
+        "end": "2026-04-26",
+        "weeks": 10,
+        "mean_posts_per_day": 18.13
+      },
+      {
+        "start": "2026-04-26",
+        "end": "2026-08-02",
+        "weeks": 15,
+        "mean_posts_per_day": 22.82
+      }
+    ],
+    "breaks": [
+      "2025-08-24",
+      "2026-01-11",
+      "2026-02-15",
+      "2026-04-26"
+    ]
+  },
+  "bursts": [
+    {
+      "date": "2025-12-01",
+      "dow": "Mon",
+      "count": 168,
+      "vs_median": 11.2,
+      "peak_hour": 23,
+      "keywords": [
+        "syria",
+        "country",
+        "vote",
+        "people",
+        "great",
+        "get",
+        "election",
+        "united"
+      ],
+      "sample_posts": [
+        {
+          "text": "Ther are laws that effect our Nation. Read Title 18, Chapter 115, Section 2387, \u201cWhoever with the intent to interfere, impair, influence the loyalty, moral or discipline of the military and Naval Forces,\u2026\u2026to be fined or imprisoned up to 10 years.\u201d Commander Kirk Lippold, U.S. Nav",
+          "id": 34069
+        },
+        {
+          "text": "There are laws that impact our Nation. Read Title 18, Chapter 115, Section 2387, \u201cWhoever with the intent to interfere, impair, influence the loyalty, moral or discipline of the military and Naval Forces,\u2026\u2026to be fined or imprisoned up to 10 years.\u201d Commander Kirk Lippold, U.S. Na",
+          "id": 34070
+        },
+        {
+          "text": "The United States is very satisfied with the results displayed, through hard work and determination, in the Country of Syria. We are doing everything within our power to make sure the Government of Syria continues to do what was intended, which is substantial, in order to build a",
+          "id": 34071
+        }
+      ]
+    },
+    {
+      "date": "2025-03-10",
+      "dow": "Mon",
+      "count": 140,
+      "vs_median": 9.3,
+      "peak_hour": 17,
+      "keywords": [
+        "trump",
+        "trumps",
+        "opinion",
+        "foxnews",
+        "breitbart",
+        "president",
+        "politics",
+        "news"
+      ],
+      "sample_posts": [
+        {
+          "text": "https://www.foxnews.com/world/trump-effect-display-uks-starmer-boosts-defense-spending-eve-us-visit",
+          "id": 30020
+        },
+        {
+          "text": "https://www.foxnews.com/politics/trump-calls-company-building-keystone-xl-pipeline-return-america-get-built",
+          "id": 30038
+        },
+        {
+          "text": "https://amgreatness.com/2025/02/25/no-trumps-tariffs-will-not-cause-inflation/",
+          "id": 30039
+        }
+      ]
+    },
+    {
+      "date": "2025-12-25",
+      "dow": "Thu",
+      "count": 126,
+      "vs_median": 8.4,
+      "peak_hour": 0,
+      "keywords": [
+        "many",
+        "there",
+        "donald",
+        "trump",
+        "status",
+        "president",
+        "united",
+        "states"
+      ],
+      "sample_posts": [
+        {
+          "text": "",
+          "id": 35160
+        },
+        {
+          "text": "",
+          "id": 35159
+        },
+        {
+          "text": "",
+          "id": 35158
+        }
+      ]
+    },
+    {
+      "date": "2026-01-23",
+      "dow": "Fri",
+      "count": 110,
+      "vs_median": 7.3,
+      "peak_hour": 1,
+      "keywords": [
+        "secure",
+        "american",
+        "election",
+        "energy",
+        "keep",
+        "great",
+        "siege",
+        "made"
+      ],
+      "sample_posts": [
+        {
+          "text": "",
+          "id": 34789
+        },
+        {
+          "text": "",
+          "id": 34790
+        },
+        {
+          "text": "",
+          "id": 34791
+        }
+      ]
+    },
+    {
+      "date": "2026-07-05",
+      "dow": "Sun",
+      "count": 101,
+      "vs_median": 6.7,
+      "peak_hour": 11,
+      "keywords": [
+        "trump",
+        "president",
+        "statue",
+        "america",
+        "donald",
+        "great",
+        "godless",
+        "communists"
+      ],
+      "sample_posts": [
+        {
+          "text": "Best fireworks show, EVER! President DJT",
+          "id": 39704
+        },
+        {
+          "text": "",
+          "id": 39705
+        },
+        {
+          "text": "\u2018We\u2019re on Break!\u2019 Senate\u2019s Sloth Stalls SAVE America Act: https://www.dailysignal.com/2026/06/29/save-america-senate-sloth/",
+          "id": 39711
+        }
+      ]
+    },
+    {
+      "date": "2026-01-05",
+      "dow": "Mon",
+      "count": 97,
+      "vs_median": 6.5,
+      "peak_hour": 1,
+      "keywords": [
+        "states",
+        "all",
+        "america",
+        "united",
+        "trump",
+        "kentucky",
+        "massie",
+        "congressman"
+      ],
+      "sample_posts": [
+        {
+          "text": "",
+          "id": 35001
+        },
+        {
+          "text": "",
+          "id": 35002
+        },
+        {
+          "text": "",
+          "id": 34997
+        }
+      ]
+    },
+    {
+      "date": "2026-02-05",
+      "dow": "Thu",
+      "count": 89,
+      "vs_median": 5.9,
+      "peak_hour": 23,
+      "keywords": [
+        "prime",
+        "minister",
+        "united",
+        "states",
+        "military",
+        "america",
+        "country",
+        "powerful"
+      ],
+      "sample_posts": [
+        {
+          "text": "",
+          "id": 36474
+        },
+        {
+          "text": "",
+          "id": 36472
+        },
+        {
+          "text": "",
+          "id": 36473
+        }
+      ]
+    },
+    {
+      "date": "2026-02-27",
+      "dow": "Fri",
+      "count": 85,
+      "vs_median": 5.7,
+      "peak_hour": 11,
+      "keywords": [
+        "secure",
+        "texas",
+        "trump",
+        "american",
+        "congressional",
+        "district",
+        "border",
+        "energy"
+      ],
+      "sample_posts": [
+        {
+          "text": "",
+          "id": 36907
+        },
+        {
+          "text": "",
+          "id": 36909
+        },
+        {
+          "text": "",
+          "id": 36908
+        }
+      ]
+    },
+    {
+      "date": "2026-01-22",
+      "dow": "Thu",
+      "count": 72,
+      "vs_median": 4.8,
+      "peak_hour": 10,
+      "keywords": [
+        "state",
+        "trump",
+        "fake",
+        "all",
+        "great",
+        "president",
+        "america",
+        "against"
+      ],
+      "sample_posts": [
+        {
+          "text": "",
+          "id": 34854
+        },
+        {
+          "text": "",
+          "id": 34855
+        },
+        {
+          "text": "",
+          "id": 34853
+        }
+      ]
+    },
+    {
+      "date": "2025-11-03",
+      "dow": "Mon",
+      "count": 69,
+      "vs_median": 4.6,
+      "peak_hour": 14,
+      "keywords": [
+        "secure",
+        "energy",
+        "american",
+        "down",
+        "district",
+        "complete",
+        "total",
+        "election"
+      ],
+      "sample_posts": [
+        {
+          "text": "Scott Franklin is a fantastic Representative for the Great People of Florida\u2019s 18th Congressional District! A U.S. Naval Academy Graduate and retired Navy Commander, Scott knows the Wisdom and Courage that is required to Defend our Country, Support our incredible Military/Veteran",
+          "id": 33633
+        },
+        {
+          "text": "Congressman Vern Buchanan, who has been with us from the very beginning, is a Fantastic Advocate of Florida\u2019s 16th Congressional District! As a very successful Businessman, and the Vice Chairman of the POWERFUL House Ways & Means Committee, Vern understands the America First Poli",
+          "id": 33634
+        },
+        {
+          "text": "Congressman Gus Bilirakis is a Tremendous Champion for Florida\u2019s 12th Congressional District! As a Senior Member of the POWERFUL House Energy and Commerce Committee, Gus is working tirelessly to Advance American Energy DOMINANCE, Create GREAT Jobs, Cut Taxes and Regulations, Prom",
+          "id": 33635
+        }
+      ]
+    },
+    {
+      "date": "2025-11-02",
+      "dow": "Sun",
+      "count": 69,
+      "vs_median": 4.6,
+      "peak_hour": 21,
+      "keywords": [
+        "secure",
+        "energy",
+        "american",
+        "election",
+        "down",
+        "never",
+        "always",
+        "let"
+      ],
+      "sample_posts": [
+        {
+          "text": "Congratulations to the L.A. Dodgers, a game won by incredible CHAMPIONS!!! A lesser group of men would never have been able to win that game, or game 6, for that matter. So many stars made it all happen. Also, congratulations to ownership. What a great job they have done. SEE YOU",
+          "id": 33546
+        },
+        {
+          "text": "https://dailycaller.com/2025/11/01/opinion-arctic-frost-accountability-starts-with-impeaching-judge-boasberg-dave-bossie/",
+          "id": 33547
+        },
+        {
+          "text": "https://nypost.com/2025/11/01/us-news/rep-nicole-malliotakis-rips-gerrymandering-lawsuit-for-staten-island-house-seat-as-nonsensical-power-grab/",
+          "id": 33548
+        }
+      ]
+    },
+    {
+      "date": "2026-01-03",
+      "dow": "Sat",
+      "count": 68,
+      "vs_median": 4.5,
+      "peak_hour": 17,
+      "keywords": [
+        "out",
+        "support",
+        "operation",
+        "trump",
+        "venezuela",
+        "president",
+        "nicolas",
+        "maduro"
+      ],
+      "sample_posts": [
+        {
+          "text": "The United States of America has successfully carried out a large scale strike against Venezuela and its leader, President Nicolas Maduro, who has been, along with his wife, captured and flown out of the Country. This operation was done in conjunction with U.S. Law Enforcement. D",
+          "id": 34410
+        },
+        {
+          "text": "",
+          "id": 34411
+        },
+        {
+          "text": "Nicolas Maduro on board the USS Iwo Jima.",
+          "id": 34412
+        }
+      ]
+    },
+    {
+      "date": "2026-05-30",
+      "dow": "Sat",
+      "count": 64,
+      "vs_median": 4.3,
+      "peak_hour": 17,
+      "keywords": [
+        "trump",
+        "president",
+        "people",
+        "donald",
+        "center",
+        "country",
+        "great",
+        "judge"
+      ],
+      "sample_posts": [
+        {
+          "text": "",
+          "id": 38881
+        },
+        {
+          "text": "",
+          "id": 38882
+        },
+        {
+          "text": "Can you imagine? A Barack Hussein Obama Judge named Christopher Cooper has stopped a magnificent structural and aesthetic rebuilding of The Trump Kennedy Center where Millions of Dollars of material, marble, furniture, steel, air conditioning, heating, and so much else was ordere",
+          "id": 38883
+        }
+      ]
+    },
+    {
+      "date": "2026-05-11",
+      "dow": "Mon",
+      "count": 64,
+      "vs_median": 4.3,
+      "peak_hour": 22,
+      "keywords": [
+        "judge",
+        "law",
+        "district",
+        "great",
+        "court",
+        "university",
+        "serve",
+        "federal"
+      ],
+      "sample_posts": [
+        {
+          "text": "Red states follow Trump\u2019s model, seek to rid Islamist influence in local lawmaking: https://justthenews.com/politics-policy/red-states-follow-trumps-model-seek-de-islamify-homeland",
+          "id": 38351
+        },
+        {
+          "text": "I am very much looking forward to my trip to China, an amazing Country, with a Leader, President Xi, respected by all. Great things will happen for both Countries! President DONALD J. TRUMP",
+          "id": 38355
+        },
+        {
+          "text": "I am pleased to announce the nomination of Daniel Traynor to serve as Judge on the United States Court of Appeals for the Eighth Circuit in North Dakota. During his time as a Federal District Court Judge, Daniel has issued courageous decisions, and blocked illegal Federal Governm",
+          "id": 38354
+        }
+      ]
+    },
+    {
+      "date": "2026-01-28",
+      "dow": "Wed",
+      "count": 63,
+      "vs_median": 4.2,
+      "peak_hour": 21,
+      "keywords": [
+        "trump",
+        "federal",
+        "iran",
+        "one",
+        "first",
+        "ever",
+        "status",
+        "government"
+      ],
+      "sample_posts": [
+        {
+          "text": "A massive Armada is heading to Iran. It is moving quickly, with great power, enthusiasm, and purpose. It is a larger fleet, headed by the great Aircraft Carrier Abraham Lincoln, than that sent to Venezuela. Like with Venezuela, it is, ready, willing, and able to rapidly fulfill i",
+          "id": 36259
+        },
+        {
+          "text": "It is the same mindset that gave pro football the new and unwatchable \u201cSissy\u201d Kickoff Rule, that made it possible for Bill Belichick to not be elected into the Pro Football Hall of Fame. Both are ridiculous and should be overturned!",
+          "id": 36260
+        },
+        {
+          "text": "Surprisingly, Mayor Jacob Frey just stated that, \u201cMinneapolis does not, and will not, enforce Federal Immigration Laws.\u201d This is after having had a very good conversation with him. Could somebody in his inner sanctum please explain that this statement is a very serious violation ",
+          "id": 36261
+        }
+      ]
+    },
+    {
+      "date": "2026-06-01",
+      "dow": "Mon",
+      "count": 60,
+      "vs_median": 4.0,
+      "peak_hour": 21,
+      "keywords": [
+        "election",
+        "vote",
+        "great",
+        "out",
+        "american",
+        "never",
+        "let",
+        "always"
+      ],
+      "sample_posts": [
+        {
+          "text": "Iran really wants to make a deal, and it will be a good one for the U.S.A. and those that are with us. But don\u2019t the Dumocrats, and various seemingly unpatriotic Republicans, understand that it is MUCH tougher for me to properly do my job and negotiate, when political hacks keep ",
+          "id": 38975
+        },
+        {
+          "text": "Has anyone ever seen a happy Dumocrat??? President DJT",
+          "id": 38974
+        },
+        {
+          "text": "I had a very productive call with Prime Minister Bibi Netanyahu, of Israel, and there will be no Troops going to Beirut, and any Troops that are on their way, have already been turned back. Likewise, through highly placed Representatives, I had a very good call with Hezbollah, an",
+          "id": 38976
+        }
+      ]
+    },
+    {
+      "date": "2026-03-03",
+      "dow": "Tue",
+      "count": 60,
+      "vs_median": 4.0,
+      "peak_hour": 21,
+      "keywords": [
+        "trump",
+        "united",
+        "act",
+        "aaron",
+        "president",
+        "states",
+        "state",
+        "military"
+      ],
+      "sample_posts": [
+        {
+          "text": "https://truthsocial.com/users/joemccuiston/statuses/116163475424249040",
+          "id": 37052
+        },
+        {
+          "text": "Deranged Jack Smith should be brought to Justice, NOW!!!",
+          "id": 37053
+        },
+        {
+          "text": "",
+          "id": 37054
+        }
+      ]
+    },
+    {
+      "date": "2026-07-26",
+      "dow": "Sun",
+      "count": 57,
+      "vs_median": 3.8,
+      "peak_hour": 16,
+      "keywords": [
+        "great",
+        "hopefully",
+        "president",
+        "deranged",
+        "thank",
+        "highly",
+        "respected",
+        "mohammed"
+      ],
+      "sample_posts": [
+        {
+          "text": "",
+          "id": 40252
+        },
+        {
+          "text": "",
+          "id": 40251
+        },
+        {
+          "text": "",
+          "id": 40248
+        }
+      ]
+    },
+    {
+      "date": "2026-04-18",
+      "dow": "Sat",
+      "count": 57,
+      "vs_median": 3.8,
+      "peak_hour": 21,
+      "keywords": [
+        "thank",
+        "how",
+        "status",
+        "israel",
+        "great",
+        "robert",
+        "anybody",
+        "looked"
+      ],
+      "sample_posts": [
+        {
+          "text": "",
+          "id": 37863
+        },
+        {
+          "text": "",
+          "id": 37866
+        },
+        {
+          "text": "",
+          "id": 37867
+        }
+      ]
+    },
+    {
+      "date": "2026-05-18",
+      "dow": "Mon",
+      "count": 56,
+      "vs_median": 3.7,
+      "peak_hour": 13,
+      "keywords": [
+        "election",
+        "american",
+        "out",
+        "vote",
+        "military",
+        "never",
+        "congressman",
+        "day"
+      ],
+      "sample_posts": [
+        {
+          "text": "",
+          "id": 38567
+        },
+        {
+          "text": "",
+          "id": 38566
+        },
+        {
+          "text": "",
+          "id": 38565
+        }
+      ]
+    },
+    {
+      "date": "2025-07-31",
+      "dow": "Thu",
+      "count": 54,
+      "vs_median": 3.6,
+      "peak_hour": 13,
+      "keywords": [
+        "america",
+        "all",
+        "country",
+        "president",
+        "tariffs",
+        "there",
+        "trump",
+        "great"
+      ],
+      "sample_posts": [
+        {
+          "text": "I don\u2019t care what India does with Russia. They can take their dead economies down together, for all I care. We have done very little business with India, their Tariffs are too high, among the highest in the World. Likewise, Russia and the USA do almost no business together. Let\u2019s",
+          "id": 32286
+        },
+        {
+          "text": "https://justthenews.com/government/white-house/trump-economic-policy-defies-critics-shows-steady-improvements",
+          "id": 32287
+        },
+        {
+          "text": "",
+          "id": 35795
+        }
+      ]
+    },
+    {
+      "date": "2026-05-16",
+      "dow": "Sat",
+      "count": 54,
+      "vs_median": 3.6,
+      "peak_hour": 17,
+      "keywords": [
+        "trump",
+        "president",
+        "donald",
+        "great",
+        "all",
+        "get",
+        "after",
+        "justthenews"
+      ],
+      "sample_posts": [
+        {
+          "text": "Biden FBI secretly set up Trump to be indicted after he leaves office, Arctic Frost memos suggest: https://justthenews.com/government/courts-law/fbi-and-jack-smith-prosecutor-sought-hold-anti-trump-evidence-until-he-left",
+          "id": 38472
+        },
+        {
+          "text": "One Nation Under Fraud: Trump administration uncovers massive welfare, citizenship abuses: https://justthenews.com/accountability/waste-fraud-and-abuse/one-nation-under-fraud-trump-admin-uncovers-mass-welfare",
+          "id": 38471
+        },
+        {
+          "text": "Judicial Watch files lawsuit seeking records on $2 billion grant to nonprofit tied to Stacey Abrams: https://justthenews.com/government/courts-law/judicial-watch-files-lawsuit-seeking-records-2-billion-grant-nonprofit-tied",
+          "id": 38473
+        }
+      ]
+    },
+    {
+      "date": "2026-07-06",
+      "dow": "Mon",
+      "count": 52,
+      "vs_median": 3.5,
+      "peak_hour": 10,
+      "keywords": [
+        "trump",
+        "fountain",
+        "president",
+        "exclusive",
+        "prices",
+        "scotus",
+        "america",
+        "greg"
+      ],
+      "sample_posts": [
+        {
+          "text": "Exclusive \u2014 President Donald Trump: \u2018Certainly Prepared\u2019 for Possible SCOTUS Vacancy, but \u2018Nobody\u2019 Can Replace Justice Alito: https://www.breitbart.com/politics/2026/07/01/exclusive-president-donald-trump-certainly-prepared-possible-scotus-vacancy-nobody-can-replace-justice-alito",
+          "id": 39824
+        },
+        {
+          "text": "Hillary Clinton breaks with Democratic critics by backing Trump\u2019s Gaza plan as the 'only game in town': https://www.foxnews.com/media/hillary-clinton-breaks-democratic-critics-backing-trumps-gaza-plan-game-town",
+          "id": 39825
+        },
+        {
+          "text": "They\u2019re Running the 2024 Anti-Trump Playbook on Nigel Farage: https://thenationalpulse.com/analysis-post/theyre-running-the-2024-anti-trump-playbook-on-nigel-farage-its-failing/",
+          "id": 39821
+        }
+      ]
+    },
+    {
+      "date": "2025-03-31",
+      "dow": "Mon",
+      "count": 50,
+      "vs_median": 3.3,
+      "peak_hour": 20,
+      "keywords": [
+        "trump",
+        "america",
+        "news",
+        "tariffs",
+        "foxnews",
+        "politics",
+        "trumps",
+        "first"
+      ],
+      "sample_posts": [
+        {
+          "text": "",
+          "id": 30433
+        },
+        {
+          "text": "",
+          "id": 36103
+        },
+        {
+          "text": "There will never have been a transformation of a Country like the transformation that is happening, for all to see, in the United States of America. Companies are pouring into our Country at levels never seen before, with Jobs (and Money!) to follow. It is a beautiful thing to wa",
+          "id": 30436
+        }
+      ]
+    },
+    {
+      "date": "2026-01-20",
+      "dow": "Tue",
+      "count": 50,
+      "vs_median": 3.3,
+      "peak_hour": 11,
+      "keywords": [
+        "president",
+        "trump",
+        "nato",
+        "donald",
+        "there",
+        "america",
+        "greenland",
+        "davos"
+      ],
+      "sample_posts": [
+        {
+          "text": "I had a very good telephone call with Mark Rutte, the Secretary General of NATO, concerning Greenland. I agreed to a meeting of the various parties in Davos, Switzerland. As I expressed to everyone, very plainly, Greenland is imperative for National and World Security. There can ",
+          "id": 34911
+        },
+        {
+          "text": "Note from President Emmanuel Macron, of France:",
+          "id": 34910
+        },
+        {
+          "text": "",
+          "id": 34909
+        }
+      ]
+    }
+  ],
+  "hourly_profile": [
+    1099,
+    612,
+    168,
+    53,
+    40,
+    156,
+    369,
+    856,
+    950,
+    1275,
+    1765,
+    2179,
+    1813,
+    1822,
+    1996,
+    2005,
+    1981,
+    1870,
+    1765,
+    1503,
+    1273,
+    1782,
+    1418,
+    1450
+  ],
+  "retruths": {
+    "total": 178,
+    "share_of_all_posts": 0.017,
+    "note": "ReTruths are excluded from the modeled series. The mirror stores them with the ORIGINAL author's timestamp, not the moment Trump reshared, so counting them would place activity on days he did nothing."
+  },
+  "source": {
+    "name": "trumpstruth.org",
+    "account": "@realDonaldTrump on Truth Social",
+    "note": "Truth Social's own API refuses datacenter IPs; this mirror is the ingest path."
+  }
+}

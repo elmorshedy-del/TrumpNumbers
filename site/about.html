@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About — Truth Social forecast</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2213%22>📊</text></svg>">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <div class="brand">Truth Social post tracker <span>— @realDonaldTrump</span></div>
+    <nav class="tabs">
+      <a href="index.html">Tracker</a>
+      <a href="models.html">Models</a>
+      <a href="diagnostics.html">Diagnostics</a>
+      <a href="about.html" aria-current="page">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <h1>How this works, and what it can't tell you</h1>
+
+  <h2>What it does</h2>
+  <p>It counts how many times Donald Trump posts on Truth Social, and projects where the current
+  Monday-to-Sunday total will land. Roughly twenty statistical models compete on the same task, and
+  every one of them is scored on forecasts of weeks it was never allowed to see.</p>
+
+  <h2>Where the numbers come from</h2>
+  <p>Posts are read from <a href="https://trumpstruth.org">trumpstruth.org</a>, a complete public
+  mirror of the account. Truth Social's own API refuses requests from datacenter addresses, so the
+  mirror is the practical ingest path; its <code>robots.txt</code> permits crawling. The archive runs
+  from February 2022 to the present — over 34,000 posts.</p>
+  <p>Timestamps are stored in UTC and bucketed into <b>US Eastern</b> days, because his local day is
+  the unit that produces the weekday pattern. In UTC, late-evening posts spill into the next day and
+  smear it.</p>
+
+  <div class="note">
+    <b>ReTruths are excluded from the modelled series.</b> The mirror records a ReTruth under the
+    <i>original</i> author's timestamp, not the moment Trump reshared it — one ReTruth of a
+    month-old post is stored with the month-old date. Counting them would credit activity to days on
+    which he did nothing. They are still ingested, labelled, and shown in the live feed.
+  </div>
+
+  <h2>How the models are graded</h2>
+  <p>Every model outputs a full distribution, never a single number, and is scored with
+  <b>proper scoring rules</b> — rules under which the best possible score comes from reporting what
+  you actually believe. This is not a stylistic preference. Grade forecasts the wrong way and you do
+  not merely measure badly; you teach the forecaster to lie. A desert forecaster who says "0% rain"
+  every day is right 98% of the time and has told you nothing.</p>
+  <p>The primary metric is <b>CRPS</b>, in units of posts. Alongside it sit the log score, pinball
+  loss, Brier scores for threshold events, and a PIT-based calibration test. Accuracy is deliberately
+  absent: a model can be more accurate on average while being systematically overconfident, and
+  overconfidence is the failure that costs you, because it stays invisible until the tail event arrives.</p>
+  <p>Validation is <b>walk-forward</b>: train on the past, forecast the next week, roll forward.
+  A random train/test split would let a model see Tuesday and Thursday while being scored on
+  Wednesday — not mild optimism, but reading tomorrow's newspaper. A one-day embargo sits at the seam,
+  and a final stretch of weeks is held back untouched.</p>
+
+  <h2>What the data turned out to be</h2>
+  <ul>
+    <li><b>Not Poisson, by a wide margin.</b> Variance runs many times the mean. A Poisson process
+    at this rate would essentially never produce the days actually observed.</li>
+    <li><b>Heavy-tailed.</b> The busiest day is many times the median, so every figure here is a
+    median with an asymmetric interval rather than a mean plus or minus something.</li>
+    <li><b>Almost no day-to-day memory.</b> Once the weekly cycle is removed, autocorrelation is
+    close to nothing. Whatever makes posts cluster operates <i>within</i> a day, not across days.</li>
+    <li><b>Weeks are hard to forecast.</b> The best model removes only a small share of climatology's
+    error. That is the honest headline, and it is why the leaderboard shows skill scores instead of
+    raw numbers that could be dressed up.</li>
+  </ul>
+
+  <h2>What it cannot tell you</h2>
+  <p>It cannot tell you <b>why</b> he posted a lot on a given day. Two stories explain clustering
+  equally well: something outside caused it (a storm knocks down forty trees at once), or the events
+  cause each other (an earthquake, then aftershocks, each with aftershocks of their own). These
+  produce remarkably similar daily counts, and separating them is a live research problem, not a
+  textbook exercise. Both are fitted; neither is asserted. The burst keywords on the diagnostics page
+  describe what was in a heavy day — they do not explain it.</p>
+  <p>Tail probabilities are the softest numbers here and are marked as such. Rare events need far
+  more data to pin down than the middle of a distribution does, and roughly fifty scored weeks is a
+  coarse instrument.</p>
+
+  <h2>Running it</h2>
+  <p>The project is a Python pipeline plus this static site. <code>python daemon.py</code> polls for
+  new posts, recomputes the projection, re-runs the backtest nightly, and serves these pages locally.
+  See the README for one-off commands and for running it unattended.</p>
+
+  <footer class="site">
+    <p class="small">This is a descriptive forecasting exercise about public posting volume.
+    It makes no claims about anyone's intentions and does not attribute causes to bursts.</p>
+  </footer>
+</div>
+</body>
+</html>

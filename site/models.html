@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Model leaderboard — Truth Social forecast</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2213%22>📊</text></svg>">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <div class="brand">Truth Social post tracker <span>— @realDonaldTrump</span></div>
+    <nav class="tabs">
+      <a href="index.html">Tracker</a>
+      <a href="models.html" aria-current="page">Models</a>
+      <a href="diagnostics.html">Diagnostics</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <h1>How the models actually score</h1>
+  <p class="lede">Every model is fitted only on the past, then asked to forecast a week it has
+  never seen — for each of the seven days you might ask on. Scores below come from
+  <span id="n-forecasts">…</span> such forecasts.</p>
+
+  <div class="note">
+    <b>Two different virtues, and you need both.</b> <i>Calibration</i> asks whether an 80%
+    interval really contains the truth 80% of the time — is the model honest? <i>Sharpness</i>
+    asks how narrow the interval is — is it useful? A forecast of "somewhere between 0 and 500"
+    is perfectly calibrated and perfectly useless. The goal is the sharpest model that is still
+    honest, which is why a model can win on error and still be disqualified by the calibration column.
+  </div>
+
+  <div class="grid c3" id="summary"></div>
+
+  <h2>Leaderboard</h2>
+  <p class="small">Ranked by CRPS — a proper scoring rule over the whole predicted distribution,
+  in units of posts, lower is better. <b>Skill</b> is the fraction of climatology's error removed;
+  0 means "no better than resampling history". Every pre-registered model is listed, including the
+  ones that lost badly, because a leaderboard showing only winners is a target painted after the shot.</p>
+
+  <div class="card">
+    <figure>
+      <div id="crps-chart"></div>
+      <figcaption>Bars are coloured by calibration: green passes the PIT uniformity test,
+      blue is borderline, orange is rejected as overconfident.</figcaption>
+    </figure>
+  </div>
+
+  <div class="card scroll-x">
+    <table id="board"><thead><tr>
+      <th>Model</th><th>Family</th><th class="num">CRPS</th><th class="num">Skill</th>
+      <th class="num">Log score</th><th class="num">80% coverage</th><th class="num">Width</th>
+      <th>Calibrated?</th>
+    </tr></thead><tbody></tbody></table>
+  </div>
+
+  <h2>Sharpness against honesty</h2>
+  <div class="card">
+    <figure>
+      <div id="calib-chart"></div>
+      <figcaption>Each dot is a model. Horizontal position is how often the 80% interval actually
+      contained the truth — the dashed line at 0.80 is where an honest model sits. Left of it means
+      overconfident. Vertical position is average interval width: lower is sharper. The best place
+      to be is on the line and low.</figcaption>
+    </figure>
+  </div>
+
+  <h2>Does the forecast improve as the week unfolds?</h2>
+  <div class="card">
+    <p class="small">Mean CRPS by the day you ask on, for the top models. Monday is a forecast of
+    a week that has barely started; Saturday is a forecast with six days already banked.</p>
+    <div class="scroll-x"><table id="cuts"><thead><tr><th>Model</th></tr></thead><tbody></tbody></table></div>
+  </div>
+
+  <h2>Held-out weeks</h2>
+  <p class="small">The final stretch of weeks, never looked at while the models were being built.
+  These are the honest numbers; everything above was visible during development, and looking is
+  itself a form of fitting.</p>
+  <div class="card scroll-x">
+    <table id="holdout"><thead><tr>
+      <th>Model</th><th class="num">CRPS</th><th class="num">Skill</th>
+      <th class="num">80% coverage</th><th>Calibrated?</th>
+    </tr></thead><tbody></tbody></table>
+  </div>
+
+  <h2>What each model claims</h2>
+  <div id="catalog"></div>
+
+  <footer class="site"><p class="small" id="generated"></p></footer>
+</div>
+
+<script type="module">
+import { rankedBars, calibrationScatter, onResize } from "./assets/charts.js";
+
+let rep;
+const pill = (c) => c === true ? `<span class="pill good">passes</span>`
+  : c === false ? `<span class="pill bad">rejected</span>`
+  : `<span class="pill mute">n/a</span>`;
+
+function toneFor(r) {
+  if (r.pit_calibrated === true) return "--series-3";
+  if (r.pit_p_value !== null && r.pit_p_value > 0.01) return "--series-1";
+  return "--series-2";
+}
+
+function render() {
+  const board = rep.leaderboard || [];
+  document.getElementById("n-forecasts").textContent =
+    `${(rep.n_forecasts || 0).toLocaleString()} weekly`;
+
+  const best = board[0];
+  const calibrated = board.filter((r) => r.pit_calibrated === true);
+  document.getElementById("summary").innerHTML = [
+    ["Best by CRPS", best ? best.model : "—", best ? `${best.crps} posts` : ""],
+    ["Models passing calibration", `${calibrated.length} of ${board.length}`, "PIT uniformity, p > 0.05"],
+    ["Weeks scored", rep.n_weeks || 0, `holdout from ${rep.holdout_start || "—"}`],
+  ].map(([l, n, s]) => `<div class="card tile"><div class="label">${l}</div><div class="num">${n}</div><div class="sub">${s}</div></div>`).join("");
+
+  document.querySelector("#board tbody").innerHTML = board.map((r) => `
+    <tr><td>${r.model}</td><td class="small">${r.family}</td>
+    <td class="num">${r.crps.toFixed(2)}</td>
+    <td class="num">${(r.crps_skill_vs_climatology * 100).toFixed(1)}%</td>
+    <td class="num">${r.log_score.toFixed(2)}</td>
+    <td class="num">${(r.coverage80 * 100).toFixed(0)}%</td>
+    <td class="num">${r.width80.toFixed(0)}</td>
+    <td>${pill(r.pit_calibrated)}</td></tr>`).join("");
+
+  document.querySelector("#holdout tbody").innerHTML = (rep.leaderboard_holdout || []).map((r) => `
+    <tr><td>${r.model}</td><td class="num">${r.crps.toFixed(2)}</td>
+    <td class="num">${(r.crps_skill_vs_climatology * 100).toFixed(1)}%</td>
+    <td class="num">${(r.coverage80 * 100).toFixed(0)}%</td>
+    <td>${pill(r.pit_calibrated)}</td></tr>`).join("")
+    || `<tr><td colspan="5" class="small">No holdout segment yet.</td></tr>`;
+
+  // CRPS by cut
+  const cuts = rep.crps_by_cut || {};
+  const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const head = document.querySelector("#cuts thead tr");
+  head.innerHTML = "<th>Model</th>" + days.map((d) => `<th class="num">${d}</th>`).join("");
+  document.querySelector("#cuts tbody").innerHTML = board.slice(0, 8).map((r) => {
+    const row = cuts[r.model] || {};
+    return `<tr><td>${r.model}</td>` + days.map((_, i) =>
+      `<td class="num">${row[String(i)] != null ? row[String(i)].toFixed(1) : "—"}</td>`).join("") + "</tr>";
+  }).join("");
+
+  document.getElementById("catalog").innerHTML = board.map((r) => `
+    <details><summary>${r.model} <span class="small">— ${r.family}</span></summary>
+      <div class="card">
+        <p>${r.description}</p>
+        <p class="small"><b>Assumes:</b> ${r.assumptions}</p>
+        <p class="small"><b>Fails when:</b> ${r.fails_when}</p>
+      </div></details>`).join("");
+
+  draw();
+}
+
+function draw() {
+  const board = rep.leaderboard || [];
+  rankedBars(document.getElementById("crps-chart"),
+    board.map((r) => ({ label: r.model, value: r.crps, ...r })),
+    {
+      colorFor: toneFor,
+      fmt: (v) => v.toFixed(2),
+      tipRows: (r) => [
+        `CRPS <b>${r.crps.toFixed(2)}</b> posts`,
+        `skill vs climatology <b>${(r.crps_skill_vs_climatology * 100).toFixed(1)}%</b>`,
+        `80% interval covered <b>${(r.coverage80 * 100).toFixed(0)}%</b> of the time`,
+      ],
+    });
+  calibrationScatter(document.getElementById("calib-chart"), board);
+}
+
+(async function () {
+  try {
+    rep = await (await fetch(`../data/exports/backtest.json?t=${Date.now()}`)).json();
+  } catch {
+    document.getElementById("summary").innerHTML =
+      `<div class="card"><b>No backtest yet.</b><br><span class="small">Run <code>python daemon.py --backtest</code>.</span></div>`;
+    return;
+  }
+  render();
+  document.getElementById("generated").textContent =
+    `Reference model: ${rep.reference_model}. ${(rep.notes || []).join(" ")}`;
+  onResize(draw);
+})();
+</script>
+</body>
+</html>

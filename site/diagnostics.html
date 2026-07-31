@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diagnostics — Truth Social forecast</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2213%22>📊</text></svg>">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <div class="brand">Truth Social post tracker <span>— @realDonaldTrump</span></div>
+    <nav class="tabs">
+      <a href="index.html">Tracker</a>
+      <a href="models.html">Models</a>
+      <a href="diagnostics.html" aria-current="page">Diagnostics</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <h1>What kind of thing is this data?</h1>
+  <p class="lede">Before choosing a model it is worth establishing what the counts actually look
+  like. Each finding below rules something in or out.</p>
+
+  <h2>Is it Poisson? No — and the size of the failure is the point</h2>
+  <div class="card" id="dispersion"><div class="loading">Loading…</div></div>
+  <div class="note">
+    A Poisson process has variance equal to its mean, and that is <b>forced</b>, not conventional:
+    if the rate is fixed and posts don't influence each other, arrival timing is the only randomness
+    left, so one number sets both the typical level and the scatter. When the data refuses that
+    constraint, at least one assumption is false — either the rate is not fixed (some days he is
+    simply a different person) or the posts are not independent (one post pulls the next along).
+    Both suspects are modelled, and both are on the leaderboard.
+  </div>
+
+  <h2>The tail</h2>
+  <div class="grid c4" id="tail"></div>
+  <p class="small">When the largest observation is many times the median, the average stops being a
+  stable summary: collect more data, feel confident, then one enormous day rewrites the estimate.
+  That is why every number on this site is a median with an asymmetric interval.</p>
+
+  <h2>Day of week</h2>
+  <div class="card">
+    <figure><div id="dow-chart"></div>
+      <figcaption>Median posts per day. Medians rather than means, because a single 168-post day
+      drags an average somewhere no ordinary day lives.</figcaption></figure>
+    <div class="scroll-x"><table id="dow-table"><thead><tr>
+      <th>Day</th><th class="num">n</th><th class="num">Mean</th><th class="num">Median</th>
+      <th class="num">SD</th><th class="num">vs overall</th>
+    </tr></thead><tbody></tbody></table></div>
+  </div>
+
+  <h2>Does the process remember yesterday?</h2>
+  <div class="card">
+    <figure><div id="acf-chart"></div>
+      <figcaption>Autocorrelation after the weekly cycle has been removed. The shaded band is the
+      range consistent with no memory at all; bars inside it are noise.</figcaption></figure>
+    <div class="note" style="margin-top:16px">
+      <b>Why the cycle is removed first.</b> The raw series has a strong weekly rhythm, so its raw
+      autocorrelation shows a lag-7 spike no matter what. That spike is the calendar reflected back
+      at you, not evidence the process remembers a week ago. Removing the known cycle before looking
+      for memory is the difference between a finding and a mirror.
+      <span id="acf-contrast"></span>
+    </div>
+  </div>
+
+  <h2>When does he post?</h2>
+  <div class="card">
+    <figure><div id="hour-chart"></div>
+      <figcaption>Posts by hour of the local day, across the modelling window. This circadian shape
+      is the background rate the self-exciting model builds on.</figcaption></figure>
+  </div>
+
+  <h2>Has the process changed?</h2>
+  <div class="card" id="breaks"><div class="loading">Loading…</div></div>
+  <p class="small">Choosing which slice of history to model is a bigger lever on the answer than
+  choosing the model, and it is usually decided by accident. Fitting across a genuine regime change
+  describes neither regime — the way an average of a man's height across his lifetime describes him
+  at no age at all. The window used here is stated on every page.</p>
+
+  <h2>Bursts</h2>
+  <div class="note">
+    <b>Descriptive, not causal.</b> The keywords below say what he was posting about on a heavy day.
+    They do not explain the heavy day. A self-exciting process produces bursts with no outside
+    trigger whatever, and whatever he happened to be posting about will always be sitting there
+    ready to take the blame. Telling a genuine external cause apart from a self-feeding run is not
+    settled from daily totals, and this page does not pretend otherwise.
+  </div>
+  <div class="card scroll-x">
+    <table id="bursts"><thead><tr>
+      <th>Date</th><th>Day</th><th class="num">Posts</th><th class="num">× median</th><th>What was in it</th>
+    </tr></thead><tbody></tbody></table>
+  </div>
+
+  <footer class="site"><p class="small" id="generated"></p></footer>
+</div>
+
+<script type="module">
+import { barChart, stemChart, onResize } from "./assets/charts.js";
+let d;
+
+function render() {
+  const dp = d.dispersion, t = d.tail;
+  document.getElementById("dispersion").innerHTML = `
+    <div class="grid c3">
+      <div class="tile"><div class="label">Variance ÷ mean</div>
+        <div class="num">${dp.dispersion_ratio}×</div>
+        <div class="sub">Poisson requires exactly 1.0</div></div>
+      <div class="tile"><div class="label">Poisson would predict</div>
+        <div class="num">${dp.poisson_range_95[0]}–${dp.poisson_range_95[1]}</div>
+        <div class="sub">95% of days in this range</div></div>
+      <div class="tile"><div class="label">Actually observed</div>
+        <div class="num">${dp.actual_range[0]}–${dp.actual_range[1]}</div>
+        <div class="sub">across ${dp.n} days</div></div>
+    </div>
+    <p style="margin-top:12px">Mean ${dp.mean} posts/day, median ${dp.median}, standard deviation
+    ${dp.sd}. A Poisson process at this mean would have a standard deviation of just
+    ${dp.poisson_sd}. The dispersion test rejects Poisson with
+    p ${dp.p_value < 1e-10 ? "< 1e-10" : "= " + dp.p_value.toExponential(1)}.</p>`;
+
+  document.getElementById("tail").innerHTML = [
+    ["Mean ÷ median", `${t.mean_over_median}×`, "1.0 would be symmetric"],
+    ["Max ÷ median", `${t.max_over_median}×`, "how far the tail reaches"],
+    ["Skewness", t.skewness, "0 would be symmetric"],
+    ["Busiest 1% of days", `${(t.top_1pct_share_of_all_posts * 100).toFixed(1)}%`, "of all posts"],
+  ].map(([l, n, s]) => `<div class="card tile"><div class="label">${l}</div><div class="num">${n}</div><div class="sub">${s}</div></div>`).join("");
+
+  const days = d.day_of_week.days;
+  document.querySelector("#dow-table tbody").innerHTML = days.map((x) => `
+    <tr><td>${x.day}</td><td class="num">${x.n}</td><td class="num">${x.mean}</td>
+    <td class="num">${x.median}</td><td class="num">${x.sd ?? "—"}</td>
+    <td class="num">${x.index_vs_overall}×</td></tr>`).join("");
+
+  const segs = (d.structural_breaks && d.structural_breaks.segments) || [];
+  document.getElementById("breaks").innerHTML = segs.length
+    ? `<div class="scroll-x"><table><thead><tr><th>Segment</th><th class="num">Weeks</th>
+       <th class="num">Mean posts/day</th></tr></thead><tbody>` +
+      segs.map((s) => `<tr><td>${s.start} → ${s.end}</td><td class="num">${s.weeks}</td>
+        <td class="num">${s.mean_posts_per_day}</td></tr>`).join("") + `</tbody></table></div>`
+    : `<p class="small">No clear regime changes detected inside the current window.</p>`;
+
+  document.querySelector("#bursts tbody").innerHTML = (d.bursts || []).slice(0, 15).map((b) => `
+    <tr><td>${b.date}</td><td>${b.dow}</td><td class="num">${b.count}</td>
+    <td class="num">${b.vs_median}×</td>
+    <td class="small">${(b.keywords || []).slice(0, 6).join(", ") || "—"}</td></tr>`).join("");
+
+  const ac = d.autocorrelation;
+  document.getElementById("acf-contrast").innerHTML = ac.acf && ac.acf.length > 7
+    ? ` Here the raw lag-7 correlation is <b>${ac.acf_raw_with_weekly_cycle[7].toFixed(3)}</b>;
+        once the cycle is taken out it falls to <b>${ac.acf[7].toFixed(3)}</b>.` : "";
+
+  draw();
+}
+
+function draw() {
+  const days = d.day_of_week.days;
+  barChart(document.getElementById("dow-chart"),
+    days.map((x) => ({ label: x.day, value: x.median, ...x })),
+    {
+      height: 200, xTickEvery: 1,
+      refLine: d.day_of_week.overall_mean, refLabel: `overall mean ${d.day_of_week.overall_mean}`,
+      tipTitle: (x) => x.day,
+      tipRows: (x) => [`median <b>${x.median}</b> posts`, `mean ${x.mean}`, `${x.n} days observed`],
+    });
+
+  const ac = d.autocorrelation;
+  if (ac.acf && ac.acf.length > 1) {
+    stemChart(document.getElementById("acf-chart"), ac.acf.slice(1), {
+      band: ac.conf, startIndex: 1, tipTitle: (i) => `lag ${i} days`,
+    });
+  }
+
+  const hours = d.hourly_profile || [];
+  barChart(document.getElementById("hour-chart"),
+    hours.map((v, i) => ({ label: `${i}`, value: v, hour: i })),
+    {
+      height: 190, xTickEvery: 3,
+      tipTitle: (x) => `${x.hour}:00 – ${x.hour}:59`,
+      tipRows: (x) => [`<b>${x.value}</b> posts`],
+    });
+}
+
+(async function () {
+  try {
+    d = await (await fetch(`../data/exports/diagnostics.json?t=${Date.now()}`)).json();
+  } catch {
+    document.getElementById("dispersion").innerHTML =
+      `<b>No diagnostics yet.</b> <span class="small">Run <code>python daemon.py --once</code>.</span>`;
+    return;
+  }
+  render();
+  document.getElementById("generated").textContent =
+    `Window ${d.window.start} → ${d.window.end} (${d.window.days} days). ` +
+    `ReTruths excluded: ${d.retruths.note}`;
+  onResize(draw);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Truth Social post tracker &amp; weekly forecast</title>
+<meta name="description" content="Tracks Donald Trump's Truth Social posting volume and projects the weekly total from a backtested set of statistical models.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2213%22>📊</text></svg>">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <div class="brand">Truth Social post tracker <span>— @realDonaldTrump</span></div>
+    <nav class="tabs">
+      <a href="index.html" aria-current="page">Tracker</a>
+      <a href="models.html">Models</a>
+      <a href="diagnostics.html">Diagnostics</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <h1>Where does this week finish?</h1>
+  <p class="lede">Posts are counted in US Eastern days, Monday to Sunday. The projection below
+  is a distribution, not a target — read the interval, not just the middle number.</p>
+
+  <div id="hero" class="loading">Loading…</div>
+
+  <div class="grid c4" id="tiles"></div>
+
+  <h2>Weekly totals, and where this week lands</h2>
+  <div class="card">
+    <div class="legend">
+      <span><i style="background:var(--series-1)"></i>completed weeks</span>
+      <span><i style="background:var(--series-2)"></i>projected total</span>
+      <span><i style="background:var(--band-strong)"></i>80% interval</span>
+      <span><i style="background:var(--band-weak)"></i>95% interval</span>
+    </div>
+    <figure>
+      <div id="weekly-chart"></div>
+      <figcaption>The fan is deliberately lopsided: posting cannot go below zero and rarely
+      drops under a floor, but a single burst weekend can push the total far above the median.</figcaption>
+    </figure>
+  </div>
+
+  <h2>Daily posts, last 10 weeks</h2>
+  <div class="card">
+    <figure>
+      <div id="daily-chart"></div>
+      <figcaption>Dashed line is the median day across the modelling window.</figcaption>
+    </figure>
+  </div>
+
+  <h2>Chance the week clears a threshold</h2>
+  <div class="card">
+    <div class="scroll-x"><table id="thresholds"><thead><tr>
+      <th>Week total at least</th><th class="num">Probability</th><th>Confidence</th>
+    </tr></thead><tbody></tbody></table></div>
+    <p class="small">Thresholds are the 50th, 75th and 90th percentiles of recent weekly totals.
+    Probabilities out in the tail are marked soft: rare events need far more data to pin down
+    than the middle of the distribution does, and roughly 50 scored weeks is a coarse instrument.</p>
+  </div>
+
+  <h2>What every model says about this week</h2>
+  <div class="card">
+    <p class="small">Ordered by backtest performance (best first). The headline above averages the
+    top three quantile-wise rather than trusting a single winner, whose margin is usually inside the noise.</p>
+    <div class="scroll-x"><table id="per-model"><thead><tr>
+      <th>Model</th><th>Family</th><th class="num">Median</th>
+      <th class="num">80% interval</th><th class="num">Width</th>
+    </tr></thead><tbody></tbody></table></div>
+  </div>
+
+  <h2>Latest posts</h2>
+  <div class="card" id="posts"><div class="loading">Loading…</div></div>
+
+  <footer class="site">
+    <p class="small">Source: <a href="https://trumpstruth.org">trumpstruth.org</a>, a complete mirror of
+    @realDonaldTrump on Truth Social. ReTruths are tracked but excluded from the modelled series —
+    the mirror stores them under the original author's timestamp, so counting them would place
+    activity on days nothing happened. <span id="generated"></span></p>
+  </footer>
+</div>
+
+<script type="module">
+import { barChart, forecastChart, onResize } from "./assets/charts.js";
+
+const num = (v) => Math.round(v).toLocaleString();
+
+async function load(name) {
+  const res = await fetch(`../data/exports/${name}?t=${Date.now()}`);
+  if (!res.ok) throw new Error(`${name}: ${res.status}`);
+  return res.json();
+}
+
+let fc, posts;
+
+function renderHero() {
+  const h = fc.headline, w = fc.week;
+  if (!h || !h.median) {
+    document.getElementById("hero").innerHTML = `<div class="card">No forecast available yet.</div>`;
+    return;
+  }
+  document.getElementById("hero").innerHTML = `
+    <div class="card hero">
+      <div class="label small">Projected total for ${w.week_start} → ${w.week_end}</div>
+      <div class="value">${num(h.median)}<span class="unit">posts</span></div>
+      <div class="range">
+        80% interval <b>${num(h.interval_80[0])} – ${num(h.interval_80[1])}</b> ·
+        50% <b>${num(h.interval_50[0])} – ${num(h.interval_50[1])}</b> ·
+        95% <b>${num(h.interval_95[0])} – ${num(h.interval_95[1])}</b>
+      </div>
+      <div class="note" style="margin-top:14px">
+        <b>${num(h.week_to_date)} posts so far</b> with ${w.days_remaining} full day${w.days_remaining === 1 ? "" : "s"}
+        left after today, implying about <b>${num(h.implied_remaining)}</b> more.
+        The interval runs ${num(h.asymmetry.downside)} below the median but
+        ${num(h.asymmetry.upside)} above it — that gap is the heavy right tail, not a rounding artefact.
+      </div>
+    </div>`;
+
+  document.getElementById("tiles").innerHTML = [
+    ["Week to date", num(h.week_to_date), `${w.days_observed} complete day${w.days_observed === 1 ? "" : "s"}`],
+    ["Today so far", num(w.today_partial_count), "still accumulating"],
+    ["Projected median", num(h.median), "top-3 model blend"],
+    ["Days remaining", w.days_remaining, "after today"],
+  ].map(([l, n, s]) => `<div class="card tile"><div class="label">${l}</div><div class="num">${n}</div><div class="sub">${s}</div></div>`).join("");
+}
+
+function renderThresholds() {
+  const tb = document.querySelector("#thresholds tbody");
+  tb.innerHTML = (fc.threshold_probabilities || []).map((t) => {
+    const pct = (t.probability * 100).toFixed(0);
+    const pill = t.soft
+      ? `<span class="pill warn">soft — tail estimate</span>`
+      : `<span class="pill good">reasonably supported</span>`;
+    return `<tr><td>${num(t.threshold)} posts</td><td class="num">${pct}%</td><td>${pill}</td></tr>`;
+  }).join("") || `<tr><td colspan="3" class="small">Not enough history yet.</td></tr>`;
+}
+
+function renderPerModel() {
+  const order = fc.ranking || [];
+  const rows = [...fc.per_model].sort((a, b) => {
+    const ia = order.indexOf(a.model), ib = order.indexOf(b.model);
+    return (ia < 0 ? 999 : ia) - (ib < 0 ? 999 : ib);
+  });
+  document.querySelector("#per-model tbody").innerHTML = rows.map((m) => {
+    const lo = m.quantiles["0.1"], hi = m.quantiles["0.9"];
+    return `<tr><td>${m.model}</td><td class="small">${m.family}</td>
+      <td class="num">${num(m.median)}</td>
+      <td class="num">${num(lo)} – ${num(hi)}</td>
+      <td class="num">${num(hi - lo)}</td></tr>`;
+  }).join("");
+}
+
+function renderPosts() {
+  document.getElementById("posts").innerHTML = posts.posts.slice(0, 25).map((p) => {
+    const when = new Date(p.at).toLocaleString(undefined,
+      { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+    const tag = p.is_retruth
+      ? `<span class="pill mute">ReTruth ${p.source_handle || ""}</span>` : "";
+    const body = (p.text || "").replace(/</g, "&lt;");
+    return `<div class="post"><div class="meta">${when} ${tag}
+      <a href="${p.url}" target="_blank" rel="noopener">open</a></div>
+      <div class="body">${body || "<i>media only</i>"}</div></div>`;
+  }).join("");
+}
+
+function drawCharts() {
+  const median = fc.headline && fc.headline.median
+    ? { median: fc.headline.median, quantiles: fc.headline.quantiles } : null;
+  forecastChart(document.getElementById("weekly-chart"),
+    (fc.weekly_history || []).slice(-26), median);
+
+  const daily = (fc.daily_recent || []).slice(-70);
+  const med = [...daily.map((d) => d.count)].sort((a, b) => a - b)[Math.floor(daily.length / 2)] || 0;
+  barChart(document.getElementById("daily-chart"),
+    daily.map((d) => ({ label: d.date.slice(5), value: d.count, date: d.date })),
+    {
+      refLine: med, refLabel: `median ${med}`,
+      tipTitle: (d) => d.date,
+      tipRows: (d) => [`<b>${d.value}</b> posts`],
+    });
+}
+
+(async function () {
+  try {
+    [fc, posts] = await Promise.all([load("forecast.json"), load("posts.json")]);
+  } catch (err) {
+    document.getElementById("hero").innerHTML =
+      `<div class="card"><b>No data yet.</b><br><span class="small">Run <code>python daemon.py --once</code> to build the exports.</span></div>`;
+    return;
+  }
+  renderHero(); renderThresholds(); renderPerModel(); renderPosts(); drawCharts();
+  document.getElementById("generated").textContent =
+    `Updated ${new Date(fc.generated_at).toLocaleString()}.`;
+  onResize(drawCharts);
+})();
+</script>
+</body>
+</html>
