@@ -22,7 +22,8 @@ import pandas as pd
 from . import diagnostics as diag
 from .config import EXPORT_DIR, WINDOW, ensure_dirs
 from .forecast import current_week_forecast, headline, threshold_probabilities
-from .ingest.run import backfill, poll
+from .ingest.run import backfill, poll, reconcile
+from .ingest.run import coverage as ingest_coverage
 from .models.registry import model_catalog
 from .series import daily_counts, load_frame, modeling_series
 
@@ -52,14 +53,26 @@ def _json_safe(obj):
 
 
 def load_ranking() -> list[str]:
-    """Model order from the last backtest, best CRPS first."""
+    """Model order from the last backtest, best CRPS first.
+
+    Deliberately the **development** leaderboard, not the holdout one. The
+    holdout exists to answer "how well does the chosen procedure do on weeks
+    nobody looked at" — and it can only answer that while nothing is chosen with
+    it. Ranking the live headline on eight weeks would spend the one clean
+    sample on a selection, leave nothing to check the selection with, and report
+    the resulting score as if it were still out-of-sample.
+
+    It is also the noisier board: eight weeks reorders models whose CRPS differs
+    by less than the sampling noise, so selecting on it mostly chases noise. The
+    holdout is still computed, still shown, and still the honest number — it is
+    just not allowed to pick.
+    """
     path = EXPORT_DIR / "backtest.json"
     if not path.exists():
         return []
     try:
         rep = json.loads(path.read_text())
-        board = rep.get("leaderboard_holdout") or rep.get("leaderboard") or []
-        return [r["model"] for r in board]
+        return [r["model"] for r in rep.get("leaderboard") or []]
     except Exception:
         return []
 
@@ -86,7 +99,12 @@ def refresh_forecast(df=None) -> dict:
     recent = series.daily.tail(70)
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
+        "coverage": ingest_coverage(),
         "window": {"start": WINDOW.start, "label": WINDOW.label},
+        "ranking_basis": (
+            "development leaderboard (the holdout is reported, never used to select)"
+            if ranking else "no backtest yet — models are in registry order"
+        ),
         "headline": head,
         "week": fc["week"],
         "threshold_probabilities": probs,
@@ -183,7 +201,9 @@ def main(argv=None) -> int:
     p = argparse.ArgumentParser(description="Trump Truth Social forecast pipeline")
     p.add_argument("--backfill", metavar="YYYY-MM-DD", nargs="?", const="2022-02-01",
                    help="walk the archive back to this date")
-    p.add_argument("--poll", action="store_true", help="fetch the newest posts")
+    p.add_argument("--poll", action="store_true", help="fetch everything since the last poll")
+    p.add_argument("--reconcile", metavar="DAYS", nargs="?", type=int, const=14,
+                   help="re-read the last N days so deletions and corrections land")
     p.add_argument("--diagnose", action="store_true", help="rebuild diagnostics.json")
     p.add_argument("--forecast", action="store_true", help="rebuild forecast.json")
     p.add_argument("--backtest", action="store_true", help="rerun the walk-forward backtest")
@@ -197,6 +217,8 @@ def main(argv=None) -> int:
         backfill(since=args.backfill)
     if args.poll:
         poll()
+    if args.reconcile:
+        reconcile(days=args.reconcile)
     if args.diagnose:
         refresh_diagnostics()
     if args.backtest:
@@ -205,7 +227,8 @@ def main(argv=None) -> int:
         refresh_forecast()
     if args.all:
         refresh_all()
-    if not any([args.backfill, args.poll, args.diagnose, args.forecast, args.backtest, args.all]):
+    if not any([args.backfill, args.poll, args.reconcile, args.diagnose,
+                args.forecast, args.backtest, args.all]):
         p.print_help()
     return 0
 

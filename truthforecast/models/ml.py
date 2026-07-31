@@ -92,6 +92,7 @@ class QuantileGBM(Model):
 
         X, y = self._build_training(history)
         self.fallback = history.to_numpy(dtype=float)
+        self._history = history.astype(float)
         self.trained = False
         if len(y) < 80:
             return self
@@ -109,10 +110,33 @@ class QuantileGBM(Model):
             except Exception:
                 pass
         self.trained = len(self.models) == len(GBM_QUANTILES)
-        self._last_feats = _features(history.index, history.to_numpy(dtype=float))
-        self._last_index = history.index
-        self._last_values = history.to_numpy(dtype=float)
+        self._history = history.astype(float)
         return self
+
+    def _anchor_row(self, task: ForecastTask) -> np.ndarray:
+        """Features as of the cut — the same row shape training was built from.
+
+        Training anchors each row on the last observed day of that week (or the
+        day before the week starts, at cut -1). Predicting from the last day of
+        *history* instead would hand the model a Saturday row every time and
+        lags that stop before the week began, while training taught it rows
+        anchored on every weekday. The model then reads a feature vector from a
+        distribution it never saw, which is the ordinary way a gradient booster
+        is made to look worthless by its plumbing rather than by its merits.
+        """
+        index = self._history.index
+        values = self._history.to_numpy(dtype=float)
+        if task.cut_dow >= 0 and len(task.observed):
+            # Extend the series with the days of the target week already known,
+            # so lag and rolling features are anchored where training put them.
+            obs_index = pd.date_range(task.week_start, periods=len(task.observed), freq="D")
+            index = index.append(obs_index)
+            values = np.concatenate([values, np.asarray(task.observed, dtype=float)])
+
+        feats = _features(index, values)
+        return np.concatenate(
+            [feats[-1], [task.cut_dow, task.observed_total, 6 - task.cut_dow]]
+        ).reshape(1, -1)
 
     def sample_remaining(self, task: ForecastTask, n: int) -> np.ndarray:
         dows = task.remaining_dows
@@ -122,9 +146,10 @@ class QuantileGBM(Model):
             pool = self.fallback if self.fallback is not None else np.array([0.0])
             return np.random.choice(pool, size=n, replace=True) * len(dows)
 
-        row = np.concatenate([
-            self._last_feats[-1], [task.cut_dow, task.observed_total, 6 - task.cut_dow]
-        ]).reshape(1, -1)
+        row = self._anchor_row(task)
+        if not np.isfinite(row).all():
+            pool = self.fallback if self.fallback is not None else np.array([0.0])
+            return np.random.choice(pool, size=n, replace=True) * len(dows)
 
         qs, preds = [], []
         for q, m in sorted(self.models.items()):

@@ -91,7 +91,22 @@ class BacktestConfig:
     min_train_weeks: int = 26
     embargo_days: int = 1  # keeps rolling features from straddling the seam
     holdout_weeks: int = 8  # untouched until the very end
-    cut_days: tuple[int, ...] = field(default=(0, 1, 2, 3, 4, 5, 6))
+
+    # The cuts the live site actually faces, and only those.
+    #
+    # -1 is Monday: the week has produced nothing yet, which is the hardest
+    # forecast of the seven and the one on display for a seventh of all time.
+    # Scoring it is not optional — a leaderboard that omits the hardest case is
+    # not measuring the thing being shown.
+    #
+    # 6 is excluded: by the end of Sunday the week is fully observed, so every
+    # model returns the answer exactly. That row scores 0 CRPS, covers its own
+    # interval by construction, reports zero width, and contributes a uniform
+    # random PIT value. Averaged in, it flatters coverage (a poisson-glm at a
+    # true 0.29 reads as 0.39), shrinks reported interval widths by a seventh,
+    # dilutes CRPS by a seventh, and weakens the calibration test — all of it
+    # uniformly across models, so it never shows up as a ranking anomaly.
+    cut_days: tuple[int, ...] = field(default=(-1, 0, 1, 2, 3, 4, 5))
 
 
 BACKTEST = BacktestConfig()

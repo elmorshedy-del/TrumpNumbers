@@ -7,6 +7,8 @@ unable to judge what the winners actually achieved.
 
 from __future__ import annotations
 
+from datetime import datetime, timezone
+
 import numpy as np
 import pandas as pd
 
@@ -45,12 +47,17 @@ def leaderboard(rows: pd.DataFrame, cut_dow: int | None = None) -> pd.DataFrame:
     return agg.sort_values("crps").round(4)
 
 
-def by_cut(rows: pd.DataFrame) -> pd.DataFrame:
-    """How much does the forecast improve as the week reveals itself?"""
-    if rows.empty:
+def by_cut(rows: pd.DataFrame, column: str = "crps", places: int = 2) -> pd.DataFrame:
+    """How does a metric move as the week reveals itself?
+
+    Reported per cut rather than only as an average, because the average over
+    cuts is dominated by how much of the week is already known and can hide a
+    model that is fine on Saturday and badly overconfident on Monday.
+    """
+    if rows.empty or column not in rows:
         return pd.DataFrame()
     return (
-        rows.groupby(["model", "cut_dow"])["crps"].mean().unstack("cut_dow").round(2)
+        rows.groupby(["model", "cut_dow"])[column].mean().unstack("cut_dow").round(places)
     )
 
 
@@ -120,7 +127,20 @@ def build_report(result) -> dict:
         return out
 
     cuts = by_cut(rows)
+    cover_cuts = by_cut(rows, "covered80", places=3)
+
+    def spread(frame: pd.DataFrame) -> dict:
+        if frame.empty:
+            return {}
+        return {
+            m: {str(c): (None if pd.isna(v) else float(v)) for c, v in row.items()}
+            for m, row in frame.iterrows()
+        }
+
     return {
+        # A leaderboard has no expiry stamped on it, so it can outlive the data
+        # it describes without looking any different. This is that stamp.
+        "generated_at": datetime.now(timezone.utc).isoformat(),
         "leaderboard": pack(lb),
         "leaderboard_holdout": pack(leaderboard(hold)) if not hold.empty else [],
         "n_weeks": int(rows["week"].nunique()),
@@ -129,10 +149,9 @@ def build_report(result) -> dict:
             result.holdout_start.date().isoformat() if result.holdout_start is not None else None
         ),
         "thresholds": [round(t, 1) for t in result.thresholds],
-        "crps_by_cut": (
-            {m: {str(c): (None if pd.isna(v) else float(v)) for c, v in row.items()}
-             for m, row in cuts.iterrows()} if not cuts.empty else {}
-        ),
+        "crps_by_cut": spread(cuts),
+        "coverage80_by_cut": spread(cover_cuts),
+        "cut_days": [int(c) for c in sorted(rows["cut_dow"].unique())],
         "calibration": [
             calibration_detail(rows, m) for m in lb.index[:6]
         ],
@@ -144,6 +163,18 @@ def build_report(result) -> dict:
             "coverage80 should be ~0.80. Much below means overconfident intervals.",
             "PIT p-value below 0.05 means the forecast distribution is NOT calibrated.",
             "The holdout leaderboard is the honest number; the main one was visible during development.",
+            (
+                "The live headline picks its models from the development leaderboard, never from "
+                "the holdout. Selecting on the holdout would spend the one unlooked-at sample on "
+                "a choice and then report the result as if it were still out-of-sample."
+            ),
+            (
+                "Cuts run from -1 (Monday, nothing of the week observed) to 5 (Saturday complete) "
+                "— exactly the situations the site is ever in. The fully-observed Sunday cut is "
+                "excluded because every model returns the answer there: it scores 0 CRPS, covers "
+                "its own interval and reports zero width, which would flatter coverage and shrink "
+                "CRPS for every model alike."
+            ),
             (
                 "Each week is scored at seven weekday cuts, so the forecasts are NOT independent. "
                 "Treat the PIT p-values as a strong directional signal about over/under-confidence, "
