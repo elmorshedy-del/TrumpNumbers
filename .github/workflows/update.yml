@@ -120,7 +120,9 @@ jobs:
           else
             git commit -m "Refresh exports (nightly backtest)"
             git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || true
-            git push origin "HEAD:${GITHUB_REF_NAME}"
+            # Non-fatal: a protected branch or a race is a reason to skip the
+            # seed update, not a reason to skip publishing the site.
+            git push origin "HEAD:${GITHUB_REF_NAME}" || echo "push refused; exports not seeded"
           fi
 
       # The deployed bundle is `site/` with the exports mounted underneath it,
