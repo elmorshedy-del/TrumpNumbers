@@ -223,6 +223,24 @@ updater has stopped. Freshness is a claim the page has to earn, not one it makes
 To turn it on: **Settings → Pages → Source: GitHub Actions**, then either wait for the schedule or
 run the workflow manually from the Actions tab.
 
+That click can be automated, but it needs a credential the built-in `GITHUB_TOKEN` deliberately
+is not: enabling Pages is a repository-admin operation. If you would rather not click, create a
+token and store it as the repository secret `PAGES_TOKEN`:
+
+- **fine-grained**, scoped to this repository only, with *Pages: read and write* and
+  *Administration: read and write* (fine-grained tokens use the GitHub App permission model, and
+  the action documents `administration:write` + `pages:write` for Apps);
+- or a **classic** token with the `repo` scope, which is much broader — prefer the fine-grained one;
+- set the shortest expiry offered.
+
+The workflow's first run then enables Pages itself. **Delete the secret and revoke the token once
+it has worked** — it is a one-time setup step, and a standing admin-scoped credential is a poor
+trade for it. With no `PAGES_TOKEN` present the step is skipped entirely and nothing changes.
+
+Never put a token in a file in the repository. This one is public, and committed credentials are
+harvested by bots within seconds of the push — being deleted in a later commit does not help,
+because the value stays in the git history and in every clone already taken.
+
 ## Getting notified when he posts
 
 `.github/workflows/notify.yml` polls every five minutes and pushes new posts to whichever channel

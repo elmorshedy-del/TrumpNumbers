@@ -50,10 +50,33 @@ jobs:
     timeout-minutes: 45
     permissions:
       contents: write
+      pages: write
     outputs:
       nightly: ${{ steps.mode.outputs.nightly }}
     steps:
       - uses: actions/checkout@v4
+
+      # Turning Pages on is normally a click in Settings. It can be automated,
+      # but only with a token that is NOT the built-in GITHUB_TOKEN — the action
+      # says so outright, because switching Pages on is a repository-admin
+      # operation and the built-in token deliberately cannot perform one.
+      #
+      # So this step is opt-in and self-disabling: with no PAGES_TOKEN secret it
+      # does nothing and the click is still yours to make. With one, the first
+      # run enables Pages and every later run finds it already on — at which
+      # point the secret has done its job and should be deleted, along with the
+      # token behind it. A standing admin-scoped credential is a poor trade for
+      # a one-time setup step.
+      #
+      # The secret is the only correct home for it. Never a file in the repo:
+      # this repository is public, and a committed token is scraped by bots
+      # within seconds of the push.
+      - name: Enable Pages if a setup token is present
+        if: ${{ secrets.PAGES_TOKEN != '' }}
+        uses: actions/configure-pages@v5
+        with:
+          token: ${{ secrets.PAGES_TOKEN }}
+          enablement: true
 
       - uses: actions/setup-python@v5
         with:
