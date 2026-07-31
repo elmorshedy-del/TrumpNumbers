@@ -28,6 +28,12 @@ put 95% of days between 10 and 28 posts; the actual range is 0 to 168. That fail
 rather than hidden, because it is the finding that motivates every other model: either the rate
 isn't fixed, or the posts aren't independent.
 
+And it is not the calendar in disguise, which is the obvious objection: a single fixed rate is
+refuted by the weekly cycle alone. Grant a Poisson model everything it normally knows and it still
+fails — rates fitted per weekday leave χ²/df of **14.6**, adding a causal 28-day level leaves
+**15.7**, against 1.0 for a well-specified Poisson model. The overdispersion belongs to the
+process, not to the model's ignorance about Mondays.
+
 **It is heavy-tailed.** The busiest day is 11× the median, skewness 3.6, and the busiest 1% of days
 carry 6% of all posts. So every figure is a median with an *asymmetric* interval, never `x ± y`.
 
@@ -40,12 +46,26 @@ each post triggers ~0.56 further posts — with a kernel half-life of about a mi
 the rapid-fire bursts you can see in the feed, but it barely moves the *weekly* total, which is
 consistent with the flat autocorrelation.
 
-**Weeks are genuinely hard to forecast.** The best models beat climatology by only a few percent of
-CRPS. That is the honest headline. Anyone quoting a confident weekly number is quoting noise.
+**Weeks are genuinely hard to forecast.** The best model removes **3.0%** of climatology's CRPS.
+That is the honest headline. Anyone quoting a confident weekly number is quoting noise. It is also
+what most of the leaderboard's ordering is made of: the top twelve models span 18.24 to 18.83 CRPS,
+which is inside the noise of 53 weeks.
 
-**Most models are overconfident.** Across 53 weeks, nearly every model's 80% interval contained the
-truth only 70–77% of the time. Poisson and ZIP are the worst (39%, with intervals a third of the
-width they need) — the direct consequence of variance being locked to the mean.
+**Most of a model's score is the calendar, not the model.** CRPS for the leading model falls from
+**28.9** on Monday, with nothing of the week observed, to **8.8** on Saturday. Averaging across
+cuts mostly measures how much of the week the forecaster had already been told.
+
+**Every model is overconfident.** Across 53 weeks, not one model's 80% interval reached 80%: the
+best manages 75%, the bulk sit between 57% and 73%, and Poisson and ZIP manage **27%** with
+intervals a third of the width they need — the direct consequence of locking variance to the mean.
+This is the most transferable thing here. "This week lands near 150" expires on Sunday; "forcing
+variance to equal the mean on a heavy-tailed count process produces intervals that are wrong two
+times in three" does not.
+
+**The regime changes are an artifact.** The changepoint search was told to find four breaks, and
+methods of that kind return exactly the number they are given — they will partition a straight
+line. Told to justify each break instead, the same search finds **none**. The window still makes
+sense; the four dates never did.
 
 ## How it works
 
