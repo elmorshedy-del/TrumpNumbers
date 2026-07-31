@@ -16,6 +16,12 @@ name: update
 # rather than implying freshness by existing.
 
 on:
+  # A change to the site or the pipeline should reach the page without waiting
+  # for a cron slot. It also means a fix to this file deploys itself, rather
+  # than sitting until the next scheduled run — which matters more than it
+  # sounds when the thing being fixed is the workflow.
+  push:
+    branches: [main]
   schedule:
     # Live pass: poll the source, rebuild the forecast, redeploy. ~1 minute.
     - cron: "7,37 * * * *"
@@ -53,6 +59,13 @@ jobs:
       pages: write
     outputs:
       nightly: ${{ steps.mode.outputs.nightly }}
+    env:
+      # Lifted to the job because the `secrets` context is NOT available in a
+      # step's `if:` — only env, github, inputs, job, matrix, needs, runner,
+      # steps, strategy and vars are. Referencing it there does not fail the
+      # step, it invalidates the entire workflow file, which GitHub then reports
+      # as a run with zero jobs and no logs.
+      PAGES_TOKEN: ${{ secrets.PAGES_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 
@@ -72,10 +85,10 @@ jobs:
       # this repository is public, and a committed token is scraped by bots
       # within seconds of the push.
       - name: Enable Pages if a setup token is present
-        if: ${{ secrets.PAGES_TOKEN != '' }}
+        if: env.PAGES_TOKEN != ''
         uses: actions/configure-pages@v5
         with:
-          token: ${{ secrets.PAGES_TOKEN }}
+          token: ${{ env.PAGES_TOKEN }}
           enablement: true
 
       - uses: actions/setup-python@v5

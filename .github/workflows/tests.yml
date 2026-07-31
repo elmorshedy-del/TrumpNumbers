@@ -23,3 +23,14 @@ jobs:
           cache: pip
       - run: pip install -e ".[dev]"
       - run: python -m pytest tests/ -q
+
+  actionlint:
+    # The `secrets` context in a step `if:` does not fail that step — it
+    # invalidates the whole workflow file, and GitHub reports that as a run with
+    # zero jobs and no logs. Nothing else in this repository would have caught
+    # it, and it silently stopped every scheduled run.
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: raven-actions/actionlint@v2
