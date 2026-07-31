@@ -12,7 +12,9 @@ python daemon.py --once     # backfill (first run), then build every export
 python daemon.py            # run forever: poll, forecast, nightly backtest, serve :8000
 ```
 
-Then open <http://localhost:8000/site/index.html>.
+Then open <http://localhost:8000/>. The local server mounts the exports at
+`/data/exports/` — the same layout the deployed bundle has, so both resolve data through the
+same relative path and "works locally" cannot mean a different URL shape than the one users get.
 
 ---
 
@@ -58,6 +60,8 @@ truthforecast/
   pipeline.py orchestration -> data/exports/*.json
 site/         static HTML/CSS/vanilla JS reading those JSON files
 daemon.py     the self-updating local runner
+.github/      the same cadences on GitHub Actions, publishing to Pages
+REVIEW.md     what a fresh read found: what was wrong, what is unstated, what to build next
 ```
 
 ### Data source
@@ -104,6 +108,17 @@ Walk-forward, expanding origin, one-day embargo, with a final stretch of weeks h
 historical week and every weekday cut, each model forecasts that week's total from what was
 knowable then.
 
+Cuts run from **-1** (Monday, nothing of the week observed — the hardest forecast, and the one on
+display for a seventh of all time) to **5** (Saturday complete). The fully-observed Sunday cut is
+excluded: by then every model returns the answer exactly, scoring 0 CRPS with an interval that
+covers by construction, and averaging that free win in would flatter coverage and shrink CRPS for
+every model alike.
+
+The live headline picks its models from the **development** leaderboard, never from the holdout.
+A holdout can answer "how does the chosen procedure do on weeks nobody looked at" only while
+nothing is chosen with it; selecting on eight weeks would spend the one clean sample on a choice
+and then report the result as if it were still out-of-sample.
+
 Scored only with **proper** rules — CRPS (primary, in posts), log score, pinball, Brier for
 thresholds — plus PIT-based calibration and interval width for sharpness. Accuracy is deliberately
 absent: a model can be more accurate on average while being systematically overconfident, and
@@ -130,9 +145,11 @@ Tail probabilities are the softest numbers here and are flagged as such in the U
 ```bash
 python daemon.py --once            # one full pass (backfills on first run)
 python daemon.py --backtest        # force the expensive backtest now
+python daemon.py --reconcile       # re-read the last 14 days (deletions, corrections)
 python daemon.py --serve-only      # just serve existing exports
 python -m truthforecast.pipeline --backfill 2022-02-01
 python -m truthforecast.pipeline --poll --forecast
+python -m truthforecast.pipeline --reconcile 30
 python -m pytest tests/ -q
 ```
 
@@ -148,10 +165,43 @@ systemctl --user enable --now trump-truth-forecast.service   # ExecStart=…/.ve
 
 # or cron, if you'd rather not keep a process alive
 */15 * * * * cd /path/to/repo && .venv/bin/python daemon.py --once
-0 4 * * *    cd /path/to/repo && .venv/bin/python daemon.py --backtest
+0 4 * * *    cd /path/to/repo && .venv/bin/python daemon.py --backtest --reconcile
 ```
 
 SQLite holds all state and the poll is idempotent, so restarts and overlapping runs are safe.
+
+The poll is defined by **coverage**, not by cadence: it walks the listing back until it reaches
+the point the last completed poll got to, and only advances that watermark when the walk actually
+closes the gap. This matters more than it sounds. Reading just the newest page and trusting it
+means any interruption longer than a page of posts writes *quiet days* into the series rather than
+gaps — and a quiet day is indistinguishable from a real one, so every model downstream learns from
+it and nothing in the output looks wrong. Bursts are the whole subject here; a hundred posts inside
+one interval is the event the project exists to measure, not an edge case.
+
+## Hosting it on GitHub
+
+`.github/workflows/update.yml` is the same daemon on GitHub's scheduler: poll and rebuild twice
+an hour, reconcile and re-rank every model nightly, publish `site/` plus the exports to GitHub
+Pages. The archive lives in the Actions cache rather than in git — it is a 25 MB binary that
+changes every pass — and losing it costs one automatic backfill, because the mirror is the source
+of truth and the cache is only a shortcut.
+
+Three things about that platform are worth knowing before trusting what it publishes:
+
+- **`schedule:` only fires on the default branch.** On any other branch the workflow exists and
+  never runs by itself.
+- **Scheduled runs are best-effort.** They queue under load and can be skipped entirely; "every
+  30 minutes" really means "usually within the hour".
+- **Private repositories bill Actions minutes and need a paid plan for Pages.** Public ones get
+  both free. Two runs an hour is ~1,500 minutes a month, which does not fit the free private
+  allowance — on a private repo, drop to hourly or accept the bill.
+
+None of that is a problem as long as nobody reads a stale page as a live one, so every export
+carries its own build time, the site states how old its data is, and it says so loudly when the
+updater has stopped. Freshness is a claim the page has to earn, not one it makes by existing.
+
+To turn it on: **Settings → Pages → Source: GitHub Actions**, then either wait for the schedule or
+run the workflow manually from the Actions tab.
 
 ## Note
 
