@@ -26,6 +26,8 @@
   <p class="lede">Posts are counted in US Eastern days, Monday to Sunday. The projection below
   is a distribution, not a target — read the interval, not just the middle number.</p>
 
+  <div id="freshness" class="freshness"></div>
+
   <div id="hero" class="loading">Loading…</div>
 
   <div class="grid c4" id="tiles"></div>
@@ -86,14 +88,14 @@
 
 <script type="module">
 import { barChart, forecastChart, onResize } from "./assets/charts.js";
+import { autoRefresh, loadExport, renderFreshness } from "./assets/data.js";
 
 const num = (v) => Math.round(v).toLocaleString();
 
-async function load(name) {
-  const res = await fetch(`../data/exports/${name}?t=${Date.now()}`);
-  if (!res.ok) throw new Error(`${name}: ${res.status}`);
-  return res.json();
-}
+// Matches the deployed cadence in .github/workflows/update.yml. It is only used
+// to decide when "overdue" starts, so it can be generous without hiding a real
+// outage.
+const EXPECTED_UPDATE_MINUTES = 30;
 
 let fc, posts;
 
@@ -184,18 +186,26 @@ function drawCharts() {
     });
 }
 
+async function refresh() {
+  [fc, posts] = await Promise.all([loadExport("forecast.json"), loadExport("posts.json")]);
+  renderHero(); renderThresholds(); renderPerModel(); renderPosts(); drawCharts();
+  renderFreshness(document.getElementById("freshness"), fc, EXPECTED_UPDATE_MINUTES);
+  document.getElementById("generated").textContent =
+    `Updated ${new Date(fc.generated_at).toLocaleString()}.`;
+}
+
 (async function () {
   try {
-    [fc, posts] = await Promise.all([load("forecast.json"), load("posts.json")]);
+    await refresh();
   } catch (err) {
     document.getElementById("hero").innerHTML =
       `<div class="card"><b>No data yet.</b><br><span class="small">Run <code>python daemon.py --once</code> to build the exports.</span></div>`;
     return;
   }
-  renderHero(); renderThresholds(); renderPerModel(); renderPosts(); drawCharts();
-  document.getElementById("generated").textContent =
-    `Updated ${new Date(fc.generated_at).toLocaleString()}.`;
   onResize(drawCharts);
+  // The page outlives one build: a tab left open through a Sunday evening
+  // should follow the week closing, not freeze at whatever it loaded with.
+  autoRefresh(refresh, 60);
 })();
 </script>
 </body>

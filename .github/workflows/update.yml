@@ -1,0 +1,152 @@
+name: update
+
+# The hosted equivalent of `daemon.py`. Same entry points, same cadences, run
+# on a schedule instead of in a long-lived process.
+#
+# Two things about GitHub's scheduler shape this file and are worth knowing
+# before trusting the numbers it produces:
+#
+#   * `schedule:` only fires on the repository's DEFAULT branch. On any other
+#     branch this workflow exists but never runs on its own.
+#   * Scheduled runs are best-effort. They queue under load and can be skipped
+#     entirely; a "every 30 minutes" cron is really "usually within an hour".
+#
+# Neither is a problem as long as nobody reads a stale page as a live one, which
+# is why every export carries its own build time and the site says how old it is
+# rather than implying freshness by existing.
+
+on:
+  schedule:
+    # Live pass: poll the source, rebuild the forecast, redeploy. ~1 minute.
+    - cron: "7,37 * * * *"
+    # Nightly: reconcile the recent past, then re-rank every model. ~10 minutes.
+    - cron: "10 8 * * *"
+  workflow_dispatch:
+    inputs:
+      backtest:
+        description: "Re-run the full backtest in this pass"
+        type: boolean
+        default: false
+      backfill_since:
+        description: "Re-walk the archive back to this date (YYYY-MM-DD), e.g. after a parser fix"
+        type: string
+        default: ""
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  # Identify the crawler as this deployment. The mirror's robots.txt permits
+  # crawling; being identifiable is the other half of asking politely.
+  TTF_USER_AGENT: "trump-truth-forecast/0.1 (posting-volume research; +${{ github.server_url }}/${{ github.repository }})"
+  TTF_REQUEST_DELAY: "1.0"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # 10 min covers a live pass with a long catch-up walk; the nightly backtest
+    # needs the rest. Better to be killed than to run for an hour unnoticed.
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    outputs:
+      nightly: ${{ steps.mode.outputs.nightly }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install
+        run: pip install -e .
+
+      - name: Decide the pass
+        id: mode
+        run: |
+          nightly=false
+          if [ "${{ github.event.schedule }}" = "10 8 * * *" ]; then nightly=true; fi
+          if [ "${{ inputs.backtest }}" = "true" ]; then nightly=true; fi
+          echo "nightly=$nightly" >> "$GITHUB_OUTPUT"
+          echo "nightly pass: $nightly"
+
+      # The archive lives in the cache, not in git: it is a 25 MB binary that
+      # changes every pass, and committing it every half hour would bloat the
+      # repository for no benefit. Losing it costs one backfill (~6 minutes),
+      # which `daemon.py` performs automatically when the database is missing —
+      # the source is the source of truth, the cache is only a shortcut.
+      - name: Restore the post archive
+        id: cache
+        uses: actions/cache/restore@v4
+        with:
+          path: data/posts.db
+          key: posts-db-${{ github.run_id }}
+          restore-keys: |
+            posts-db-
+
+      - name: Re-walk the archive
+        if: inputs.backfill_since != ''
+        run: python -m truthforecast.pipeline --backfill "${{ inputs.backfill_since }}"
+
+      - name: Live pass
+        if: steps.mode.outputs.nightly != 'true'
+        run: python daemon.py --once
+
+      - name: Nightly pass
+        if: steps.mode.outputs.nightly == 'true'
+        run: python daemon.py --backtest --reconcile
+
+      - name: Save the post archive
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: data/posts.db
+          key: posts-db-${{ github.run_id }}
+
+      # Only the nightly pass writes to git. The exports in the repository are
+      # the cold-start seed: after a cache eviction the site still has a
+      # leaderboard to show while the first backfill runs. Committing them every
+      # half hour would add ~50 commits a day to say the same thing.
+      - name: Commit the refreshed exports
+        if: steps.mode.outputs.nightly == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/exports
+          if git diff --cached --quiet; then
+            echo "exports unchanged"
+          else
+            git commit -m "Refresh exports (nightly backtest)"
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || true
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+
+      # The deployed bundle is `site/` with the exports mounted underneath it,
+      # which is the layout `daemon.py serve` reproduces locally so both resolve
+      # data through the same relative path.
+      - name: Assemble the site
+        run: |
+          mkdir -p _site/data/exports
+          cp -R site/. _site/
+          cp data/exports/*.json _site/data/exports/
+          touch _site/.nojekyll
+          ls -la _site _site/data/exports
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

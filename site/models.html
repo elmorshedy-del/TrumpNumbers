@@ -95,6 +95,7 @@
 
 <script type="module">
 import { rankedBars, calibrationScatter, onResize } from "./assets/charts.js";
+import { loadExport } from "./assets/data.js";
 
 let rep;
 const pill = (c) => c === true ? `<span class="pill good">passes</span>`
@@ -176,15 +177,17 @@ function draw() {
 
 (async function () {
   try {
-    rep = await (await fetch(`../data/exports/backtest.json?t=${Date.now()}`)).json();
+    rep = await loadExport("backtest.json");
   } catch {
     document.getElementById("summary").innerHTML =
       `<div class="card"><b>No backtest yet.</b><br><span class="small">Run <code>python daemon.py --backtest</code>.</span></div>`;
     return;
   }
   render();
+  const ran = rep.generated_at
+    ? `Backtest last run ${new Date(rep.generated_at).toLocaleString()}. ` : "";
   document.getElementById("generated").textContent =
-    `Reference model: ${rep.reference_model}. ${(rep.notes || []).join(" ")}`;
+    `${ran}Reference model: ${rep.reference_model}. ${(rep.notes || []).join(" ")}`;
   onResize(draw);
 })();
 </script>

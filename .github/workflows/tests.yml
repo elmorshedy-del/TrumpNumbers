@@ -1,0 +1,25 @@
+name: tests
+
+# The ingest tests are the ones that matter here: they pin the timezone the
+# listing renders in and the rule that only top-level posts count. Both are
+# assumptions about someone else's HTML, and both corrupt the series silently
+# when they stop holding.
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -e ".[dev]"
+      - run: python -m pytest tests/ -q
