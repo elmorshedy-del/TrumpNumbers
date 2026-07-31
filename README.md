@@ -268,6 +268,47 @@ python -m truthforecast.notify --dry-run   # print what would be sent
 python -m truthforecast.notify --reset     # forget the watermark; next run adopts the present
 ```
 
+### The fast version
+
+Run it as a process instead of a cron slot. GitHub's scheduler floors out at five minutes and
+queues under load; a loop you own does not.
+
+```bash
+docker run -d --restart=always \
+  -e TTF_NTFY_TOPIC=your-topic-name \
+  -e TTF_POLL_SECONDS=30 \
+  -v truthforecast-data:/app/data \
+  -p 8000:8000 truthforecast
+```
+
+The volume holds the archive and the coverage watermark, so a restart resumes rather than
+re-walking 34,000 posts. At `TTF_POLL_SECONDS=30` the poll costs two requests every thirty
+seconds and the only remaining delay is the mirror's.
+
+### Why it cannot be instant
+
+Four links, and only one of them is ours:
+
+    Trump posts -> Truth Social publishes -> trumpstruth.org crawls -> we poll -> your phone
+                                             \_____ unmeasured _____/   \__ 30s to 20min __/
+
+The diagnostics page now measures the whole chain — post timestamp to the moment this pipeline
+stored it, ReTruths excluded — so the number stops being a guess as soon as the poller has seen
+enough live posts. Everything below the mirror is a floor we cannot get under by polling harder.
+
+**The X API does not help, for two independent reasons.** It is the wrong data: Truth Social is
+where he posts, and this project measures Truth Social volume — an X-based series would be a
+different, much sparser thing, and the popular "Trump's Truths" accounts on X are fan reposters
+rather than him. And real-time on X means the filtered stream, which is Pro tier at $5,000/month
+minimum; the $200/month Basic tier has no streaming at all, and both tiers closed to new signups
+during the June 2026 move to pay-per-use.
+
+**Genuinely instant exists and is not for us.** Trump Media launched **Truth API** on 1 August
+2026: licensed, millisecond delivery of posts from top Truth Social accounts, sold to
+high-frequency trading firms. Reported pricing is $100,000 per month, or $60,000 on a three-year
+contract. That is the actual price of "instant", and it tells you what the latency is worth to the
+people who pay for it. Anything cheaper is polling something that is itself polling.
+
 ## Note
 
 This is a descriptive forecasting exercise about public posting volume. It makes no claims about

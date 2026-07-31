@@ -74,6 +74,13 @@
       is the background rate the self-exciting model builds on.</figcaption></figure>
   </div>
 
+  <h2>How fast do we see a post?</h2>
+  <div class="card" id="lag"><div class="loading">Loading…</div></div>
+  <p class="small">Measured, not assumed: the gap between a post's own timestamp and the moment
+  this pipeline stored it. That covers Truth Social publishing it, trumpstruth.org crawling it, and
+  our poll interval — and only the last of those is ours to shorten. ReTruths are excluded, because
+  the mirror stores them under the original author's date and they would read as days of lag.</p>
+
   <h2>Has the process changed?</h2>
   <div class="card" id="breaks"><div class="loading">Loading…</div></div>
   <p class="small">Choosing which slice of history to model is a bigger lever on the answer than
@@ -148,6 +155,19 @@ function render() {
     <tr><td>${x.day}</td><td class="num">${x.n}</td><td class="num">${x.mean}</td>
     <td class="num">${x.median}</td><td class="num">${x.sd ?? "—"}</td>
     <td class="num">${x.index_vs_overall}×</td></tr>`).join("");
+
+  const lag = d.ingest_lag || {};
+  document.getElementById("lag").innerHTML = lag.available
+    ? `<div class="grid c3">
+        <div class="tile"><div class="label">Typical delay</div>
+          <div class="num">${lag.median_minutes} min</div><div class="sub">median of ${lag.n} posts</div></div>
+        <div class="tile"><div class="label">Slower end</div>
+          <div class="num">${lag.p90_minutes} min</div><div class="sub">90th percentile</div></div>
+        <div class="tile"><div class="label">Worst seen</div>
+          <div class="num">${lag.max_minutes} min</div><div class="sub">since the last backfill</div></div>
+       </div>`
+    : `<p class="small">${lag.note || "No live observations yet."} Until then, treat any claim about
+       how quickly this notices a post as unmeasured.</p>`;
 
   const sb = d.structural_breaks || {};
   const segs = sb.segments || [];

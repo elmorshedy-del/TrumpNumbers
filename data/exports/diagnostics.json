@@ -4,6 +4,11 @@
     "end": "2026-07-30",
     "days": 557
   },
+  "ingest_lag": {
+    "available": false,
+    "n": 0,
+    "note": "not enough posts observed live yet \u2014 this fills in as the poller runs"
+  },
   "dispersion": {
     "n": 557,
     "mean": 18.826,

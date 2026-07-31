@@ -120,6 +120,61 @@ def dispersion_test(series: CountSeries) -> dict:
     }
 
 
+def ingest_lag(df: pd.DataFrame) -> dict:
+    """How long after a post exists do we know about it?
+
+    Every alert this project can send is bounded by this number, so it is worth
+    measuring rather than assuming. `first_seen_utc` minus the post's own
+    timestamp is the whole chain: Truth Social publishes, trumpstruth.org
+    crawls, we poll. Only the last link is ours.
+
+    Two exclusions, both load-bearing. Backfilled rows were all "first seen" in
+    one burst hours or years after the fact, so they would report the age of the
+    archive rather than the latency of the pipeline. And ReTruths carry the
+    ORIGINAL author's timestamp, so a reshare of a three-day-old post reads as
+    three days of lag — measured before that filter went in, the median came out
+    at 4,728 minutes, which is a fact about ReTruths and nothing else.
+
+    What is left is originals observed by a live poll, so this fills in as the
+    deployment runs and says so when it has too little to be worth reading.
+    """
+    from .ingest.store import connect, get_state
+
+    if df.empty or "first_seen_utc" not in df:
+        return {"available": False}
+
+    with connect() as conn:
+        backfill_end = get_state(conn, "last_backfill_utc")
+    if not backfill_end:
+        return {"available": False, "note": "no backfill recorded"}
+
+    seen = pd.to_datetime(df["first_seen_utc"], utc=True, format="mixed", errors="coerce")
+    live = df[(seen > pd.Timestamp(backfill_end)) & (df["is_retruth"] == 0)]
+    if len(live) < 5:
+        return {
+            "available": False,
+            "n": int(len(live)),
+            "note": "not enough posts observed live yet — this fills in as the poller runs",
+        }
+
+    lag_min = (
+        (seen[live.index] - live["created_utc"]).dt.total_seconds() / 60.0
+    ).clip(lower=0)
+
+    return {
+        "available": True,
+        "n": int(len(lag_min)),
+        "median_minutes": round(float(lag_min.median()), 1),
+        "p90_minutes": round(float(lag_min.quantile(0.90)), 1),
+        "max_minutes": round(float(lag_min.max()), 1),
+        "note": (
+            "Post timestamp to the moment this pipeline stored it: Truth Social publishing, "
+            "trumpstruth.org crawling, and our poll interval combined. Only the poll interval "
+            "is ours to shorten; the rest is the floor."
+        ),
+    }
+
+
 def tail_summary(series: CountSeries) -> dict:
     """How heavy is the right tail? Decides whether means are usable at all."""
     x = series.daily.to_numpy(dtype=float)
@@ -405,6 +460,7 @@ def run_all(df: pd.DataFrame, series: CountSeries) -> dict:
             "end": series.daily.index[-1].date().isoformat() if len(series.daily) else None,
             "days": int(len(series.daily)),
         },
+        "ingest_lag": ingest_lag(df),
         "dispersion": dispersion_test(series),
         "conditional_dispersion": conditional_dispersion(series),
         "tail": tail_summary(series),
