@@ -298,10 +298,42 @@ enough live posts. Everything below the mirror is a floor we cannot get under by
 
 **The X API does not help, for two independent reasons.** It is the wrong data: Truth Social is
 where he posts, and this project measures Truth Social volume — an X-based series would be a
-different, much sparser thing, and the popular "Trump's Truths" accounts on X are fan reposters
-rather than him. And real-time on X means the filtered stream, which is Pro tier at $5,000/month
-minimum; the $200/month Basic tier has no streaming at all, and both tiers closed to new signups
-during the June 2026 move to pay-per-use.
+different, much sparser thing. And real-time on X means the filtered stream, which is Pro tier at
+$5,000/month minimum; the $200/month Basic tier has no streaming at all, and both tiers closed to
+new signups during the June 2026 move to pay-per-use.
+
+**Nor do the X accounts that relay Truth Social posts.** They exist, and watching one instead is a
+reasonable-sounding idea, but it moves in the wrong direction. Those accounts are themselves
+polling Truth Social or a mirror and republishing — their posts quote the original's timestamp,
+which is what reposting looks like. Going through one means inheriting its crawl lag, plus its
+posting interval, plus your own polling of X, and paying X for the privilege. You cannot be faster
+than your source's source. It is also a dependency you cannot see into: when a relay account gets
+suspended, rate-limited, or quietly stops, the silence is indistinguishable from "he did not post"
+— the exact failure this project's own poller had to be rebuilt to avoid.
+
+The useful move is upstream, not downstream.
+
+### Reading Truth Social directly
+
+Truth Social is a Mastodon fork, so the account exposes a standard RSS feed at
+`https://truthsocial.com/@realDonaldTrump.rss`. That removes the mirror from the chain entirely —
+one link instead of three. The catch is that it refuses datacenter traffic; from Google Cloud every
+endpoint returns 403, which is why the archive uses the mirror in the first place. From a home
+connection it may just work, and that depends on where you are rather than on anything in this
+repo, so the code asks rather than assumes:
+
+```bash
+python -m truthforecast.ingest.direct --probe    # can this machine read it?
+python -m truthforecast.ingest.direct --watch    # poll it every 30s and alert
+```
+
+The probe reports the status code, what `robots.txt` says, and how old the newest post in the feed
+is. `--watch` refuses to run if robots.txt disallows the path.
+
+This path feeds **alerts only** and never the modelled series. The archive is keyed on the mirror's
+post id, which a direct read does not have, so merging the two could store the same post twice
+under different keys — and a double-counted day is precisely the silent corruption the rest of this
+codebase is built to prevent. Speed is worth having; it is not worth the series.
 
 **Genuinely instant exists and is not for us.** Trump Media launched **Truth API** on 1 August
 2026: licensed, millisecond delivery of posts from top Truth Social accounts, sold to

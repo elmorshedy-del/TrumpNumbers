@@ -262,3 +262,38 @@ def test_a_failed_send_does_not_advance_the_watermark(isolated_db, monkeypatch, 
     assert notify_mod.notify() == 2
     with connect(isolated_db) as conn:
         assert get_state(conn, "notified_max_id") == str(posts[-3].trumpstruth_id)
+
+
+# --- reading Truth Social directly ------------------------------------------
+
+
+def test_direct_account_feed_parses():
+    from truthforecast.ingest.direct import parse_account_rss
+
+    xml = (FIXTURES / "truthsocial_account.rss").read_text()
+    posts = parse_account_rss(xml)
+
+    assert [p.status_id for p in posts] == [117011459082239407, 117011459082239400]
+    assert posts[0].text == "THE WITCH HUNT CONTINUES! Second paragraph."
+    assert posts[0].created_utc.isoformat() == "2026-07-30T23:13:14+00:00"
+
+
+def test_direct_feed_rejects_non_rss():
+    from truthforecast.ingest.direct import parse_account_rss
+
+    with pytest.raises(ValueError):
+        parse_account_rss("<html><body>Just a moment...</body></html>")
+
+
+def test_direct_alerts_keep_their_own_watermark(isolated_db):
+    """The direct path must never write into the modelled series."""
+    from truthforecast.ingest.direct import parse_account_rss
+    from truthforecast.ingest.store import get_state, post_count
+    from truthforecast.notify import notify_direct
+
+    posts = parse_account_rss((FIXTURES / "truthsocial_account.rss").read_text())
+
+    assert notify_direct(posts) == 0  # cold start adopts the present
+    with connect(isolated_db) as conn:
+        assert get_state(conn, "notified_direct_max_id") == "117011459082239407"
+        assert post_count(conn) == 0  # nothing entered the archive

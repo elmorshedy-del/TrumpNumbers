@@ -214,6 +214,68 @@ def notify(dry_run: bool = False) -> int:
         return len(rows)
 
 
+DIRECT_STATE_KEY = "notified_direct_max_id"
+
+
+def notify_direct(posts: list) -> int:
+    """Alert on posts read straight from Truth Social, bypassing the mirror.
+
+    Separate watermark, keyed on Truth Social's own status id, and nothing is
+    written to the posts table. The archive is keyed on the mirror's id, so
+    storing these alongside it could double-count a day — and a double-counted
+    day is exactly the silent corruption the rest of this codebase exists to
+    prevent. Speed is worth having; it is not worth the series.
+    """
+    if not posts:
+        return 0
+    newest = max(p.status_id for p in posts)
+
+    with connect() as conn:
+        mark = get_state(conn, DIRECT_STATE_KEY)
+        if mark is None:
+            set_state(conn, DIRECT_STATE_KEY, str(newest))
+            log.info("notify(direct): first run, watermark at %s — nothing sent", newest)
+            return 0
+
+        fresh = sorted((p for p in posts if p.status_id > int(mark)), key=lambda p: p.status_id)
+        if not fresh:
+            return 0
+
+        rows = [
+            {
+                "trumpstruth_id": p.status_id,
+                "created_utc": p.created_utc.isoformat(),
+                "text": p.text,
+                "is_retruth": 0,
+                "source_handle": None,
+                "truth_url": p.url,
+            }
+            for p in fresh
+        ]
+        title, body = format_message(rows)
+        payload = {
+            "count": len(rows),
+            "source": "truthsocial.com (direct)",
+            "posts": [
+                {"id": r["trumpstruth_id"], "at": r["created_utc"],
+                 "text": r["text"], "is_retruth": False, "url": r["truth_url"]}
+                for r in rows
+            ],
+        }
+
+        results = [fn(title, body, payload) for fn in CHANNELS]
+        sent = [r for r in results if r is not None]
+        if not sent:
+            log.warning("notify(direct): %s new post(s) but no channel configured", len(rows))
+            return 0
+        if all(sent):
+            set_state(conn, DIRECT_STATE_KEY, str(fresh[-1].status_id))
+            log.info("notify(direct): sent %s post(s)", len(rows))
+        else:
+            log.warning("notify(direct): partial failure, watermark held for retry")
+        return len(rows)
+
+
 def main(argv=None) -> int:
     import argparse
 
