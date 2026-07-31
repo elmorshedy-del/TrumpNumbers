@@ -9,7 +9,7 @@ every model downstream would faithfully learn from the lie.
 from __future__ import annotations
 
 import sqlite3
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import pytest
@@ -150,3 +150,80 @@ def test_second_precision_supersedes_minute(tmp_path, rss_text, listing_html):
             "SELECT time_precision FROM posts WHERE trumpstruth_id = ?", (sid,)
         ).fetchone()
         assert row["time_precision"] == "second"
+
+
+# --- polling coverage -------------------------------------------------------
+#
+# The poll's failure mode is silent: posts missed during an outage do not show
+# up as a gap, they show up as *quiet days*, which every model downstream then
+# fits as real. These tests pin the two behaviours that prevent it — walk back
+# far enough to cover the gap, and refuse to record a gap as covered when the
+# walk stopped early.
+
+
+class FakeClient:
+    """A client whose walk_back stops after `pages` pages, recording its target."""
+
+    def __init__(self, posts, pages=3, exhausted=False, reach_target=True):
+        self._posts = posts
+        self._pages = pages
+        self._exhausted = exhausted
+        self._reach_target = reach_target
+        self.targets = []
+
+    def fetch_feed(self):
+        return self._posts[:1]
+
+    def walk_back(self, start=None, until=None, max_pages=None):
+        from truthforecast.ingest.client import WalkPage
+
+        self.targets.append(until)
+        for i in range(self._pages):
+            last = i == self._pages - 1
+            reached = until - timedelta(hours=1) if (last and self._reach_target) else start
+            yield WalkPage(self._posts, reached, exhausted=self._exhausted and last)
+
+
+@pytest.fixture
+def isolated_db(tmp_path, monkeypatch):
+    from truthforecast.ingest import store
+
+    monkeypatch.setattr(store, "DB_PATH", tmp_path / "poll.db")
+    return tmp_path / "poll.db"
+
+
+def test_poll_walks_back_to_the_last_covered_point(isolated_db, rss_text):
+    """The catch-up target is the previous watermark, not "the newest page"."""
+    from truthforecast.ingest.run import POLL_OVERLAP, poll
+    from truthforecast.ingest.store import get_state, set_state
+
+    posts = parse_rss(rss_text)
+    watermark = datetime(2026, 3, 1, 12, 0, tzinfo=timezone.utc)
+    with connect(isolated_db) as conn:
+        set_state(conn, "last_poll_utc", watermark.isoformat())
+
+    client = FakeClient(posts)
+    poll(client=client)
+
+    assert client.targets == [watermark - POLL_OVERLAP]
+    with connect(isolated_db) as conn:
+        assert get_state(conn, "last_poll_complete") == "1"
+        assert get_state(conn, "last_poll_utc") != watermark.isoformat()
+
+
+def test_an_incomplete_walk_leaves_the_watermark_alone(isolated_db, rss_text):
+    """A walk that gave up early must not be recorded as coverage."""
+    from truthforecast.ingest.run import poll
+    from truthforecast.ingest.store import get_state, set_state
+
+    posts = parse_rss(rss_text)
+    watermark = datetime(2026, 3, 1, 12, 0, tzinfo=timezone.utc)
+    with connect(isolated_db) as conn:
+        set_state(conn, "last_poll_utc", watermark.isoformat())
+
+    poll(client=FakeClient(posts, pages=2, reach_target=False))
+
+    with connect(isolated_db) as conn:
+        # Unchanged, so the next run retries the same gap rather than skipping it.
+        assert get_state(conn, "last_poll_utc") == watermark.isoformat()
+        assert get_state(conn, "last_poll_complete") == "0"
