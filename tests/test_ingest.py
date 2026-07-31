@@ -227,3 +227,38 @@ def test_an_incomplete_walk_leaves_the_watermark_alone(isolated_db, rss_text):
         # Unchanged, so the next run retries the same gap rather than skipping it.
         assert get_state(conn, "last_poll_utc") == watermark.isoformat()
         assert get_state(conn, "last_poll_complete") == "0"
+
+
+# --- notifications ----------------------------------------------------------
+
+
+def test_notifier_adopts_the_present_on_first_run(isolated_db, rss_text):
+    """A fresh database must not page you about the whole archive."""
+    from truthforecast.ingest.store import get_state
+    from truthforecast.notify import notify
+
+    posts = parse_rss(rss_text)
+    with connect(isolated_db) as conn:
+        upsert_posts(conn, posts)
+
+    assert notify() == 0
+    with connect(isolated_db) as conn:
+        assert get_state(conn, "notified_max_id") == str(max(p.trumpstruth_id for p in posts))
+
+
+def test_a_failed_send_does_not_advance_the_watermark(isolated_db, monkeypatch, rss_text):
+    """Better to notify twice than to drop one silently."""
+    from truthforecast import notify as notify_mod
+    from truthforecast.ingest.store import get_state, set_state
+
+    posts = sorted(parse_rss(rss_text), key=lambda p: p.trumpstruth_id)
+    with connect(isolated_db) as conn:
+        upsert_posts(conn, posts)
+        set_state(conn, "notified_max_id", str(posts[-3].trumpstruth_id))
+
+    monkeypatch.setenv("TTF_WEBHOOK_URL", "http://127.0.0.1:9/never")
+    monkeypatch.setattr(notify_mod, "_post", lambda *a, **k: False)
+
+    assert notify_mod.notify() == 2
+    with connect(isolated_db) as conn:
+        assert get_state(conn, "notified_max_id") == str(posts[-3].trumpstruth_id)

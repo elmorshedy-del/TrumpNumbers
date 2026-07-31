@@ -1,0 +1,86 @@
+name: notify
+
+# Alerts, on the fastest cadence this platform actually offers.
+#
+# Kept separate from `update.yml` on purpose. This job polls and pushes and
+# nothing else — no forecast, no backtest, no Pages deployment — because Pages
+# rate-limits deployments and there is no reason to rebuild twenty models to
+# find out that one post appeared.
+#
+# It also keeps its own small database. It never backfills, so it holds only
+# what has been polled since it started, and it cannot fight `update.yml` over a
+# shared cache entry. The cost is a second poll of the mirror every five
+# minutes, which is two requests.
+#
+# What "instant" is worth here, honestly:
+#
+#   this workflow          5 min cron, plus GitHub's queueing -> 5-20 min
+#   daemon.py locally      TTF_POLL_SECONDS=60                -> about a minute
+#   the ceiling            trumpstruth.org is itself crawling Truth Social, so
+#                          nothing downstream can be fresher than its crawl
+#
+# Every alert carries the post's own timestamp, so the lag is visible rather
+# than something you have to take on trust.
+#
+# Configure at least one channel in Settings -> Secrets -> Actions:
+#   NTFY_TOPIC        ntfy.sh topic — install the app, subscribe, no account
+#   TELEGRAM_TOKEN + TELEGRAM_CHAT_ID
+#   DISCORD_WEBHOOK / SLACK_WEBHOOK / WEBHOOK_URL
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: notify
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  TTF_USER_AGENT: "trump-truth-forecast/0.1 (posting-volume research; +${{ github.server_url }}/${{ github.repository }})"
+
+jobs:
+  poll:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      # requests and selectolax are all the ingest path needs; skipping the
+      # modelling stack takes the install from ~40s to a few seconds.
+      - run: pip install "requests>=2.31" "selectolax>=0.3.21"
+
+      - uses: actions/cache/restore@v4
+        with:
+          path: data/notify.db
+          key: notify-db-${{ github.run_id }}
+          restore-keys: |
+            notify-db-
+
+      - name: Poll and push
+        env:
+          TTF_DB_PATH: data/notify.db
+          TTF_NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          TTF_TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TTF_TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TTF_DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          TTF_SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          TTF_WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+        run: |
+          python -c "
+          import logging; logging.basicConfig(level=logging.INFO)
+          from truthforecast.ingest.run import poll; poll()"
+          python -m truthforecast.notify
+
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: data/notify.db
+          key: notify-db-${{ github.run_id }}

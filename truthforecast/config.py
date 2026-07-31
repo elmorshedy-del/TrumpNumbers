@@ -15,7 +15,10 @@ from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = Path(os.environ.get("TTF_DATA_DIR", ROOT / "data"))
-DB_PATH = DATA_DIR / "posts.db"
+# Overridable on its own, so a process that only wants the ingest path — the
+# notifier, say — can keep a small database of its own instead of sharing the
+# full archive and racing whoever else is writing it.
+DB_PATH = Path(os.environ.get("TTF_DB_PATH", DATA_DIR / "posts.db"))
 EXPORT_DIR = DATA_DIR / "exports"
 SITE_DIR = ROOT / "site"
 
@@ -115,3 +118,4 @@ BACKTEST = BacktestConfig()
 def ensure_dirs() -> None:
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     EXPORT_DIR.mkdir(parents=True, exist_ok=True)
+    DB_PATH.parent.mkdir(parents=True, exist_ok=True)

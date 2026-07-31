@@ -223,6 +223,51 @@ updater has stopped. Freshness is a claim the page has to earn, not one it makes
 To turn it on: **Settings → Pages → Source: GitHub Actions**, then either wait for the schedule or
 run the workflow manually from the Actions tab.
 
+## Getting notified when he posts
+
+`.github/workflows/notify.yml` polls every five minutes and pushes new posts to whichever channel
+you configure. Set one of these as a repository secret (**Settings → Secrets and variables →
+Actions**) and it starts working; anything unset is skipped.
+
+| secret | channel |
+|---|---|
+| `NTFY_TOPIC` | [ntfy.sh](https://ntfy.sh) — install the app, subscribe to the topic, no account needed |
+| `TELEGRAM_TOKEN` + `TELEGRAM_CHAT_ID` | a Telegram bot |
+| `DISCORD_WEBHOOK` / `SLACK_WEBHOOK` | channel webhooks |
+| `WEBHOOK_URL` | anything else — receives the raw JSON |
+
+The first run adopts whatever is already stored and sends nothing, so a fresh database cannot page
+you about last week. After that it is keyed on the mirror's ingest order rather than post
+timestamps — a ReTruth carries the *original* author's date, so a timestamp watermark would either
+miss it or replay months of history. A failed send does not advance the watermark: the next run
+retries, which can duplicate an alert on a channel that did work. For a notifier that is the right
+way round.
+
+Bursts are handled: past five posts in one pass it sends one summary line instead of five
+notifications, which is the difference between an alert and an attack on your phone.
+
+**What "instant" is actually worth here.** Nothing downstream can be fresher than the mirror's own
+crawl of Truth Social, and GitHub's scheduler queues under load:
+
+| running it as | latency |
+|---|---|
+| `notify.yml` on Actions | 5-minute cron, plus GitHub's queueing — realistically 5–20 minutes |
+| `TTF_POLL_SECONDS=60 python daemon.py` on any always-on machine | about a minute |
+| the ceiling | whatever trumpstruth.org's own crawl lag is |
+
+Every alert carries the post's own timestamp, so the lag is visible rather than something you have
+to take on trust. If you want the fast version, run the daemon on a machine that stays up — the
+poll is two requests, so a 60-second loop is nothing.
+
+Run exactly one notifier. Two processes with separate databases keep separate watermarks and will
+both alert you. The secrets are referenced only by `notify.yml`, so the site workflow cannot
+double-send; a local daemon with the same environment variables set will.
+
+```bash
+python -m truthforecast.notify --dry-run   # print what would be sent
+python -m truthforecast.notify --reset     # forget the watermark; next run adopts the present
+```
+
 ## Note
 
 This is a descriptive forecasting exercise about public posting volume. It makes no claims about

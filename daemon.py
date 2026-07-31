@@ -28,6 +28,7 @@ import argparse
 import functools
 import http.server
 import logging
+import os
 import posixpath
 import random
 import socketserver
@@ -39,6 +40,8 @@ from pathlib import Path
 from truthforecast.config import DB_PATH, EXPORT_DIR, SITE_DIR, ensure_dirs
 from truthforecast.ingest.run import backfill, poll, reconcile
 from truthforecast.ingest.store import connect, post_count
+from truthforecast.notify import configured as notify_channels
+from truthforecast.notify import notify
 from truthforecast.pipeline import (
     refresh_backtest,
     refresh_diagnostics,
@@ -49,7 +52,10 @@ from truthforecast.series import load_frame
 
 log = logging.getLogger("daemon")
 
-POLL_SECONDS = 15 * 60
+# Drop this to 60 if you are running it for the notifications rather than the
+# forecast: the poll costs two requests, and the loop's latency is the floor on
+# how fast an alert can reach you.
+POLL_SECONDS = int(os.environ.get("TTF_POLL_SECONDS", 15 * 60))
 DIAGNOSTICS_SECONDS = 60 * 60
 RECONCILE_SECONDS = 24 * 60 * 60
 BACKTEST_SECONDS = 24 * 60 * 60
@@ -99,8 +105,19 @@ def ensure_data() -> None:
         backfill()
 
 
+def push_notifications() -> None:
+    """Never let a notifier failure take the pipeline down with it."""
+    if not notify_channels():
+        return
+    try:
+        notify()
+    except Exception:
+        log.exception("notification pass failed")
+
+
 def one_pass(do_backtest: bool = False, do_reconcile: bool = False) -> None:
     poll()
+    push_notifications()
     if do_reconcile:
         reconcile()
     df = load_frame()
@@ -119,6 +136,7 @@ def loop() -> None:
         now = datetime.now(timezone.utc)
         try:
             poll()
+            push_notifications()
 
             if now - last_reconcile > timedelta(seconds=RECONCILE_SECONDS):
                 reconcile()
