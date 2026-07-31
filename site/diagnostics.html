@@ -100,7 +100,21 @@
 
 <script type="module">
 import { barChart, stemChart, onResize } from "./assets/charts.js";
+import { loadExport } from "./assets/data.js";
 let d;
+
+/* "Variance is 16x the mean" only refutes a single fixed rate, which the weekly
+   cycle refutes on its own. The number that carries the argument is what is left
+   after a Poisson GLM's own assumptions are granted. */
+function renderConditional(cd) {
+  if (!cd || !cd.available || cd.by_weekday === null) return "";
+  return `<p class="small" style="margin-top:10px">Granting a Poisson model everything it
+    normally knows does not rescue it. Rates fitted per weekday still leave
+    <b>${cd.by_weekday}</b> chi-square per degree of freedom, and adding a causal 28-day level
+    leaves <b>${cd.by_weekday_and_level}</b> — against 1.0 for a well-specified Poisson model.
+    So the overdispersion is not the weekly cycle or a drifting level in disguise; it is a
+    property of the process, which is what the Negative Binomial family is here to answer.</p>`;
+}
 
 function render() {
   const dp = d.dispersion, t = d.tail;
@@ -119,7 +133,8 @@ function render() {
     <p style="margin-top:12px">Mean ${dp.mean} posts/day, median ${dp.median}, standard deviation
     ${dp.sd}. A Poisson process at this mean would have a standard deviation of just
     ${dp.poisson_sd}. The dispersion test rejects Poisson with
-    p ${dp.p_value < 1e-10 ? "< 1e-10" : "= " + dp.p_value.toExponential(1)}.</p>`;
+    p ${dp.p_value < 1e-10 ? "< 1e-10" : "= " + dp.p_value.toExponential(1)}.</p>
+    ${renderConditional(d.conditional_dispersion)}`;
 
   document.getElementById("tail").innerHTML = [
     ["Mean ÷ median", `${t.mean_over_median}×`, "1.0 would be symmetric"],
@@ -134,13 +149,35 @@ function render() {
     <td class="num">${x.median}</td><td class="num">${x.sd ?? "—"}</td>
     <td class="num">${x.index_vs_overall}×</td></tr>`).join("");
 
-  const segs = (d.structural_breaks && d.structural_breaks.segments) || [];
-  document.getElementById("breaks").innerHTML = segs.length
+  const sb = d.structural_breaks || {};
+  const segs = sb.segments || [];
+  const wb = d.window_vs_breaks || {};
+  // The segmentation below is produced by a search that was told how many breaks
+  // to find, so it always finds that many. Reporting it without the penalized
+  // count would dress a partition of noise as a discovery.
+  const penalized = sb.n_breaks_penalized;
+  const verdict = penalized === 0
+    ? `<p class="note"><b>None of these breaks survive a penalized search.</b> The table is a
+       segmentation that was told to find ${segs.length ? segs.length - 1 : 0}; when the number is
+       left to the data, it chooses <b>0</b>. Read the rows as a description of drift, not as
+       evidence that the process changed.</p>`
+    : penalized > 0
+      ? `<p class="note">A penalized search — one that must pay for each break it claims — finds
+         <b>${penalized}</b>. That is the count to trust; the table below was told how many to find.</p>`
+      : "";
+
+  document.getElementById("breaks").innerHTML = (segs.length
     ? `<div class="scroll-x"><table><thead><tr><th>Segment</th><th class="num">Weeks</th>
        <th class="num">Mean posts/day</th></tr></thead><tbody>` +
       segs.map((s) => `<tr><td>${s.start} → ${s.end}</td><td class="num">${s.weeks}</td>
         <td class="num">${s.mean_posts_per_day}</td></tr>`).join("") + `</tbody></table></div>`
-    : `<p class="small">No clear regime changes detected inside the current window.</p>`;
+    : `<p class="small">No clear regime changes detected inside the current window.</p>`)
+    + verdict
+    + (wb.most_recent_break && penalized > 0
+      ? `<p class="small">Models here are fitted from ${wb.window_start} — across the break at
+         ${wb.most_recent_break}, ${wb.weeks_since_most_recent_break} weeks ago. That is the
+         practice this window exists to avoid.</p>`
+      : "");
 
   document.querySelector("#bursts tbody").innerHTML = (d.bursts || []).slice(0, 15).map((b) => `
     <tr><td>${b.date}</td><td>${b.dow}</td><td class="num">${b.count}</td>
@@ -185,7 +222,7 @@ function draw() {
 
 (async function () {
   try {
-    d = await (await fetch(`../data/exports/diagnostics.json?t=${Date.now()}`)).json();
+    d = await loadExport("diagnostics.json");
   } catch {
     document.getElementById("dispersion").innerHTML =
       `<b>No diagnostics yet.</b> <span class="small">Run <code>python daemon.py --once</code>.</span>`;
