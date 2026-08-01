@@ -235,6 +235,48 @@ reported elsewhere — there is no local level to condition on.
 
 ---
 
+## 9. The headline measured a week nobody else was measuring
+
+**Was:** Monday–Sunday, original posts only, deleted posts included. Every one of those was
+hardcoded, and together they decided what the number *meant*.
+
+The Kalshi weekly market — the thing people actually quote for this — resolves on Sunday 00:00
+through Saturday 23:59 ET, counting Truths, ReTruths and Quote Truths, excluding deleted posts.
+Three differences, all invisible from the page.
+
+The gap is not cosmetic. On the week of 26 July the site read **97** while the market's week stood
+at **164**, and both were correct about different things. The single day between the two windows —
+Sunday 26 July — was a 57-post day, the loudest in three weeks: the market's week opens with it,
+the site's excluded it. A reader comparing the site's number to a Kalshi bracket would conclude the
+market was mispriced by a factor of two, when in fact 140–159 had already been passed.
+
+**Fixed.** `config.CountConvention` now defaults to the market's definition, and every consumer
+follows it — daily counts, the weekly resample anchor, the week-progress arithmetic, the backtest's
+week boundaries, and the event-level feeds for Hawkes and the partial-day sampler. Setting
+`TTF_WEEK_ANCHOR=MON`, `TTF_INCLUDE_RETRUTHS=0`, `TTF_INCLUDE_DELETED=1` restores the original,
+which is a cleaner measure of original authorship — it just answers a different question.
+
+Counting ReTruths was previously impossible for a good reason: the mirror files them under the
+*original* author's timestamp, so a reshare of a month-old post lands a month back, and counting
+them as filed would credit activity to days on which nothing happened. That is now recoverable.
+`trumpstruth_id` is the mirror's arrival order, so the ids either side of a ReTruth bracket the
+moment it appeared; interpolating the neighbouring originals places the reshare within hours. 72%
+of stored ReTruth dates agree to within a day — he mostly reshares fresh material — and the other
+28% are exactly the ones the stored date gets wrong, one by 420 days.
+
+One landmine this exposed: models index day-of-week pools by `remaining_dows`, which assumed
+position-in-week equalled pandas weekday. Under a Sunday-anchored week they diverge, and a model
+forecasting the week's opening day would have read Monday's history to predict a Sunday.
+`ForecastTask.remaining_dows` now does the mapping.
+
+**What changed, and what did not.** Daily-level conclusions barely moved — mean 18.80 → 18.87,
+median 15 → 15, variance/mean 15.7 → 15.4 — so every finding above survives intact. Weekly figures
+moved, because the boundary moved: the leaderboard is 52 weeks rather than 53, best CRPS 18.24 →
+17.84, and calibration *improved*, with the top model's 80% coverage going 0.728 → **0.799**
+against a nominal 0.80.
+
+---
+
 ## Left alone, deliberately — but you should know
 
 **The backtest runs on revised data.** The series is "what trumpstruth.org says today", not "what

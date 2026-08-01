@@ -25,9 +25,15 @@ class ForecastTask:
     the walk-forward harness is responsible for that, so a model physically
     cannot see the future it is being asked about.
 
-    `cut_dow` is the last *completed* day of the target week (0=Mon..6=Sun),
-    or -1 when the week has not started. `observed` holds that week's counts for
-    days 0..cut_dow.
+    `cut_dow` is the last *completed* POSITION in the target week (0 = the
+    week's first day .. 6 = its last), or -1 when the week has not started.
+    `observed` holds that week's counts for positions 0..cut_dow.
+
+    Position is not the same as weekday once the week can start on a Sunday:
+    under the Kalshi convention position 0 is Sunday (pandas weekday 6), and a
+    model looking up "weekday 0" for the week's opening day would be reading
+    Monday's history to forecast a Sunday. `remaining_dows` does that mapping so
+    no model has to know about it.
     """
 
     history: pd.Series
@@ -37,8 +43,9 @@ class ForecastTask:
 
     @property
     def remaining_dows(self) -> np.ndarray:
-        """Day-of-week indices still to be predicted."""
-        return np.arange(self.cut_dow + 1, 7)
+        """Pandas weekday indices (Mon=0..Sun=6) still to be predicted."""
+        start = int(self.week_start.dayofweek)
+        return np.array([(start + p) % 7 for p in range(self.cut_dow + 1, 7)], dtype=int)
 
     @property
     def observed_total(self) -> int:

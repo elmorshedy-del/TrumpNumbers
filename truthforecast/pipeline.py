@@ -25,7 +25,7 @@ from .forecast import current_week_forecast, headline, threshold_probabilities
 from .ingest.run import backfill, poll, reconcile
 from .ingest.run import coverage as ingest_coverage
 from .models.registry import model_catalog
-from .series import daily_counts, load_frame, modeling_series
+from .series import convention_events, daily_counts, load_frame, modeling_series
 
 log = logging.getLogger(__name__)
 
@@ -84,7 +84,7 @@ def refresh_forecast(df=None) -> dict:
     if series.daily.empty:
         raise RuntimeError("no data — run a backfill first")
 
-    events = df[df["is_retruth"] == 0]
+    events = convention_events(df)
     fc = current_week_forecast(series, events=events)
     ranking = load_ranking()
 

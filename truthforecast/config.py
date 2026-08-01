@@ -66,8 +66,51 @@ class ModelingWindow:
 
 WINDOW = ModelingWindow()
 
-# Week convention for the headline forecast: Monday 00:00 -> Sunday 23:59 local.
-WEEK_START_DOW = 0  # Monday, matching pandas' Monday=0
+@dataclass(frozen=True)
+class CountConvention:
+    """What counts as a post, and where a week starts.
+
+    These were hardcoded, and each of them silently decided what the headline
+    number means. The default now matches the Kalshi weekly market, because a
+    number nobody can compare to the market everyone is quoting is a number
+    that invites exactly the wrong comparison — the site read 97 while the
+    market's week stood at 164, and both were correct about different things.
+
+    Kalshi resolves on: Sunday 00:00 ET through Saturday 23:59 ET, counting
+    Truths, ReTruths and Quote Truths, excluding deleted posts.
+
+    Set TTF_WEEK_ANCHOR=MON / TTF_INCLUDE_RETRUTHS=0 / TTF_INCLUDE_DELETED=1 to
+    recover the original convention. It is not wrong — it is a cleaner measure
+    of *original authorship*. It just answers a different question.
+    """
+
+    # "SUN" -> Sunday..Saturday (Kalshi). "MON" -> Monday..Sunday (original).
+    week_anchor: str = os.environ.get("TTF_WEEK_ANCHOR", "SUN").upper()
+    include_retruths: bool = os.environ.get("TTF_INCLUDE_RETRUTHS", "1") == "1"
+    include_deleted: bool = os.environ.get("TTF_INCLUDE_DELETED", "0") == "1"
+
+    @property
+    def resample_rule(self) -> str:
+        """Pandas anchor for the week's LAST day."""
+        return "W-SAT" if self.week_anchor == "SUN" else "W-SUN"
+
+    @property
+    def start_dow(self) -> int:
+        """Weekday index the week opens on, in pandas terms (Mon=0 .. Sun=6)."""
+        return 6 if self.week_anchor == "SUN" else 0
+
+    @property
+    def label(self) -> str:
+        span = "Sunday–Saturday" if self.week_anchor == "SUN" else "Monday–Sunday"
+        kinds = "all post types" if self.include_retruths else "original posts only"
+        dele = "including deleted" if self.include_deleted else "excluding deleted"
+        return f"{span}, {kinds}, {dele}"
+
+
+CONVENTION = CountConvention()
+
+# Retained for callers that want the raw index; prefer CONVENTION.start_dow.
+WEEK_START_DOW = CONVENTION.start_dow
 
 # Quantiles carried end to end: models emit them, scoring consumes them, the
 # site draws them. Deliberately asymmetric coverage bands (50/80/95).

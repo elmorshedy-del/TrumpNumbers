@@ -18,7 +18,7 @@ from . import partial
 from .config import LOCAL_TZ, N_PREDICTIVE_SAMPLES, QUANTILE_LEVELS
 from .models import ForecastTask
 from .models.registry import build_all_models
-from .series import CountSeries, week_progress
+from .series import CountSeries, days_into_week, week_progress
 
 log = logging.getLogger(__name__)
 
@@ -58,7 +58,9 @@ def current_week_forecast(
     # sampled separately — conditioned on how today has actually gone. See
     # `partial.py` for why neither ignoring nor rescaling it is good enough.
     observed = daily[(daily.index >= monday) & (daily.index <= today)].to_numpy()
-    cut = int(today.dayofweek)
+    # Position within the week, not pandas weekday: under the Sunday-anchored
+    # convention those differ, and the cut indexes position.
+    cut = days_into_week(today)
 
     rest_of_today = np.zeros(n_samples)
     if events is not None and not events.empty:

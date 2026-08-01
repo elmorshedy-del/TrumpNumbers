@@ -26,6 +26,7 @@ import pandas as pd
 from ..config import BACKTEST, QUANTILE_LEVELS, THRESHOLD_PERCENTILES
 from ..models import ForecastTask
 from ..models.registry import REFERENCE_MODEL, build_all_models
+from ..series import days_into_week
 from .scoring import score_forecast
 
 log = logging.getLogger(__name__)
@@ -38,11 +39,17 @@ class BacktestResult:
     holdout_start: pd.Timestamp | None
 
 
-def _week_mondays(daily: pd.Series) -> list[pd.Timestamp]:
+def _week_starts(daily: pd.Series) -> list[pd.Timestamp]:
+    """First day of every complete week in the series, under CONVENTION.
+
+    Anchored on whatever day the convention opens a week — Sunday for the
+    Kalshi week, Monday for the original one — rather than assuming Monday.
+    """
     idx = daily.index
-    mondays = pd.unique(idx - pd.to_timedelta(idx.dayofweek, unit="D"))
+    offsets = np.array([days_into_week(d) for d in idx])
+    starts = pd.unique(idx - pd.to_timedelta(offsets, unit="D"))
     out = []
-    for m in sorted(pd.to_datetime(mondays)):
+    for m in sorted(pd.to_datetime(starts)):
         week = daily[(daily.index >= m) & (daily.index < m + pd.Timedelta(days=7))]
         if len(week) == 7:  # complete weeks only
             out.append(m)
@@ -63,7 +70,7 @@ def run_backtest(
     `events` carries post-level timestamps for models that need them (Hawkes).
     """
     daily = daily.astype(float)
-    mondays = _week_mondays(daily)
+    mondays = _week_starts(daily)
     if len(mondays) <= min_train_weeks:
         raise ValueError(f"need more than {min_train_weeks} complete weeks, have {len(mondays)}")
 
