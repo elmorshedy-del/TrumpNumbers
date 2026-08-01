@@ -141,24 +141,38 @@ jobs:
           path: data/posts.db
           key: posts-db-${{ github.run_id }}
 
-      # Only the nightly pass writes to git. The exports in the repository are
-      # the cold-start seed: after a cache eviction the site still has a
-      # leaderboard to show while the first backfill runs. Committing them every
-      # half hour would add ~50 commits a day to say the same thing.
-      - name: Commit the refreshed exports
-        if: steps.mode.outputs.nightly == 'true'
+      # Two different things go into git, for two different reasons.
+      #
+      # The exports are the cold-start seed: after a cache eviction the site
+      # still has a leaderboard to show while the first backfill runs. Only the
+      # nightly pass writes them — committing them every half hour would add ~50
+      # commits a day to say the same thing.
+      #
+      # `data/live_forecasts.jsonl` is the prospective record, and git is its
+      # only durable home: every run starts from a fresh checkout, so a line
+      # appended and not committed is gone. It has to be written on EVERY pass,
+      # because the forecast it registers is the first one made at each cut and
+      # the nightly pass is not the first. The file only changes when the cut
+      # changes, so this is about one commit a day, not fifty.
+      - name: Commit the record and, nightly, the exports
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/exports
+          git add data/live_forecasts.jsonl 2>/dev/null || true
+          msg="Register the live forecast"
+          if [ "${{ steps.mode.outputs.nightly }}" = "true" ]; then
+            git add data/exports
+            msg="Refresh exports (nightly backtest) and register the live forecast"
+          fi
           if git diff --cached --quiet; then
-            echo "exports unchanged"
+            echo "nothing to commit"
           else
-            git commit -m "Refresh exports (nightly backtest)"
+            git commit -m "$msg"
             git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || true
             # Non-fatal: a protected branch or a race is a reason to skip the
-            # seed update, not a reason to skip publishing the site.
-            git push origin "HEAD:${GITHUB_REF_NAME}" || echo "push refused; exports not seeded"
+            # commit, not a reason to skip publishing the site.
+            git push origin "HEAD:${GITHUB_REF_NAME}" || echo "push refused; record not seeded"
           fi
 
       # The deployed bundle is `site/` with the exports mounted underneath it,

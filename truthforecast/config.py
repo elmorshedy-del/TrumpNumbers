@@ -118,6 +118,15 @@ QUANTILE_LEVELS: tuple[float, ...] = (
     0.025, 0.05, 0.10, 0.25, 0.50, 0.75, 0.90, 0.95, 0.975,
 )
 
+# The grid the *combination* arithmetic runs on. Averaging quantiles across
+# models over the nine published levels alone throws away the shape between
+# them, and — worse — leaves nothing outside 2.5%/97.5% to interpolate against,
+# so any threshold past the outer published quantile reads as an exact 0% or
+# 100%. A week total has no upper bound; a printed 100% is never right.
+COMBINATION_GRID: tuple[float, ...] = tuple(
+    round(v, 5) for v in [i / 1000 for i in range(1, 1000)]
+)
+
 # Threshold events for Brier scoring and the site's "P(at least N)" readouts.
 # Resolved against the empirical weekly distribution at runtime.
 THRESHOLD_PERCENTILES: tuple[float, ...] = (0.50, 0.75, 0.90)
@@ -153,6 +162,19 @@ class BacktestConfig:
     # dilutes CRPS by a seventh, and weakens the calibration test — all of it
     # uniformly across models, so it never shows up as a ranking anomaly.
     cut_days: tuple[int, ...] = field(default=(-1, 0, 1, 2, 3, 4, 5))
+
+    # How many past weeks the live selection rule is allowed to look at before
+    # it is willing to pick. Scored walk-forward as `headline-top3`, so the
+    # number on the front page has a row on its own leaderboard.
+    headline_top_k: int = 3
+    headline_min_weeks: int = 12
+
+    # Every forecast draws from a stream seeded from (model, week, cut), so a
+    # re-run on unchanged data reproduces the leaderboard exactly. Without it
+    # the top twelve models — which span 0.5 CRPS over 52 weeks — reorder
+    # between runs from Monte-Carlo noise alone, and the ordering looks like a
+    # finding. Change the value to measure that noise rather than inherit it.
+    seed: int = int(os.environ.get("TTF_SEED", "20260101"))
 
 
 BACKTEST = BacktestConfig()

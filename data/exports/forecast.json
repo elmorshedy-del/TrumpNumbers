@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-08-01T10:11:14.445561+00:00",
+  "generated_at": "2026-08-01T20:19:45.651776+00:00",
   "coverage": {
-    "posts_stored": 34204,
+    "posts_stored": 34195,
     "earliest_post_utc": "2022-02-14T15:54:00+00:00",
-    "latest_post_utc": "2026-08-01T01:46:40+00:00",
-    "last_poll_utc": "2026-08-01T10:08:28.731758+00:00",
-    "last_poll_attempt_utc": "2026-08-01T10:08:28.731758+00:00",
-    "last_poll_complete": true,
-    "last_reconcile_utc": "2026-08-01T10:08:30.597453+00:00",
-    "last_backfill_utc": "2026-07-31T09:02:17.594720+00:00"
+    "latest_post_utc": "2026-08-01T01:46:00+00:00",
+    "last_poll_utc": null,
+    "last_poll_attempt_utc": null,
+    "last_poll_complete": false,
+    "last_reconcile_utc": null,
+    "last_backfill_utc": "2026-08-01T07:14:03.129248+00:00"
   },
   "window": {
     "start": "2025-01-20",
@@ -18,338 +18,365 @@
   "headline": {
     "models_used": [
       "hier-dow-eb",
-      "negbin-hmm",
-      "negbin-glm-trend"
+      "negbin-glm-trend",
+      "log-sarima"
     ],
-    "median": 180.0,
+    "median": 162.4,
     "interval_50": [
-      173.4,
-      190.1
+      159.8,
+      168.0
     ],
     "interval_80": [
-      170.0,
-      198.7
+      158.6,
+      172.9
     ],
     "interval_95": [
-      167.8,
-      224.6
+      158.0,
+      179.2
     ],
     "quantiles": {
-      "0.025": 167.8,
-      "0.05": 168.7,
-      "0.1": 170.0,
-      "0.25": 173.4,
-      "0.5": 180.0,
-      "0.75": 190.1,
-      "0.9": 198.7,
-      "0.95": 207.0,
-      "0.975": 224.6
+      "0.025": 158.0,
+      "0.05": 158.0,
+      "0.1": 158.6,
+      "0.25": 159.8,
+      "0.5": 162.4,
+      "0.75": 168.0,
+      "0.9": 172.9,
+      "0.95": 178.0,
+      "0.975": 179.2
     },
     "asymmetry": {
-      "downside": 10.0,
-      "upside": 18.7,
+      "downside": 3.8,
+      "upside": 10.5,
       "note": "Upside exceeding downside is the heavy right tail, not a rounding artefact."
     },
-    "week_to_date": 166,
-    "implied_remaining": 14.0
+    "week_to_date": 158,
+    "implied_remaining": 4.4
   },
   "week": {
     "week_start": "2026-07-26",
     "week_end": "2026-08-01",
     "convention": "Sunday\u2013Saturday, all post types, excluding deleted",
     "days_observed": 6,
-    "observed_total": 166,
+    "observed_total": 158,
     "today": "2026-08-01",
     "today_partial_count": 0,
     "today_dow": 5,
     "days_into_week": 6,
     "days_remaining": 0,
-    "week_to_date_including_today": 166
+    "week_to_date_including_today": 158
   },
   "today": {
     "posts_so_far": 0,
-    "share_of_day_elapsed": 0.077,
-    "rest_of_today_median": 14.1,
+    "share_of_day_elapsed": 0.6803,
+    "share_of_posts_elapsed": 0.554,
+    "rest_of_today_median": 3.6,
     "rest_of_today_80": [
-      4.6,
-      32.7
+      0.6,
+      12.5
     ],
-    "method": "Resampled from the days whose posting looked most like today's at this hour. Neither ignores today nor scales it up \u2014 both of those score worse, in opposite halves of the day."
+    "day_total_median": 3.6,
+    "comparable_days": 279.0,
+    "method": "Each model's own distribution for today is conditioned on how today has actually gone, using the days whose posting looked most like it at this exact moment. Neither ignores today nor scales it up \u2014 both of those score worse, in opposite halves of the day. At midnight the conditioning is the identity, so the projection does not jump when the date changes."
   },
   "threshold_probabilities": [
     {
       "threshold": 122.5,
-      "probability": 1.0,
+      "probability": 0.999,
       "soft": true,
-      "note": "estimated in the tail \u2014 treat as approximate"
+      "bounded": true,
+      "note": "outside the sampled range \u2014 the honest statement is >99.9%",
+      "models_used": [
+        "hier-dow-eb",
+        "negbin-glm-trend",
+        "log-sarima"
+      ]
     },
     {
       "threshold": 156.2,
-      "probability": 1.0,
+      "probability": 0.999,
       "soft": true,
-      "note": "estimated in the tail \u2014 treat as approximate"
+      "bounded": true,
+      "note": "outside the sampled range \u2014 the honest statement is >99.9%",
+      "models_used": [
+        "hier-dow-eb",
+        "negbin-glm-trend",
+        "log-sarima"
+      ]
     },
     {
       "threshold": 193.3,
-      "probability": 0.194,
-      "soft": false,
-      "note": ""
+      "probability": 0.006,
+      "soft": true,
+      "bounded": false,
+      "note": "estimated in the tail \u2014 treat as approximate",
+      "models_used": [
+        "hier-dow-eb",
+        "negbin-glm-trend",
+        "log-sarima"
+      ]
     }
   ],
+  "live_record": {
+    "available": false,
+    "n_forecasts": 1,
+    "n_scored": 0,
+    "note": "forecasts are logged but no logged week has closed yet"
+  },
   "per_model": [
     {
       "model": "empirical-dow",
       "family": "baseline",
-      "median": 180.0,
-      "mean": 183.7,
+      "median": 161.3,
+      "mean": 163.7,
       "quantiles": {
-        "0.025": 167.8,
-        "0.05": 168.7,
-        "0.1": 170.0,
-        "0.25": 173.4,
-        "0.5": 180.0,
-        "0.75": 190.1,
-        "0.9": 198.7,
-        "0.95": 207.0,
-        "0.975": 224.6
+        "0.025": 158.0,
+        "0.05": 158.0,
+        "0.1": 158.0,
+        "0.25": 159.8,
+        "0.5": 161.3,
+        "0.75": 165.9,
+        "0.9": 172.9,
+        "0.95": 178.2,
+        "0.975": 183.2
       }
     },
     {
       "model": "empirical-dow-8w",
       "family": "baseline",
-      "median": 180.0,
-      "mean": 183.7,
+      "median": 163.0,
+      "mean": 162.9,
       "quantiles": {
-        "0.025": 167.8,
-        "0.05": 168.7,
-        "0.1": 170.0,
-        "0.25": 173.4,
-        "0.5": 180.0,
-        "0.75": 190.1,
-        "0.9": 198.7,
-        "0.95": 207.0,
-        "0.975": 224.6
+        "0.025": 158.0,
+        "0.05": 158.0,
+        "0.1": 158.0,
+        "0.25": 160.9,
+        "0.5": 163.0,
+        "0.75": 165.9,
+        "0.9": 169.0,
+        "0.95": 169.0,
+        "0.975": 169.0
       }
     },
     {
       "model": "last-week",
       "family": "baseline",
-      "median": 180.0,
-      "mean": 183.7,
+      "median": 161.6,
+      "mean": 163.6,
       "quantiles": {
-        "0.025": 167.8,
-        "0.05": 168.7,
-        "0.1": 170.0,
-        "0.25": 173.4,
-        "0.5": 180.0,
-        "0.75": 190.1,
-        "0.9": 198.7,
-        "0.95": 207.0,
-        "0.975": 224.6
+        "0.025": 158.0,
+        "0.05": 158.0,
+        "0.1": 158.6,
+        "0.25": 159.8,
+        "0.5": 161.6,
+        "0.75": 165.2,
+        "0.9": 170.3,
+        "0.95": 173.9,
+        "0.975": 179.8
       }
     },
     {
       "model": "trailing-median-4w",
       "family": "baseline",
-      "median": 180.0,
-      "mean": 183.7,
+      "median": 161.6,
+      "mean": 163.6,
       "quantiles": {
-        "0.025": 167.8,
-        "0.05": 168.7,
-        "0.1": 170.0,
-        "0.25": 173.4,
-        "0.5": 180.0,
-        "0.75": 190.1,
-        "0.9": 198.7,
-        "0.95": 207.0,
-        "0.975": 224.6
+        "0.025": 158.0,
+        "0.05": 158.0,
+        "0.1": 158.6,
+        "0.25": 159.8,
+        "0.5": 161.6,
+        "0.75": 165.2,
+        "0.9": 170.3,
+        "0.95": 174.0,
+        "0.975": 179.8
       }
     },
     {
       "model": "block-bootstrap",
       "family": "resampling",
-      "median": 180.0,
-      "mean": 183.7,
+      "median": 161.6,
+      "mean": 163.6,
       "quantiles": {
-        "0.025": 167.8,
-        "0.05": 168.7,
-        "0.1": 170.0,
-        "0.25": 173.4,
-        "0.5": 180.0,
-        "0.75": 190.1,
-        "0.9": 198.7,
-        "0.95": 207.0,
-        "0.975": 224.6
+        "0.025": 158.0,
+        "0.05": 158.0,
+        "0.1": 158.6,
+        "0.25": 159.8,
+        "0.5": 161.6,
+        "0.75": 165.2,
+        "0.9": 170.3,
+        "0.95": 173.9,
+        "0.975": 182.7
       }
     },
     {
       "model": "iid-day-bootstrap",
       "family": "resampling",
-      "median": 180.0,
-      "mean": 183.7,
+      "median": 161.6,
+      "mean": 163.7,
       "quantiles": {
-        "0.025": 167.8,
-        "0.05": 168.7,
-        "0.1": 170.0,
-        "0.25": 173.4,
-        "0.5": 180.0,
-        "0.75": 190.1,
-        "0.9": 198.7,
-        "0.95": 207.0,
-        "0.975": 224.6
+        "0.025": 158.0,
+        "0.05": 158.0,
+        "0.1": 158.6,
+        "0.25": 159.8,
+        "0.5": 161.6,
+        "0.75": 165.2,
+        "0.9": 170.4,
+        "0.95": 174.2,
+        "0.975": 181.7
       }
     },
     {
       "model": "poisson-glm",
       "family": "count-glm",
-      "median": 180.0,
-      "mean": 183.7,
+      "median": 163.0,
+      "mean": 163.4,
       "quantiles": {
-        "0.025": 167.8,
-        "0.05": 168.7,
-        "0.1": 170.0,
-        "0.25": 173.4,
-        "0.5": 180.0,
-        "0.75": 190.1,
-        "0.9": 198.7,
-        "0.95": 207.0,
-        "0.975": 224.6
+        "0.025": 160.0,
+        "0.05": 160.9,
+        "0.1": 161.0,
+        "0.25": 162.0,
+        "0.5": 163.0,
+        "0.75": 164.9,
+        "0.9": 166.0,
+        "0.95": 167.3,
+        "0.975": 168.5
       }
     },
     {
       "model": "negbin-glm",
       "family": "count-glm",
-      "median": 180.0,
-      "mean": 183.7,
+      "median": 162.2,
+      "mean": 163.7,
       "quantiles": {
-        "0.025": 167.8,
-        "0.05": 168.7,
-        "0.1": 170.0,
-        "0.25": 173.4,
-        "0.5": 180.0,
-        "0.75": 190.1,
-        "0.9": 198.7,
-        "0.95": 207.0,
-        "0.975": 224.6
+        "0.025": 158.0,
+        "0.05": 158.0,
+        "0.1": 158.6,
+        "0.25": 159.8,
+        "0.5": 162.2,
+        "0.75": 166.3,
+        "0.9": 170.8,
+        "0.95": 173.3,
+        "0.975": 177.5
       }
     },
     {
       "model": "negbin-glm-trend",
       "family": "count-glm",
-      "median": 180.0,
-      "mean": 183.7,
+      "median": 163.0,
+      "mean": 165.0,
       "quantiles": {
-        "0.025": 167.8,
-        "0.05": 168.7,
-        "0.1": 170.0,
-        "0.25": 173.4,
-        "0.5": 180.0,
-        "0.75": 190.1,
-        "0.9": 198.7,
-        "0.95": 207.0,
-        "0.975": 224.6
+        "0.025": 158.0,
+        "0.05": 158.0,
+        "0.1": 158.9,
+        "0.25": 160.0,
+        "0.5": 163.0,
+        "0.75": 168.8,
+        "0.9": 172.9,
+        "0.95": 177.5,
+        "0.975": 178.4
       }
     },
     {
       "model": "zip-glm",
       "family": "count-glm",
-      "median": 180.0,
-      "mean": 183.7,
+      "median": 163.0,
+      "mean": 163.5,
       "quantiles": {
-        "0.025": 167.8,
-        "0.05": 168.7,
-        "0.1": 170.0,
-        "0.25": 173.4,
-        "0.5": 180.0,
-        "0.75": 190.1,
-        "0.9": 198.7,
-        "0.95": 207.0,
-        "0.975": 224.6
+        "0.025": 160.0,
+        "0.05": 160.9,
+        "0.1": 161.0,
+        "0.25": 162.2,
+        "0.5": 163.0,
+        "0.75": 164.9,
+        "0.9": 166.0,
+        "0.95": 167.3,
+        "0.975": 168.5
       }
     },
     {
       "model": "zinb-glm",
       "family": "count-glm",
-      "median": 180.0,
-      "mean": 183.7,
+      "median": 162.2,
+      "mean": 163.8,
       "quantiles": {
-        "0.025": 167.8,
-        "0.05": 168.7,
-        "0.1": 170.0,
-        "0.25": 173.4,
-        "0.5": 180.0,
-        "0.75": 190.1,
-        "0.9": 198.7,
-        "0.95": 207.0,
-        "0.975": 224.6
+        "0.025": 158.0,
+        "0.05": 158.0,
+        "0.1": 158.6,
+        "0.25": 159.8,
+        "0.5": 162.2,
+        "0.75": 166.3,
+        "0.9": 170.8,
+        "0.95": 174.6,
+        "0.975": 178.2
       }
     },
     {
       "model": "hier-dow-eb",
       "family": "shrinkage",
-      "median": 180.0,
-      "mean": 183.7,
+      "median": 162.0,
+      "mean": 164.4,
       "quantiles": {
-        "0.025": 167.8,
-        "0.05": 168.7,
-        "0.1": 170.0,
-        "0.25": 173.4,
-        "0.5": 180.0,
-        "0.75": 190.1,
-        "0.9": 198.7,
-        "0.95": 207.0,
-        "0.975": 224.6
+        "0.025": 158.0,
+        "0.05": 158.0,
+        "0.1": 158.0,
+        "0.25": 159.4,
+        "0.5": 162.0,
+        "0.75": 168.5,
+        "0.9": 173.3,
+        "0.95": 178.3,
+        "0.975": 179.4
       }
     },
     {
       "model": "ingarch",
       "family": "dynamics",
-      "median": 180.0,
-      "mean": 183.7,
+      "median": 161.6,
+      "mean": 163.7,
       "quantiles": {
-        "0.025": 167.8,
-        "0.05": 168.7,
-        "0.1": 170.0,
-        "0.25": 173.4,
-        "0.5": 180.0,
-        "0.75": 190.1,
-        "0.9": 198.7,
-        "0.95": 207.0,
-        "0.975": 224.6
+        "0.025": 158.0,
+        "0.05": 158.0,
+        "0.1": 158.6,
+        "0.25": 160.0,
+        "0.5": 161.6,
+        "0.75": 165.2,
+        "0.9": 170.3,
+        "0.95": 174.1,
+        "0.975": 182.9
       }
     },
     {
       "model": "log-sarima",
       "family": "dynamics",
-      "median": 180.0,
-      "mean": 183.7,
+      "median": 162.1,
+      "mean": 164.7,
       "quantiles": {
-        "0.025": 167.8,
-        "0.05": 168.7,
-        "0.1": 170.0,
-        "0.25": 173.4,
-        "0.5": 180.0,
-        "0.75": 190.1,
-        "0.9": 198.7,
-        "0.95": 207.0,
-        "0.975": 224.6
+        "0.025": 158.0,
+        "0.05": 158.0,
+        "0.1": 158.8,
+        "0.25": 160.0,
+        "0.5": 162.1,
+        "0.75": 166.7,
+        "0.9": 172.5,
+        "0.95": 178.2,
+        "0.975": 179.8
       }
     },
     {
       "model": "poisson-hmm",
       "family": "regime",
-      "median": 180.0,
-      "mean": 183.7,
+      "median": 162.8,
+      "mean": 164.8,
       "quantiles": {
-        "0.025": 167.8,
-        "0.05": 168.7,
-        "0.1": 170.0,
-        "0.25": 173.4,
-        "0.5": 180.0,
-        "0.75": 190.1,
-        "0.9": 198.7,
-        "0.95": 207.0,
-        "0.975": 224.6
+        "0.025": 159.8,
+        "0.05": 160.0,
+        "0.1": 160.9,
+        "0.25": 161.3,
+        "0.5": 162.8,
+        "0.75": 164.9,
+        "0.9": 178.2,
+        "0.95": 178.4,
+        "0.975": 179.2
       },
       "detail": {
         "state_rates": [
@@ -369,18 +396,18 @@
     {
       "model": "negbin-hmm",
       "family": "regime",
-      "median": 180.0,
-      "mean": 183.7,
+      "median": 162.2,
+      "mean": 165.3,
       "quantiles": {
-        "0.025": 167.8,
-        "0.05": 168.7,
-        "0.1": 170.0,
-        "0.25": 173.4,
-        "0.5": 180.0,
-        "0.75": 190.1,
-        "0.9": 198.7,
-        "0.95": 207.0,
-        "0.975": 224.6
+        "0.025": 158.0,
+        "0.05": 158.6,
+        "0.1": 158.9,
+        "0.25": 160.0,
+        "0.5": 162.2,
+        "0.75": 167.3,
+        "0.9": 172.9,
+        "0.95": 178.3,
+        "0.975": 187.1
       },
       "detail": {
         "state_rates": [
@@ -403,18 +430,18 @@
     {
       "model": "hawkes",
       "family": "self-exciting",
-      "median": 180.0,
-      "mean": 183.7,
+      "median": 161.6,
+      "mean": 163.7,
       "quantiles": {
-        "0.025": 167.8,
-        "0.05": 168.7,
-        "0.1": 170.0,
-        "0.25": 173.4,
-        "0.5": 180.0,
-        "0.75": 190.1,
-        "0.9": 198.7,
-        "0.95": 207.0,
-        "0.975": 224.6
+        "0.025": 158.0,
+        "0.05": 158.0,
+        "0.1": 158.6,
+        "0.25": 159.8,
+        "0.5": 161.6,
+        "0.75": 165.2,
+        "0.9": 170.3,
+        "0.95": 174.1,
+        "0.975": 183.1
       },
       "detail": {
         "fitted": true,
@@ -427,74 +454,74 @@
     {
       "model": "lgbm-quantile",
       "family": "ml",
-      "median": 180.0,
-      "mean": 183.7,
+      "median": 161.6,
+      "mean": 163.6,
       "quantiles": {
-        "0.025": 167.8,
-        "0.05": 168.7,
-        "0.1": 170.0,
-        "0.25": 173.4,
-        "0.5": 180.0,
-        "0.75": 190.1,
-        "0.9": 198.7,
-        "0.95": 207.0,
-        "0.975": 224.6
+        "0.025": 158.0,
+        "0.05": 158.0,
+        "0.1": 158.6,
+        "0.25": 159.8,
+        "0.5": 161.6,
+        "0.75": 165.2,
+        "0.9": 170.3,
+        "0.95": 174.1,
+        "0.975": 181.2
       }
     },
     {
       "model": "ensemble-pool",
       "family": "ensemble",
-      "median": 180.0,
-      "mean": 183.7,
+      "median": 161.6,
+      "mean": 163.7,
       "quantiles": {
-        "0.025": 167.8,
-        "0.05": 168.7,
-        "0.1": 170.0,
-        "0.25": 173.4,
-        "0.5": 180.0,
-        "0.75": 190.1,
-        "0.9": 198.7,
-        "0.95": 207.0,
-        "0.975": 224.6
+        "0.025": 158.0,
+        "0.05": 158.0,
+        "0.1": 158.6,
+        "0.25": 159.8,
+        "0.5": 161.6,
+        "0.75": 165.2,
+        "0.9": 170.3,
+        "0.95": 174.2,
+        "0.975": 180.5
       }
     },
     {
       "model": "ensemble-vincent",
       "family": "ensemble",
-      "median": 180.0,
-      "mean": 183.7,
+      "median": 161.6,
+      "mean": 163.6,
       "quantiles": {
-        "0.025": 167.8,
-        "0.05": 168.7,
-        "0.1": 170.0,
-        "0.25": 173.4,
-        "0.5": 180.0,
-        "0.75": 190.1,
-        "0.9": 198.7,
-        "0.95": 207.0,
-        "0.975": 224.6
+        "0.025": 158.0,
+        "0.05": 158.0,
+        "0.1": 158.6,
+        "0.25": 159.8,
+        "0.5": 161.6,
+        "0.75": 165.2,
+        "0.9": 170.2,
+        "0.95": 173.6,
+        "0.975": 182.4
       }
     }
   ],
   "ranking": [
     "hier-dow-eb",
-    "negbin-hmm",
     "negbin-glm-trend",
-    "ensemble-vincent",
-    "ensemble-pool",
     "log-sarima",
-    "negbin-glm",
-    "zinb-glm",
+    "negbin-hmm",
     "poisson-hmm",
+    "ensemble-pool",
+    "ensemble-vincent",
+    "zinb-glm",
+    "negbin-glm",
     "iid-day-bootstrap",
     "empirical-dow",
-    "trailing-median-4w",
     "block-bootstrap",
-    "ingarch",
-    "empirical-dow-8w",
+    "trailing-median-4w",
     "hawkes",
-    "poisson-glm",
+    "empirical-dow-8w",
+    "ingarch",
     "zip-glm",
+    "poisson-glm",
     "lgbm-quantile",
     "last-week"
   ],
@@ -826,12 +853,12 @@
     },
     {
       "date": "2026-07-27",
-      "count": 41,
+      "count": 37,
       "dow": 0
     },
     {
       "date": "2026-07-28",
-      "count": 50,
+      "count": 49,
       "dow": 1
     },
     {
@@ -841,12 +868,12 @@
     },
     {
       "date": "2026-07-30",
-      "count": 6,
+      "count": 4,
       "dow": 3
     },
     {
       "date": "2026-07-31",
-      "count": 8,
+      "count": 7,
       "dow": 4
     }
   ],

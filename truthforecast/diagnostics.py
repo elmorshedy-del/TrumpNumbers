@@ -10,8 +10,8 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
-from .config import WINDOW
-from .series import DAY_NAMES, CountSeries
+from .config import CONVENTION, WINDOW
+from .series import DAY_NAMES, CountSeries, convention_events
 
 
 def conditional_dispersion(series: CountSeries) -> dict:
@@ -282,9 +282,12 @@ def structural_breaks(series: CountSeries, max_breaks: int = 4) -> dict:
         return {"available": True, "breaks": [], "note": "series too short"}
 
     # Smooth to weekly means first: daily counts are so noisy that a daily-level
-    # changepoint search finds bursts rather than regimes.
-    weekly = series.daily.resample("W-SUN").mean().to_numpy(dtype=float)
-    weekly_index = series.daily.resample("W-SUN").mean().index
+    # changepoint search finds bursts rather than regimes. The weeks are the
+    # convention's weeks, so a break lands on a boundary the rest of the project
+    # recognises.
+    resampled = series.daily.resample(CONVENTION.resample_rule).mean()
+    weekly = resampled.to_numpy(dtype=float)
+    weekly_index = resampled.index
 
     signal = np.log1p(weekly).reshape(-1, 1)
     algo = rpt.Binseg(model="l2").fit(signal)
@@ -398,10 +401,13 @@ def detect_bursts(df: pd.DataFrame, series: CountSeries, top_n: int = 25) -> lis
     thresh = float(d.quantile(0.90))
     heavy = d[d >= max(thresh, 1)].sort_values(ascending=False).head(top_n)
 
-    originals = df[df["is_retruth"] == 0]
+    # The same posts the counts are built from. Describing a heavy day using
+    # only originals, when the count that made it heavy includes ReTruths,
+    # explains the day with a subset of what happened in it.
+    counted = convention_events(df)
     out = []
     for date, count in heavy.items():
-        day_posts = originals[originals["local_date"] == date]
+        day_posts = counted[counted["local_date"] == date]
         out.append(
             {
                 "date": date.date().isoformat(),
@@ -446,9 +452,13 @@ def _keywords(texts: list[str], top: int = 8) -> list[str]:
 
 
 def hourly_profile(df: pd.DataFrame) -> list[int]:
-    """Posts by local hour — the circadian background the Hawkes model needs."""
-    originals = df[df["is_retruth"] == 0]
-    counts = originals.groupby("hour").size().reindex(range(24), fill_value=0)
+    """Posts by local hour — the circadian background the Hawkes model needs.
+
+    Built from the posts the convention counts, which is what the Hawkes fit is
+    actually given. A profile drawn from a different population than the model
+    consumes describes neither.
+    """
+    counts = convention_events(df).groupby("hour").size().reindex(range(24), fill_value=0)
     return [int(v) for v in counts.to_numpy()]
 
 

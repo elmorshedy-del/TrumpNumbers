@@ -10,7 +10,37 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
+from ..config import CONVENTION
 from .base import DailyModel, ForecastTask, Model
+
+
+def _week_starts(index: pd.DatetimeIndex) -> pd.DatetimeIndex:
+    """The first day of each day's own week, under the counting convention.
+
+    Every one of these models used to anchor on Monday — `resample("W-SUN")`,
+    or subtracting `dayofweek` — while the week being forecast runs Sunday to
+    Saturday. "Last week's total" was then a Monday-to-Sunday total offset one
+    day from the target, and the block bootstrap resampled a Monday-anchored
+    block to stand in for a Sunday-anchored one. Off-by-one-day, on every week,
+    silently.
+    """
+    dow = index.dayofweek.to_numpy()
+    into = (dow + 1) % 7 if CONVENTION.week_anchor == "SUN" else dow
+    return index - pd.to_timedelta(into, unit="D")
+
+
+def _complete_week_totals(history: pd.Series) -> np.ndarray:
+    """Totals of the whole weeks inside `history`, convention-anchored.
+
+    Partial weeks at either end are dropped rather than reported as a sudden
+    collapse in volume — the same reason `CountSeries.complete_weeks` exists.
+    """
+    if history.empty:
+        return np.array([], dtype=float)
+    starts = _week_starts(history.index)
+    frame = pd.DataFrame({"v": history.to_numpy(dtype=float), "start": starts})
+    by_week = frame.groupby("start").agg(total=("v", "sum"), k=("v", "size"))
+    return by_week[by_week["k"] == 7]["total"].to_numpy(dtype=float)
 
 
 class EmpiricalDayModel(DailyModel):
@@ -40,7 +70,7 @@ class EmpiricalDayModel(DailyModel):
         self.fallback = vals if len(vals) else np.array([0.0])
         return self
 
-    def sample_days(self, dows: np.ndarray, n: int) -> np.ndarray:
+    def sample_days(self, dows: np.ndarray, n: int, dates=None) -> np.ndarray:
         out = np.empty((n, len(dows)))
         for j, d in enumerate(dows):
             pool = self.pools.get(int(d))
@@ -83,11 +113,9 @@ class LastWeekModel(Model):
         self.dow_share = np.full(7, 1 / 7)
 
     def fit(self, history: pd.Series) -> "LastWeekModel":
-        weekly = history.resample("W-SUN").sum()
-        weekly = weekly.iloc[1:-1] if len(weekly) > 2 else weekly
-        vals = weekly.to_numpy(dtype=float)
+        vals = _complete_week_totals(history)
         self.deltas = np.diff(vals) if len(vals) > 1 else np.array([0.0])
-        self.last_total = float(vals[-1]) if len(vals) else 0.0
+        self.last_total = float(vals[-1]) if len(vals) else float(history.sum())
 
         by_dow = history.groupby(history.index.dayofweek).mean()
         by_dow = by_dow.reindex(range(7)).fillna(by_dow.mean() if len(by_dow) else 0.0)
@@ -123,9 +151,7 @@ class TrailingMedianModel(Model):
         self.dow_share = np.full(7, 1 / 7)
 
     def fit(self, history: pd.Series) -> "TrailingMedianModel":
-        weekly = history.resample("W-SUN").sum()
-        weekly = weekly.iloc[1:-1] if len(weekly) > 2 else weekly
-        vals = weekly.to_numpy(dtype=float)
+        vals = _complete_week_totals(history)
         self.pool = vals[-self.weeks:] if len(vals) else np.array([0.0])
 
         by_dow = history.groupby(history.index.dayofweek).mean()
@@ -186,11 +212,14 @@ class BlockBootstrapModel(Model):
             return np.array([0.0])
         idx_dow = h.index.dayofweek.to_numpy()
         vals = h.to_numpy(dtype=float)
-        # Group by the Monday of each day's week, then sum the requested dows.
-        mondays = h.index - pd.to_timedelta(idx_dow, unit="D")
-        frame = pd.DataFrame({"v": vals, "dow": idx_dow, "monday": mondays})
+        # Group by the first day of each day's own week — under the counting
+        # convention, not on a hardcoded Monday — then sum the requested
+        # weekdays. The whole point of the block is that it is a real,
+        # contiguous stretch of one historical week; anchored a day off, it is a
+        # stretch that straddles two.
+        frame = pd.DataFrame({"v": vals, "dow": idx_dow, "week": _week_starts(h.index)})
         wanted = frame[frame["dow"].isin(set(int(d) for d in dows))]
-        by_week = wanted.groupby("monday").agg(total=("v", "sum"), k=("v", "size"))
+        by_week = wanted.groupby("week").agg(total=("v", "sum"), k=("v", "size"))
         complete = by_week[by_week["k"] == len(dows)]["total"].to_numpy(dtype=float)
         return complete if len(complete) else np.array([float(vals.mean() * len(dows))])
 

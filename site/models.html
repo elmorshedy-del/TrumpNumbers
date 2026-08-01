@@ -69,11 +69,25 @@
     </figure>
   </div>
 
+  <h2>The number on the front page, scored</h2>
+  <p class="small">The tracker does not show a model. It shows a rule — average the top three of
+  this leaderboard, quantile-wise — and until now that composite appeared on no row of the board it
+  was built from. Its members' scores are not its score: a combination can be worse than its best
+  member. So the rule is replayed week by week, choosing its models using only weeks that had
+  already closed, and graded like everything else.</p>
+  <div class="card" id="deployed"></div>
+
   <h2>Does the forecast improve as the week unfolds?</h2>
   <div class="card">
-    <p class="small">Mean CRPS by the day you ask on, for the top models. Monday is a forecast of
-    a week that has barely started; Saturday is a forecast with six days already banked.</p>
+    <p class="small">Mean CRPS by how much of the week was already banked when the forecast was
+    made — from nothing at all, which is what the tracker shows for a seventh of every week, to six
+    days done. Most of the drop across this row is the calendar handing over the answer, not a model
+    getting cleverer, so the second table divides out climatology at the same cut. That is the
+    comparison that isolates the model.</p>
     <div class="scroll-x"><table id="cuts"><thead><tr><th>Model</th></tr></thead><tbody></tbody></table></div>
+    <p class="small" style="margin-top:18px"><b>Skill against climatology, at each cut.</b>
+    Positive is better than resampling history; 0 is indistinguishable from it.</p>
+    <div class="scroll-x"><table id="skillcuts"><thead><tr><th>Model</th></tr></thead><tbody></tbody></table></div>
   </div>
 
   <h2>Held-out weeks</h2>
@@ -137,16 +151,49 @@ function render() {
     <td>${pill(r.pit_calibrated)}</td></tr>`).join("")
     || `<tr><td colspan="5" class="small">No holdout segment yet.</td></tr>`;
 
-  // CRPS by cut
-  const cuts = rep.crps_by_cut || {};
-  const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  const head = document.querySelector("#cuts thead tr");
-  head.innerHTML = "<th>Model</th>" + days.map((d) => `<th class="num">${d}</th>`).join("");
-  document.querySelector("#cuts tbody").innerHTML = board.slice(0, 8).map((r) => {
-    const row = cuts[r.model] || {};
-    return `<tr><td>${r.model}</td>` + days.map((_, i) =>
-      `<td class="num">${row[String(i)] != null ? row[String(i)].toFixed(1) : "—"}</td>`).join("") + "</tr>";
-  }).join("");
+  // The deployed rule, scored against the models it is built from.
+  const dep = rep.deployed_rule || {};
+  document.getElementById("deployed").innerHTML = dep.deployed
+    ? `<div class="grid c3">
+         <div class="tile"><div class="label">Deployed rule (${dep.deployed})</div>
+           <div class="num">${dep.crps.toFixed(2)}</div>
+           <div class="sub">CRPS over ${dep.n_weeks} weeks from ${dep.weeks_from}</div></div>
+         <div class="tile"><div class="label">Best single model, same weeks</div>
+           <div class="num">${dep.best_single_model_crps.toFixed(2)}</div>
+           <div class="sub">${dep.best_single_model_on_same_weeks}</div></div>
+         <div class="tile"><div class="label">80% interval covered</div>
+           <div class="num">${(dep.coverage80 * 100).toFixed(0)}%</div>
+           <div class="sub">nominal 80% · width ${dep.width80.toFixed(0)}</div></div>
+       </div>
+       <div class="scroll-x"><table style="margin-top:14px"><thead><tr>
+         <th>Selection rule</th><th class="num">CRPS</th><th class="num">Skill</th>
+         <th class="num">80% coverage</th><th class="num">Width</th><th></th>
+       </tr></thead><tbody>${(dep.candidates || []).map((c) => `
+         <tr><td>${c.rule}</td><td class="num">${c.crps.toFixed(2)}</td>
+         <td class="num">${(c.crps_skill_vs_climatology * 100).toFixed(1)}%</td>
+         <td class="num">${(c.coverage80 * 100).toFixed(0)}%</td>
+         <td class="num">${c.width80.toFixed(0)}</td>
+         <td>${c.deployed ? `<span class="pill good">on the front page</span>` : ""}</td></tr>`
+       ).join("")}</tbody></table></div>
+       <p class="small" style="margin-top:12px">${dep.note}</p>`
+    : `<p class="small">Not enough closed weeks yet to replay the selection rule.</p>`;
+
+  // CRPS by cut. Columns are POSITIONS in the week, named by the export so the
+  // page cannot disagree with the counting convention about which day is which.
+  const labels = rep.cut_labels || {};
+  const cutKeys = (rep.cut_days || []).map(String);
+  const cutTable = (sel, data, fmt) => {
+    const head = document.querySelector(`${sel} thead tr`);
+    head.innerHTML = "<th>Model</th>" +
+      cutKeys.map((c) => `<th class="num">${labels[c] || c}</th>`).join("");
+    document.querySelector(`${sel} tbody`).innerHTML = board.slice(0, 8).map((r) => {
+      const row = (data || {})[r.model] || {};
+      return `<tr><td>${r.model}</td>` + cutKeys.map((c) =>
+        `<td class="num">${row[c] != null ? fmt(row[c]) : "—"}</td>`).join("") + "</tr>";
+    }).join("");
+  };
+  cutTable("#cuts", rep.crps_by_cut, (v) => v.toFixed(1));
+  cutTable("#skillcuts", rep.skill_by_cut, (v) => `${(v * 100).toFixed(1)}%`);
 
   document.getElementById("catalog").innerHTML = board.map((r) => `
     <details><summary>${r.model} <span class="small">— ${r.family}</span></summary>

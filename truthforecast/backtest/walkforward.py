@@ -16,13 +16,15 @@ you actually have on a Wednesday: where does this week finish?
 
 from __future__ import annotations
 
+import hashlib
 import logging
 import time
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 import numpy as np
 import pandas as pd
 
+from .. import combine
 from ..config import BACKTEST, QUANTILE_LEVELS, THRESHOLD_PERCENTILES
 from ..models import ForecastTask
 from ..models.registry import REFERENCE_MODEL, build_all_models
@@ -32,11 +34,29 @@ from .scoring import score_forecast
 log = logging.getLogger(__name__)
 
 
+def _stable_seed(*parts) -> int:
+    """A seed derived from what the forecast IS, not from when it was made.
+
+    Seeding once at the top of the run would make the whole thing reproducible
+    but order-dependent: one model failing to fit shifts every later draw, so an
+    unrelated change reshuffles the board. Keying on (model, week, cut) instead
+    means each forecast is independently reproducible, and adding or removing a
+    model leaves every other model's numbers untouched — which is what makes a
+    before/after comparison of a fix mean anything.
+    """
+    key = "|".join(str(p) for p in parts).encode()
+    return int.from_bytes(hashlib.blake2b(key, digest_size=4).digest(), "big")
+
+
 @dataclass
 class BacktestResult:
     rows: pd.DataFrame
     thresholds: list[float]
     holdout_start: pd.Timestamp | None
+    # (week, cut) -> {model: dense quantile curve}. Kept in memory rather than
+    # exported: it is what lets the deployed selection rule be replayed and
+    # scored after the fact, without re-running every model.
+    curves: dict = field(default_factory=dict)
 
 
 def _week_starts(daily: pd.Series) -> list[pd.Timestamp]:
@@ -64,10 +84,18 @@ def run_backtest(
     embargo_days: int = BACKTEST.embargo_days,
     max_weeks: int | None = None,
     progress: bool = True,
+    seed: int = BACKTEST.seed,
 ) -> BacktestResult:
     """Score every model on every (week, cut) pair.
 
     `events` carries post-level timestamps for models that need them (Hawkes).
+
+    Every draw runs from a stream seeded on (model, week, cut), so re-running on
+    unchanged data reproduces the leaderboard exactly. That is not tidiness: the
+    top twelve models sit inside half a CRPS point of each other, which is well
+    under the Monte-Carlo spread of 4,000 samples, so an unseeded board reorders
+    itself between runs and the ordering reads as a result. Vary `seed` to
+    measure that spread deliberately instead of inheriting it.
     """
     daily = daily.astype(float)
     mondays = _week_starts(daily)
@@ -87,6 +115,7 @@ def run_backtest(
     models = build_all_models()
     fitted_at: dict[str, int] = {}
     rows = []
+    curves: dict = {}
     t_start = time.time()
 
     for wi, monday in enumerate(test_mondays):
@@ -103,6 +132,7 @@ def run_backtest(
             last = fitted_at.get(model.name)
             if last is None or (wi - last) >= model.refit_every_weeks:
                 try:
+                    np.random.seed(_stable_seed(seed, model.name, monday, "fit"))
                     model.fit(history)
                     if getattr(model, "uses_events", False) and events is not None:
                         _fit_events(model, events, train_end)
@@ -119,6 +149,7 @@ def run_backtest(
                     history=history, week_start=monday, cut_dow=cut, observed=observed
                 )
                 try:
+                    np.random.seed(_stable_seed(seed, model.name, monday, cut))
                     samples = model.sample_week_total(task, n_samples)
                 except Exception as exc:
                     log.warning("predict failed for %s: %s", model.name, exc)
@@ -126,6 +157,7 @@ def run_backtest(
                 if samples is None or len(samples) == 0 or not np.isfinite(samples).any():
                     continue
 
+                curves.setdefault((monday, cut), {})[model.name] = combine.dense_quantiles(samples)
                 s = score_forecast(samples, actual_total, QUANTILE_LEVELS, thresholds)
                 rows.append(
                     {
@@ -150,7 +182,94 @@ def run_backtest(
     holdout_start = (
         test_mondays[-BACKTEST.holdout_weeks] if len(test_mondays) > BACKTEST.holdout_weeks else None
     )
-    return BacktestResult(rows=df, thresholds=thresholds, holdout_start=holdout_start)
+    result = BacktestResult(
+        rows=df, thresholds=thresholds, holdout_start=holdout_start, curves=curves
+    )
+    headline_rows = score_headline_rule(result, QUANTILE_LEVELS, thresholds)
+    if not headline_rows.empty:
+        result.rows = pd.concat([df, headline_rows], ignore_index=True)
+    return result
+
+
+# The candidate selection rules, scored side by side. "Top three, averaged
+# quantile-wise" was the deployed rule and was never measured against the
+# obvious alternatives — including the simplest one, which is to use the single
+# best model and not combine at all. Naming them here is the same
+# pre-registration the model list gets: the winner is chosen from a fixed list,
+# in the open, on development weeks.
+HEADLINE_RULES: dict[str, tuple[int, str]] = {
+    "headline-top1": (1, "vincent"),
+    "headline-top3": (3, "vincent"),
+    "headline-top3-pool": (3, "pool"),
+    "headline-top5": (5, "vincent"),
+}
+
+
+def score_headline_rule(
+    result: BacktestResult,
+    quantiles=QUANTILE_LEVELS,
+    thresholds=(),
+    min_weeks: int = BACKTEST.headline_min_weeks,
+) -> pd.DataFrame:
+    """Grade the rules that could sit on the front page, week by week.
+
+    The front page does not show a model. It shows "average the top three on the
+    leaderboard, quantile-wise" — and that composite appeared on no row of the
+    leaderboard, so the one number anybody reads was the one number nobody
+    scored. Its members' good scores are not its score: a combination can be
+    worse than its best member, and the only way to know is to run the rule.
+
+    Selection here is strictly retrospective. At each week the ranking is
+    recomputed from the weeks *before* it, so a rule never picks its models
+    using the week it is about to be graded on. That is more conservative than
+    the live path, which selects from a leaderboard covering all history —
+    including the week in flight, though only its earlier cuts. The gap is
+    small and points the safe way: the scored version knows less than the
+    deployed one.
+    """
+    rows = result.rows
+    if rows.empty or not result.curves:
+        return pd.DataFrame()
+
+    weeks = sorted(rows["week"].unique())
+    actual = rows.groupby("week")["actual"].first()
+    observed_by = (
+        rows.groupby(["week", "cut_dow"])["observed_so_far"].first().to_dict()
+    )
+    out = []
+    for i, week in enumerate(weeks):
+        if i < min_weeks:
+            continue
+        prior = rows[rows["week"] < week]
+        ranking = prior.groupby("model")["crps"].mean().sort_values().index.tolist()
+        for cut in sorted(rows.loc[rows["week"] == week, "cut_dow"].unique()):
+            available = result.curves.get((week, cut), {})
+            y = float(actual.loc[week])
+            for name, (top_k, how) in HEADLINE_RULES.items():
+                chosen = [m for m in ranking if m in available][:top_k]
+                if len(chosen) < top_k:
+                    continue
+                curves = [available[m] for m in chosen]
+                curve = (
+                    combine.vincentize(curves) if how == "vincent"
+                    else combine.linear_pool(curves)
+                )
+                np.random.seed(_stable_seed(name, week, cut))
+                samples = combine.samples_from(curve, 4000)
+                s = score_forecast(samples, y, quantiles, thresholds)
+                out.append(
+                    {
+                        "week": week,
+                        "cut_dow": cut,
+                        "model": name,
+                        "family": "deployed",
+                        "actual": y,
+                        "observed_so_far": float(observed_by.get((week, cut), 0.0)),
+                        **{k: v for k, v in s.items() if k != "brier"},
+                        **{f"brier_{k}": v for k, v in s["brier"].items()},
+                    }
+                )
+    return pd.DataFrame(out)
 
 
 def _fit_events(model, events: pd.DataFrame, train_end: pd.Timestamp, lookback_days: int = 180):

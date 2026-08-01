@@ -63,6 +63,16 @@ def upsert_posts(conn: sqlite3.Connection, posts: Iterable[Post]) -> int:
     `created_utc` is refreshed too, because a listing-sourced row (minute
     precision) is later superseded by the RSS-sourced row for the same post
     (second precision) — but only in that direction, never the reverse.
+
+    Deletion is refreshed only from the source that can see it. The listing
+    renders a deleted badge; the RSS feed carries no deletion information at
+    all, so `parse_rss` reports every post it returns as not-deleted. Taking
+    that at face value un-deleted anything the listing had flagged, on the very
+    next poll, because the feed is re-read every cycle. With the default
+    convention excluding deleted posts, that quietly re-inflated the most recent
+    days — the days the live forecast is most sensitive to, and the ones nobody
+    can check against a stable record. `time_precision` is what distinguishes
+    the two sources: 'minute' is the listing, 'second' is the feed.
     """
     now = datetime.now(timezone.utc).isoformat()
     rows = [dict(p.as_row(), first_seen_utc=now) for p in posts]
@@ -88,7 +98,11 @@ def upsert_posts(conn: sqlite3.Connection, posts: Iterable[Post]) -> int:
             -- either source spotting a ReTruth is enough; the listing marks it
             -- by author attribution, the feed by an "RT @" prefix
             is_retruth = MAX(excluded.is_retruth, posts.is_retruth),
-            is_deleted = excluded.is_deleted,
+            -- only the listing observes deletion; the feed cannot, so it must
+            -- not be allowed to clear the flag (see the docstring)
+            is_deleted = CASE
+                WHEN excluded.time_precision = 'minute'
+                THEN excluded.is_deleted ELSE posts.is_deleted END,
             text       = CASE WHEN excluded.text != '' THEN excluded.text ELSE posts.text END,
             created_utc = CASE
                 WHEN excluded.time_precision = 'second' AND posts.time_precision = 'minute'
