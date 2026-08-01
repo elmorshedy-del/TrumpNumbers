@@ -7,9 +7,9 @@
   "ingest_lag": {
     "available": true,
     "n": 5,
-    "median_minutes": 310.3,
-    "p90_minutes": 766.2,
-    "max_minutes": 857.1,
+    "median_minutes": 57.3,
+    "p90_minutes": 68.9,
+    "max_minutes": 69.5,
     "note": "Post timestamp to the moment this pipeline stored it: Truth Social publishing, trumpstruth.org crawling, and our poll interval combined. Only the poll interval is ours to shorten; the rest is the floor."
   },
   "dispersion": {
