@@ -25,7 +25,7 @@ import numpy as np
 import pandas as pd
 
 from .. import combine
-from ..config import BACKTEST, QUANTILE_LEVELS, THRESHOLD_PERCENTILES
+from ..config import BACKTEST, LOCAL_TZ, QUANTILE_LEVELS, THRESHOLD_PERCENTILES
 from ..models import ForecastTask
 from ..models.registry import REFERENCE_MODEL, build_all_models
 from ..series import days_into_week
@@ -59,19 +59,28 @@ class BacktestResult:
     curves: dict = field(default_factory=dict)
 
 
-def _week_starts(daily: pd.Series) -> list[pd.Timestamp]:
+def _week_starts(daily: pd.Series, today: pd.Timestamp | None = None) -> list[pd.Timestamp]:
     """First day of every complete week in the series, under CONVENTION.
 
     Anchored on whatever day the convention opens a week — Sunday for the
     Kalshi week, Monday for the original one — rather than assuming Monday.
+
+    A week counts as complete when it has seven rows AND has actually ended.
+    Seven rows alone is not enough on the week's own final day: the series runs
+    up to the last day carrying a post, so a Saturday with any activity fills
+    the seventh row with a *partial* count and the week reads as finished. Every
+    model would then be scored against a total still being accumulated — and
+    since that is always the most recent week, it is the one the live headline
+    is closest to.
     """
+    today = (today or pd.Timestamp.now(tz=LOCAL_TZ).tz_localize(None)).normalize()
     idx = daily.index
     offsets = np.array([days_into_week(d) for d in idx])
     starts = pd.unique(idx - pd.to_timedelta(offsets, unit="D"))
     out = []
     for m in sorted(pd.to_datetime(starts)):
         week = daily[(daily.index >= m) & (daily.index < m + pd.Timedelta(days=7))]
-        if len(week) == 7:  # complete weeks only
+        if len(week) == 7 and (m + pd.Timedelta(days=6)) < today:
             out.append(m)
     return out
 

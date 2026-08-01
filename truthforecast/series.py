@@ -97,19 +97,32 @@ class CountSeries:
         """
         return self.daily.resample(CONVENTION.resample_rule).sum().rename("week_total")
 
-    def complete_weeks(self, through: pd.Timestamp | None = None) -> pd.Series:
+    def complete_weeks(
+        self, through: pd.Timestamp | None = None, now: pd.Timestamp | None = None
+    ) -> pd.Series:
         """Weekly totals excluding any partial week at either end.
 
         A partial final week would read as a sudden collapse in volume and
         poison both the fit and the backtest.
+
+        "Complete" means the week is **over**, not merely that its last day
+        appears in the series. Those come apart on exactly one day of the seven:
+        the week's final day, while it is still running. The series is
+        zero-filled up to the last day carrying a post, so on a Saturday with
+        any activity at all the week's last row exists and the week looked
+        finished — the in-flight day's partial count standing in for its total.
+        A forecast graded against that is being scored on an answer that is
+        still arriving, which for the prospective record is the difference
+        between evidence and nonsense.
         """
         weekly = self.weekly
         if weekly.empty:
             return weekly
+        today = (now or pd.Timestamp.now(tz=LOCAL_TZ).tz_localize(None)).normalize()
         first_day, last_day = self.daily.index[0], self.daily.index[-1]
         keep = [
             wk for wk in weekly.index
-            if (wk - pd.Timedelta(days=6)) >= first_day and wk <= last_day
+            if (wk - pd.Timedelta(days=6)) >= first_day and wk <= last_day and wk < today
         ]
         out = weekly.loc[keep]
         if through is not None:

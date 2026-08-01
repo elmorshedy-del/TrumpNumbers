@@ -676,6 +676,38 @@ mistakes: that one was mine, it was live for one pipeline run, and the only
 reason it did not ship is that the export was read afterwards instead of assumed
 correct. Every fix in this file went out with a test for the same reason.
 
+## 8b. A week was "complete" the moment its last day existed, not when it ended
+
+**Found by reading the deployed site**, one run after the merge — the prospective
+record announced that it had scored a week, and no logged week had closed.
+
+`complete_weeks` kept any week whose final day appeared in the series, and its
+own docstring said it existed to stop "a partial final week reading as a sudden
+collapse in volume". Those two things come apart on exactly one day in seven:
+the week's own last day, while it is still running. The daily series is
+zero-filled up to the last day carrying a post, so on a Saturday with any
+activity at all the seventh row exists — holding a *partial* count — and the
+week looked finished. `walkforward._week_starts` had the identical rule, phrased
+as `len(week) == 7`.
+
+Two consequences, and the second is worse than the first:
+
+- The **backtest** scored its most recent week against a total that was still
+  accumulating. One week in 52, and always the newest one — which is the week
+  the live headline sits closest to.
+- The **prospective record** graded a forecast against an answer that had not
+  finished arriving. That record's only value is that it cannot be doubted, and
+  a scored-too-early week is precisely the kind of thing that would make it
+  doubtable. It reported one scored week; the correct answer was zero.
+
+Locally this was invisible: the development archive ended the day before, so the
+in-flight week had no seventh row and the bug had nothing to bite on. It needed
+a deployment polling a live source on a Saturday afternoon to appear at all.
+
+**Fixed:** a week is complete when it has seven rows **and** has ended. Both call
+sites take an injectable `now` so the rule is testable rather than dependent on
+when the suite happens to run.
+
 ## 9. Every poll resurrected the deleted posts
 
 **Was:** `upsert_posts` refreshed `is_deleted = excluded.is_deleted` from whichever source wrote

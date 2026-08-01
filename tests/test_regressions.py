@@ -514,6 +514,45 @@ def test_every_daily_model_can_describe_a_single_day():
             assert np.isfinite(out).all() and (out >= 0).all(), model.name
 
 
+# ----------------------------------------------- a week is over, or it is not
+
+def test_a_week_is_not_complete_until_it_has_ended():
+    """Seven rows is not the same as seven finished days.
+
+    Found by reading the deployed site rather than the code: the prospective
+    record claimed to have scored a week that was still running. The daily
+    series is zero-filled up to the last day carrying a post, so on the week's
+    own final day the seventh row exists and holds a *partial* count — and the
+    week read as complete, with the day-in-progress total standing in for the
+    finished one.
+    """
+    from truthforecast.series import CountSeries
+
+    # Two full weeks then a Saturday still in progress (Sun-anchored weeks).
+    idx = pd.date_range("2025-01-05", periods=21, freq="D")   # Sun 5 Jan ...
+    s = CountSeries(daily=pd.Series(np.full(21, 10.0), index=idx), label="t")
+    last_day = idx[-1]                                        # Sat 25 Jan
+    assert last_day.dayofweek == 5
+
+    during = s.complete_weeks(now=last_day + pd.Timedelta(hours=14))
+    after = s.complete_weeks(now=last_day + pd.Timedelta(days=1))
+    assert last_day not in during.index, "an in-flight week was reported complete"
+    assert last_day in after.index, "a finished week must be scored"
+    assert len(during) == len(after) - 1
+
+
+def test_the_backtest_will_not_score_the_week_in_progress():
+    from truthforecast.backtest.walkforward import _week_starts
+
+    idx = pd.date_range("2025-01-05", periods=21, freq="D")
+    daily = pd.Series(np.full(21, 10.0), index=idx)
+    saturday = idx[-1]
+    during = _week_starts(daily, today=saturday)
+    after = _week_starts(daily, today=saturday + pd.Timedelta(days=1))
+    assert len(during) == 2 and len(after) == 3
+    assert (saturday - pd.Timedelta(days=6)) not in during
+
+
 # -------------------------------------------------------------- the live log
 
 def test_the_live_record_is_append_only_and_scores_closed_weeks(tmp_path):
