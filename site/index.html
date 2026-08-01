@@ -99,6 +99,16 @@ const EXPECTED_UPDATE_MINUTES = 30;
 
 let fc, posts;
 
+/* The day in progress is neither ignored nor extrapolated — both score worse,
+   in opposite halves of the day. Say how much of it is already decided. */
+function todaySub() {
+  const t = fc.today;
+  if (!t || t.share_of_day_elapsed === undefined) return "still accumulating";
+  const pct = Math.round(t.share_of_day_elapsed * 100);
+  const [lo, hi] = t.rest_of_today_80 || [0, 0];
+  return `${pct}% of the day gone · ${num(lo)}–${num(hi)} more likely`;
+}
+
 function renderHero() {
   const h = fc.headline, w = fc.week;
   if (!h || !h.median) {
@@ -124,7 +134,7 @@ function renderHero() {
 
   document.getElementById("tiles").innerHTML = [
     ["Week to date", num(h.week_to_date), `${w.days_observed} complete day${w.days_observed === 1 ? "" : "s"}`],
-    ["Today so far", num(w.today_partial_count), "still accumulating"],
+    ["Today so far", num(w.today_partial_count), todaySub()],
     ["Projected median", num(h.median), "top-3 model blend"],
     ["Days remaining", w.days_remaining, "after today"],
   ].map(([l, n, s]) => `<div class="card tile"><div class="label">${l}</div><div class="num">${n}</div><div class="sub">${s}</div></div>`).join("");

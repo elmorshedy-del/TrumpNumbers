@@ -107,6 +107,10 @@ def refresh_forecast(df=None) -> dict:
         ),
         "headline": head,
         "week": fc["week"],
+        # How much of today is already decided, and what is left of it. The
+        # headline leans on this, so it travels with it rather than being an
+        # invisible internal.
+        "today": fc.get("today", {}),
         "threshold_probabilities": probs,
         "per_model": fc["per_model"],
         "ranking": ranking,

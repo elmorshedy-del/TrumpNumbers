@@ -14,6 +14,7 @@ import logging
 import numpy as np
 import pandas as pd
 
+from . import partial
 from .config import LOCAL_TZ, N_PREDICTIVE_SAMPLES, QUANTILE_LEVELS
 from .models import ForecastTask
 from .models.registry import build_all_models
@@ -49,8 +50,22 @@ def current_week_forecast(
     # History excludes the target week entirely; days of this week that are
     # already complete enter through `observed`, not through the training data.
     history = daily[daily.index < monday]
-    observed = daily[(daily.index >= monday) & (daily.index < today)].to_numpy()
-    cut = int(prog["days_observed"]) - 1  # last completed day-of-week index
+
+    # Today counts. It used to be dropped and replaced by a whole fresh day
+    # drawn from history, which never learned anything from a day already 92%
+    # decided by 9pm. Today's posts now enter `observed` like any other day, the
+    # models are asked only for the days after it, and what remains of today is
+    # sampled separately — conditioned on how today has actually gone. See
+    # `partial.py` for why neither ignoring nor rescaling it is good enough.
+    observed = daily[(daily.index >= monday) & (daily.index <= today)].to_numpy()
+    cut = int(today.dayofweek)
+
+    rest_of_today = np.zeros(n_samples)
+    if events is not None and not events.empty:
+        try:
+            rest_of_today = partial.sample_rest_of_today(events, now, n=n_samples)
+        except Exception as exc:  # noqa: BLE001 - a bad draw must not lose the forecast
+            log.warning("partial-day sampling failed, treating today as finished: %s", exc)
 
     task = ForecastTask(history=history, week_start=monday, cut_dow=cut, observed=observed)
 
@@ -65,6 +80,15 @@ def current_week_forecast(
             samples = model.sample_week_total(task, n_samples)
             if samples is None or not len(samples):
                 continue
+            # Add what today has left. Drawn independently of the model's own
+            # days, which is the same conditional-independence the daily models
+            # already assume between days.
+            if len(rest_of_today):
+                extra_today = (
+                    rest_of_today if len(rest_of_today) == len(samples)
+                    else np.random.choice(rest_of_today, size=len(samples), replace=True)
+                )
+                samples = samples + extra_today
             entry = {
                 "model": model.name,
                 "family": model.family,
@@ -83,9 +107,17 @@ def current_week_forecast(
         except Exception as exc:
             log.warning("forecast failed for %s: %s", model.name, exc)
 
+    today_detail = {}
+    if events is not None and not events.empty:
+        try:
+            today_detail = partial.describe(events, now)
+        except Exception as exc:  # noqa: BLE001
+            log.warning("partial-day description failed: %s", exc)
+
     return {
         "generated_at": pd.Timestamp.now(tz=LOCAL_TZ).isoformat(),
         "week": prog,
+        "today": today_detail,
         "per_model": results,
     }
 

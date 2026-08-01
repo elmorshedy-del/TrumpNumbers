@@ -163,7 +163,55 @@ across.
 labelled as forced. `window_vs_breaks` reports whether any surviving break falls inside the
 modelling window.
 
-## 7. "Variance is 16× the mean" was aimed at a model nobody proposed
+## 7. The day in progress was thrown away
+
+**Was:** `week_progress` excluded today from `observed`, and the models drew a whole fresh day in
+its place. At 9pm on a Friday that had produced 4 posts, the forecast discarded the 4 and simulated
+~19. The site displayed "today so far" in a tile immediately beside a projection that ignored it.
+
+It is worth being precise about the failure, because the obvious description is wrong. **It was not
+biased.** Measured across every day since the window start, the error from discarding today
+averages 0.00 at every hour. It was *uninformative*: CRPS flat at 8.53 from midnight to midnight,
+never learning anything from a day already 92% decided. It reads high only when today is quiet,
+low when today is loud.
+
+The docstring shows the choice was deliberate — "treating a half-finished day as a finished one
+biases every projection downwards" — and that reasoning is correct at 00:01 and wrong by evening.
+What is missing is any measurement of the cost, and the backtest structurally cannot supply one:
+it scores forecasts only at day boundaries, on whole observed days, so the intraday state the live
+site occupies for 23 hours out of 24 is never evaluated.
+
+**Two obvious fixes are both worse.** Walk-forward CRPS, expanding origin, strictly past-only data:
+
+| hour ET | discard *(was)* | scale by elapsed share | Poisson-Gamma conjugate | **empirical** |
+|---|---|---|---|---|
+| 06:00 | 8.53 | 31.50 | 13.77 | **7.73** |
+| 09:00 | 8.53 | 17.96 | 11.25 | **7.18** |
+| 12:00 | 8.53 | 12.28 | 8.88 | **6.05** |
+| 15:00 | 8.53 | 8.96 | 6.76 | **5.03** |
+| 18:00 | 8.53 | 5.85 | 4.67 | **3.73** |
+| 21:00 | 8.53 | 2.78 | 2.20 | **1.91** |
+
+Scaling `posts_so_far / fraction_elapsed` is four times worse than doing nothing at 6am — dividing
+by a small fraction multiplies the morning's noise — and does not overtake the old behaviour until
+mid-afternoon. Its failure case is stark: nothing posted by noon predicts a total of zero, across a
+record of 556 days containing no zero days at all.
+
+The Poisson-Gamma conjugate update, the textbook answer, also loses to discarding until noon. It
+models the day as binomial thinning of a fixed intraday clock, so an empty morning is strong
+evidence of a quiet day. His mornings do not work that way: on the 44 days with nothing posted by
+noon, the median finish was 6, the mean 10.1, and one reached 69. He starts when he starts.
+
+**Fixed** with the estimator that assumes nothing about the clock: match past days on posts-so-far
+at this hour (normalised by that weekday's level), resample what those days did with their
+remaining time. It wins at every hour, and silence by noon predicts about 6 because that is what
+silence by noon actually produced. `truthforecast/partial.py`; today now enters `observed` like any
+other day and only its remainder is simulated.
+
+Live effect when this was written, at 21:20 on a quiet Friday: median **147 → 134**, and the site
+now states how much of the day is already spent next to the number.
+
+## 8. "Variance is 16× the mean" was aimed at a model nobody proposed
 
 **Was:** the dispersion test compares the daily counts against a single fixed Poisson rate. That
 model is refuted by the weekly cycle alone — a busy Monday against a quiet Thursday inflates the
@@ -197,10 +245,7 @@ stored on every row and currently unused; a vintage backtest that filters to
 `first_seen_utc < origin` is maybe thirty lines and would put a number on how optimistic the
 current scores are. Until then, treat the leaderboard as an upper bound on live performance.
 
-**Today's posts are thrown away.** `week_progress` excludes today from `observed`, so a forecast
-made at 9pm on Friday with forty posts already logged resamples Friday from scratch. The site
-displays "today so far" in a tile immediately beside a projection that ignores it. The hourly
-profile needed to condition on a partial day is already computed in `diagnostics.hourly_profile`.
+**~~Today's posts are thrown away.~~ Fixed — see below.**
 
 **The headline and the threshold probabilities use different ensembles.** `headline` averages
 quantiles across the top three models (Vincentization); `threshold_probabilities` averages
