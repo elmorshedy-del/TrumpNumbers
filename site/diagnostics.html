@@ -252,7 +252,7 @@ function draw() {
   render();
   document.getElementById("generated").textContent =
     `Window ${d.window.start} → ${d.window.end} (${d.window.days} days). ` +
-    `ReTruths excluded: ${d.retruths.note}`;
+    `${d.retruths.note}`;
   onResize(draw);
 })();
 </script>

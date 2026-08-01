@@ -57,6 +57,9 @@
     </figure>
   </div>
 
+  <h2>How this page has done, before the fact</h2>
+  <div class="card" id="live-record"></div>
+
   <h2>Chance the week clears a threshold</h2>
   <div class="card">
     <div class="scroll-x"><table id="thresholds"><thead><tr>
@@ -82,9 +85,10 @@
 
   <footer class="site">
     <p class="small">Source: <a href="https://trumpstruth.org">trumpstruth.org</a>, a complete mirror of
-    @realDonaldTrump on Truth Social. ReTruths are tracked but excluded from the modelled series —
-    the mirror stores them under the original author's timestamp, so counting them would place
-    activity on days nothing happened. <span id="generated"></span></p>
+    @realDonaldTrump on Truth Social. ReTruths are counted, on the day he reshared: the mirror
+    files them under the original author's timestamp, so they are re-dated from its ingest order
+    first — counting them as filed would place activity on days nothing happened.
+    <span id="generated"></span></p>
   </footer>
 </div>
 
@@ -102,13 +106,15 @@ const EXPECTED_UPDATE_MINUTES = 30;
 let fc, posts;
 
 /* The day in progress is neither ignored nor extrapolated — both score worse,
-   in opposite halves of the day. Say how much of it is already decided. */
+   in opposite halves of the day. Say how much of it is already decided, in the
+   unit that matters: the share of a typical day's POSTS that have landed, not
+   the share of the clock. By 9am the clock is 38% gone and the posting is not. */
 function todaySub() {
   const t = fc.today;
-  if (!t || t.share_of_day_elapsed === undefined) return "still accumulating";
-  const pct = Math.round(t.share_of_day_elapsed * 100);
+  const share = t && (t.share_of_posts_elapsed ?? t.share_of_day_elapsed);
+  if (share === undefined || share === null) return "still accumulating";
   const [lo, hi] = t.rest_of_today_80 || [0, 0];
-  return `${pct}% of the day gone · ${num(lo)}–${num(hi)} more likely`;
+  return `${Math.round(share * 100)}% of a normal day's posting is past · ${num(lo)}–${num(hi)} more likely`;
 }
 
 function renderHero() {
@@ -145,12 +151,44 @@ function renderHero() {
 function renderThresholds() {
   const tb = document.querySelector("#thresholds tbody");
   tb.innerHTML = (fc.threshold_probabilities || []).map((t) => {
-    const pct = (t.probability * 100).toFixed(0);
-    const pill = t.soft
-      ? `<span class="pill warn">soft — tail estimate</span>`
-      : `<span class="pill good">reasonably supported</span>`;
-    return `<tr><td>${num(t.threshold)} posts</td><td class="num">${pct}%</td><td>${pill}</td></tr>`;
+    // Never print a bare 0% or 100% for an unbounded count: past the ends of
+    // the sampled distribution the honest statement is an inequality.
+    const pct = t.bounded
+      ? (t.probability > 0.5 ? "&gt;99.9%" : "&lt;0.1%")
+      : `${(t.probability * 100).toFixed(t.probability > 0.99 || t.probability < 0.01 ? 1 : 0)}%`;
+    const pill = t.bounded
+      ? `<span class="pill warn">beyond the sampled range</span>`
+      : t.soft
+        ? `<span class="pill warn">soft — tail estimate</span>`
+        : `<span class="pill good">reasonably supported</span>`;
+    return `<tr><td>${num(t.threshold)} posts</td><td class="num">${pct}</td><td>${pill}</td></tr>`;
   }).join("") || `<tr><td colspan="3" class="small">Not enough history yet.</td></tr>`;
+}
+
+/* The prospective record. Everything else on this site is retrospective — the
+   models are graded on history by code written afterwards. This is the part
+   that is not, and it is deliberately allowed to say it has too little. */
+function renderLiveRecord() {
+  const r = fc.live_record || {};
+  const el = document.getElementById("live-record");
+  if (!r.available) {
+    el.innerHTML = `<p class="small"><b>Nothing scored yet.</b> Every forecast this page makes is
+      appended to an append-only log the moment it is built, and graded once the week closes.
+      ${r.note ? r.note : ""} The backtest is an upper bound on live performance; this is the
+      number that will not be.</p>`;
+    return;
+  }
+  el.innerHTML = `
+    <div class="grid c3">
+      <div class="tile"><div class="label">Weeks forecast in advance</div>
+        <div class="num">${r.n_weeks}</div><div class="sub">${r.first_week} → ${r.last_week}</div></div>
+      <div class="tile"><div class="label">CRPS</div>
+        <div class="num">${r.crps}</div><div class="sub">posts, lower is better</div></div>
+      <div class="tile"><div class="label">80% interval covered</div>
+        <div class="num">${(r.coverage80 * 100).toFixed(0)}%</div>
+        <div class="sub">nominal 80%</div></div>
+    </div>
+    <p class="small" style="margin-top:12px">${r.note}</p>`;
 }
 
 function renderPerModel() {
@@ -200,7 +238,7 @@ function drawCharts() {
 
 async function refresh() {
   [fc, posts] = await Promise.all([loadExport("forecast.json"), loadExport("posts.json")]);
-  renderHero(); renderThresholds(); renderPerModel(); renderPosts(); drawCharts();
+  renderHero(); renderLiveRecord(); renderThresholds(); renderPerModel(); renderPosts(); drawCharts();
   renderFreshness(document.getElementById("freshness"), fc, EXPECTED_UPDATE_MINUTES);
   document.getElementById("generated").textContent =
     `Updated ${new Date(fc.generated_at).toLocaleString()}.`;

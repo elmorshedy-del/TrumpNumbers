@@ -244,15 +244,26 @@ def test_models_expose_their_metadata():
 
 
 def _events(days, per_hour):
-    """Synthetic post-level frame: `days` dates, posts at the given hours."""
+    """Synthetic post-level frame: `days` dates, posts at the given hours.
+
+    Carries `local` as well as `hour`, because the partial-day estimator works
+    in continuous elapsed time — the hour column alone would exercise only its
+    quantised fallback.
+    """
     import pandas as pd
     rows = []
     for d in days:
         for h, n in per_hour.items():
-            for _ in range(n):
-                rows.append({"local_date": pd.Timestamp(d), "hour": h})
+            for i in range(n):
+                day = pd.Timestamp(d)
+                rows.append({
+                    "local_date": day,
+                    "hour": h,
+                    "local": day + pd.Timedelta(hours=h, minutes=i % 60),
+                })
     df = pd.DataFrame(rows)
     df["local_date"] = pd.to_datetime(df["local_date"])
+    df["local"] = pd.to_datetime(df["local"])
     return df
 
 

@@ -69,7 +69,19 @@
   <p>Validation is <b>walk-forward</b>: train on the past, forecast the next week, roll forward.
   A random train/test split would let a model see Tuesday and Thursday while being scored on
   Wednesday — not mild optimism, but reading tomorrow's newspaper. A one-day embargo sits at the seam,
-  and a final stretch of weeks is held back untouched.</p>
+  and a final stretch of weeks is held back untouched. The live headline picks its models from the
+  development leaderboard and never from the holdout: a holdout can answer "how does the chosen
+  procedure do on weeks nobody looked at" only for as long as nothing is chosen with it.</p>
+
+  <div class="note">
+    <b>A backtest is an upper bound, and it cannot be anything else.</b> However careful the
+    embargoes, the <i>choices</i> — which models, which window, which counting convention — were all
+    made with the whole series already visible. So the tracker now also keeps a prospective record:
+    every forecast it publishes is appended to an append-only log the moment it is built, and graded
+    once the week closes. The first forecast made at each point in the week is the one that stands;
+    it is never amended afterwards. That number starts at zero weeks and is worth exactly as much as
+    its length, which the page says out loud rather than implying otherwise.
+  </div>
 
   <h2>What the data turned out to be</h2>
   <ul>

@@ -222,10 +222,14 @@ def current_week_bounds(now: pd.Timestamp | None = None) -> tuple[pd.Timestamp, 
 def week_progress(series: CountSeries, now: pd.Timestamp | None = None) -> dict:
     """What we know about the in-flight week.
 
-    `days_observed` counts only days that are fully in the past. Today is
-    excluded from the observed total because it is still accumulating, and
-    treating a half-finished day as a finished one biases every projection
-    downwards.
+    `days_observed` and `observed_total` cover only the days that are fully in
+    the past — today is still accumulating, so counting it as a finished day
+    would understate the week. It is reported separately, as
+    `today_partial_count` and `week_to_date_including_today`, and the forecast
+    uses both: today's posts are banked and only the *rest* of today is
+    simulated, conditioned on how today has gone so far (`partial.py`). Neither
+    ignoring the day nor scaling it up to a full one scores as well, and both
+    fail in opposite halves of the day.
     """
     now = now or pd.Timestamp.now(tz=LOCAL_TZ).tz_localize(None)
     today = now.normalize()

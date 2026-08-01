@@ -119,10 +119,34 @@ class INGARCHModel(Model):
         w, a, b = self.params[0], self.params[1], self.params[2]
         r = 1.0 / max(self.alpha_nb, 1e-9)
 
-        # Seed from the most recent observed day of the target week when there
-        # is one, so the forecast reacts to how the week has actually gone.
-        prev_y = np.full(n, task.observed[-1] if len(task.observed) else self.last_y, dtype=float)
-        prev_loglam = np.full(n, np.log(max(self.last_lambda, 1e-6)))
+        # Run the filter forward from the end of history to the cut, so the
+        # conditional rate and the last count come from the same moment. Seeding
+        # `prev_y` from the week's most recent observed day while leaving
+        # `prev_loglam` at the end of history mixed a state from up to nine days
+        # earlier with an observation from yesterday — and the persistence term
+        # b*log(lambda) is most of what this model is.
+        loglam = float(np.log(max(self.last_lambda, 1e-6)))
+        prev_y_scalar = float(self.last_y)
+        last_hist = task.history.index[-1] if len(task.history) else task.week_start
+
+        # Days the embargo hides come first and are stepped through blind: the
+        # model's own expectation stands in for the count it was not allowed to
+        # see. Then the days of the target week that really are known.
+        for k in range(task.gap_days):
+            dow = int((last_hist + pd.Timedelta(days=k + 1)).dayofweek)
+            loglam = float(np.clip(
+                w + a * np.log1p(prev_y_scalar) + b * loglam + self.dow_effect[dow], -5, 8
+            ))
+            prev_y_scalar = float(np.exp(loglam))
+        for date, y_obs in zip(task.observed_dates, np.asarray(task.observed, dtype=float)):
+            loglam = float(np.clip(
+                w + a * np.log1p(prev_y_scalar) + b * loglam + self.dow_effect[int(date.dayofweek)],
+                -5, 8,
+            ))
+            prev_y_scalar = float(y_obs)
+
+        prev_y = np.full(n, prev_y_scalar, dtype=float)
+        prev_loglam = np.full(n, loglam, dtype=float)
 
         total = np.zeros(n)
         for d in dows:
@@ -161,6 +185,7 @@ class LogSarimaModel(DailyModel):
 
         y = np.log1p(history.to_numpy(dtype=float))
         self.fallback = float(history.mean()) if len(history) else 1.0
+        self.last_index = history.index[-1] if len(history) else None
         if len(y) < 60:
             self.res = None
             return self
@@ -174,14 +199,33 @@ class LogSarimaModel(DailyModel):
             self.res = None
         return self
 
-    def sample_days(self, dows: np.ndarray, n: int) -> np.ndarray:
+    def sample_days(self, dows: np.ndarray, n: int, dates=None) -> np.ndarray:
+        """Forecast the days actually being asked about.
+
+        A state-space model forecasts *forward from the end of its training
+        data*, so `get_forecast(steps=len(remaining))` returns the next few days
+        after history — which are not the remaining days of the target week.
+        The gap is the embargo plus however much of the week is already
+        observed: at a Friday cut in the backtest, the one remaining day sits
+        eight steps past the end of history, and the model was being asked for
+        step 1. For a seasonal model that is not merely a shift, it is the wrong
+        phase of the weekly cycle — a Saturday forecast made with Sunday's
+        seasonal term.
+        """
         h = len(dows)
         if self.res is None:
             return np.random.poisson(self.fallback, size=(n, h)).astype(float)
+
+        offsets = np.arange(1, h + 1)
+        if dates is not None and len(dates) == h and self.last_index is not None:
+            offsets = np.array([int((d - self.last_index).days) for d in dates])
+            if (offsets < 1).any():
+                offsets = np.arange(1, h + 1)
         try:
-            fc = self.res.get_forecast(steps=h)
-            mu = np.asarray(fc.predicted_mean, dtype=float)
-            sd = np.sqrt(np.asarray(fc.var_pred_mean, dtype=float))
+            fc = self.res.get_forecast(steps=int(offsets.max()))
+            mu_all = np.asarray(fc.predicted_mean, dtype=float)
+            sd_all = np.sqrt(np.asarray(fc.var_pred_mean, dtype=float))
+            mu, sd = mu_all[offsets - 1], sd_all[offsets - 1]
         except Exception:
             return np.random.poisson(self.fallback, size=(n, h)).astype(float)
         draws = np.random.normal(mu, np.maximum(sd, 1e-3), size=(n, h))
@@ -253,7 +297,61 @@ class PoissonHMM(DailyModel):
         """Draw counts given each sample's current state rate."""
         return np.random.poisson(rates).astype(float)
 
-    def sample_days(self, dows: np.ndarray, n: int) -> np.ndarray:
+    def _emission_logpmf(self, y: float, rates: np.ndarray) -> np.ndarray:
+        """log P(count | state). Must match what `_emit` draws from.
+
+        Filtering with a tighter distribution than the model samples from makes
+        the state belief far more confident than the model is entitled to be —
+        a 60-post day against rates of 5/15/45 is essentially decisive under a
+        Poisson likelihood and merely suggestive under an overdispersed one. The
+        subclass that widened its emissions has to widen its filter with them.
+        """
+        from scipy.stats import poisson
+
+        return poisson.logpmf(y, np.maximum(rates, 1e-9))
+
+    def _filter_forward(self, probs: np.ndarray, gap_days: int, observed) -> np.ndarray:
+        """Advance the state belief from the end of history to the cut.
+
+        Stickiness is the whole claim this model makes — "he has had two quiet
+        days, does that mean anything for the weekend?" — and it was being
+        thrown away at exactly the moment it pays. The belief came from the last
+        day of *history*, which at a Friday cut is more than a week stale, and
+        the six days of the target week the forecaster genuinely knows about
+        never entered it. Blind days (the embargo) advance by the transition
+        matrix alone; observed days additionally get a Bayes update on their
+        count.
+        """
+        from scipy.special import logsumexp
+
+        rates = np.asarray(self.model.lambdas_).ravel()
+        trans = np.asarray(self.model.transmat_)
+        p = np.asarray(probs, dtype=float)
+        p = p / max(p.sum(), 1e-12)
+
+        for _ in range(int(gap_days)):
+            p = p @ trans
+        for y in np.asarray(observed, dtype=float):
+            prior = p @ trans
+            # In logs: a 168-post day against a rate of 8 underflows outright,
+            # and the resulting 0/0 would silently reset the belief to uniform.
+            logpost = np.log(np.maximum(prior, 1e-300)) + self._emission_logpmf(y, rates)
+            p = np.exp(logpost - logsumexp(logpost))
+        return p / max(p.sum(), 1e-12)
+
+    def sample_remaining(self, task: ForecastTask, n: int) -> np.ndarray:
+        dows = task.remaining_dows
+        if len(dows) == 0:
+            return np.zeros(n)
+        probs = self.state_probs
+        if self.model is not None and probs is not None:
+            try:
+                probs = self._filter_forward(probs, task.gap_days, task.observed)
+            except Exception:
+                probs = self.state_probs
+        return self.sample_days(dows, n, task.remaining_dates, state_probs=probs).sum(axis=1)
+
+    def sample_days(self, dows: np.ndarray, n: int, dates=None, state_probs=None) -> np.ndarray:
         h = len(dows)
         if self.model is None:
             return np.random.poisson(self.fallback, size=(n, h)).astype(float)
@@ -262,9 +360,11 @@ class PoissonHMM(DailyModel):
         trans = np.asarray(self.model.transmat_)
         k = len(rates)
 
-        # Start from the filtered state distribution at the end of history and
-        # propagate the chain forward, so persistence is carried into the future.
-        states = np.random.choice(k, size=n, p=self.state_probs / self.state_probs.sum())
+        # Start from the filtered state distribution as of the cut and propagate
+        # the chain forward, so persistence is carried into the future.
+        start = self.state_probs if state_probs is None else state_probs
+        start = np.asarray(start, dtype=float)
+        states = np.random.choice(k, size=n, p=start / start.sum())
         out = np.empty((n, h))
         for j in range(h):
             nxt = states.copy()
@@ -316,6 +416,14 @@ class NegBinHMM(PoissonHMM):
         r = 1.0 / max(self.alpha, 1e-9)
         p = r / (r + mu)
         return np.random.negative_binomial(r, p).astype(float)
+
+    def _emission_logpmf(self, y: float, rates: np.ndarray) -> np.ndarray:
+        """The same overdispersed emission the sampler uses, in the filter."""
+        from scipy.stats import nbinom
+
+        mu = np.maximum(rates, 1e-9)
+        r = 1.0 / max(self.alpha, 1e-9)
+        return nbinom.logpmf(y, r, r / (r + mu))
 
 
 class HawkesModel(Model):
@@ -445,19 +553,26 @@ class HawkesModel(Model):
         # let each event spawn a Poisson(eta) cascade of descendants. Only
         # descendants landing inside the horizon are counted.
         #
-        # The background must be the IMMIGRANT rate, not the observed rate. A
+        # The background is the IMMIGRANT rate, not the observed rate. A
         # stationary Hawkes process runs at mu/(1 - eta), because every
         # immigrant drags a cascade of descendants along behind it. Seeding the
         # simulation with the full observed rate and then adding cascades on top
         # counts the offspring twice and inflates the forecast by 1/(1 - eta) —
         # at eta = 0.73 that is a factor of nearly four.
-        # The fitted immigrant rate, not the observed total rate. A stationary
-        # Hawkes process runs at mu / (1 - eta) because every immigrant drags a
-        # cascade behind it, so seeding with the observed rate and then adding
-        # cascades counts the offspring twice.
         mu_per_day = float(getattr(self, "mu_per_day", self.mu_hourly.sum() * (1 - self.eta)))
 
-        rng = np.random.default_rng()
+        # The immigrant rate is modulated by the weekday. Every other model in
+        # the zoo knows that Saturday is not Tuesday; this one was flat across
+        # the week, which on a series whose weekday means run 14 to 24 posts is
+        # a large amount of structure to leave on the table — and it showed, in
+        # the worst interval coverage on the board. The factors are normalised
+        # to average 1 so the process keeps its fitted overall level.
+        factor = np.ones(h)
+        dow_factor = np.asarray(getattr(self, "dow_factor", np.ones(7)), dtype=float)
+        if np.isfinite(dow_factor).all() and dow_factor.mean() > 0:
+            factor = dow_factor[np.asarray(dows, dtype=int)] / dow_factor.mean()
+
+        rng = np.random.default_rng(np.random.randint(0, 2**32 - 1))
         horizon = float(h)
 
         # Vectorized generation-by-generation cascade across all n paths at once.
@@ -466,9 +581,14 @@ class HawkesModel(Model):
         # displaced by an Exponential(beta) delay, and children past the horizon
         # are dropped. Doing this one sample at a time in Python made the
         # backtest (thousands of forecasts) impractical.
-        n_bg = rng.poisson(mu_per_day * horizon, size=n)
+        per_day = mu_per_day * factor                      # immigrants per day
+        n_bg_day = rng.poisson(np.tile(per_day, (n, 1)))    # (n, h)
+        n_bg = n_bg_day.sum(axis=1)
         owner = np.repeat(np.arange(n), n_bg)
-        times = rng.uniform(0.0, horizon, size=owner.size)
+        # Immigrant times land inside the day they were drawn for, so a busy
+        # weekday's cascades start on that weekday.
+        day_of = np.repeat(np.tile(np.arange(h), n), n_bg_day.ravel())
+        times = day_of + rng.uniform(0.0, 1.0, size=owner.size)
         totals = np.bincount(owner, minlength=n).astype(float)
 
         for _ in range(60):  # generation cap; at eta<1 the cascade dies long before

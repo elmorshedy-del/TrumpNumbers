@@ -76,11 +76,18 @@ def format_message(rows: list) -> tuple[str, str]:
 
     lines = []
     for row in rows[:MAX_INDIVIDUAL]:
-        tag = f"ReTruth {row['source_handle'] or ''} " if row["is_retruth"] else ""
+        # The stored timestamp of a ReTruth belongs to the ORIGINAL author, so
+        # an alert firing now can carry a date from months ago. Saying which is
+        # which costs four words and stops the timestamp reading as lag.
+        if row["is_retruth"]:
+            stamp = f"[reshared now · original {_local(row['created_utc'])}]"
+            tag = f"ReTruth {row['source_handle'] or ''} "
+        else:
+            stamp, tag = f"[{_local(row['created_utc'])}]", ""
         text = (row["text"] or "").strip() or "(media only)"
         if len(text) > 240:
             text = text[:237] + "…"
-        lines.append(f"[{_local(row['created_utc'])}] {tag}{text}\n{_url(row)}")
+        lines.append(f"{stamp} {tag}{text}\n{_url(row)}")
 
     if n > MAX_INDIVIDUAL:
         lines.append(f"…and {n - MAX_INDIVIDUAL} more in this burst.")

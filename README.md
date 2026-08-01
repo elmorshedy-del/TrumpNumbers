@@ -38,6 +38,16 @@ process, not to the model's ignorance about Mondays.
 **It is heavy-tailed.** The busiest day is 11× the median, skewness 3.5, and the busiest 1% of days
 carry 6% of all posts. So every figure is a median with an *asymmetric* interval, never `x ± y`.
 
+**The day in progress is worth conditioning on, and the clock is not.** Today's posts are neither
+ignored nor scaled up — both score worse, in opposite halves of the day. Instead each model's own
+view of today is conditioned on how today has actually gone, using the days whose posting looked
+most like it at this exact moment, in continuous elapsed time. That last part matters more than it
+sounds: conditioning on the *hour* made the projection a step function that held flat for an hour
+and then jumped, and handing the day between two different estimators at midnight moved the
+headline by **12 posts** at the stroke of a clock with no information arriving. At elapsed time
+zero the conditioning is now the identity, so the day a model draws at 23:59 is the day it draws at
+00:00, and the projection is continuous across the boundary by construction.
+
 **There is almost no day-to-day memory.** Once the weekly cycle is removed, autocorrelation is
 inside the noise band at every lag (lag-1 ≈ 0.11, lag-7 falls from 0.027 to 0.007). Whatever makes
 posts cluster works *within* a day, not across days.
@@ -51,6 +61,15 @@ consistent with the flat autocorrelation.
 That is the honest headline. Anyone quoting a confident weekly number is quoting noise. It is also
 what most of the leaderboard's ordering is made of: the top twelve models span 17.84 to 18.28 CRPS,
 which is inside the noise of 52 weeks.
+
+**Choosing a model costs more than having a good one is worth.** The site's own selection rule —
+take the top three of the leaderboard and average them — is now scored week by week like any other
+forecaster, picking only from weeks that had already closed. It loses about **0.5 CRPS (2.5%)** to
+the model that turns out best on those weeks. That gap is the price of not knowing in advance which
+model will win, and it is *larger than the 2.3% the winning model gains over climatology*. Four
+different selection rules, from "trust one model" to "blend five", sit within 0.11 CRPS of each
+other, so there was never anything to tune. This is the most useful thing on the models page and it
+was invisible until the deployed rule was put on the board it selects from.
 
 **Most of a model's score is the calendar, not the model.** CRPS for the leading model falls from
 **28.0** on the week's opening day, with nothing observed, to **7.6** on its last full day. Averaging across
@@ -77,7 +96,10 @@ truthforecast/
   diagnostics.py  dispersion, tails, deseasonalized ACF/PACF, regimes, bursts
   models/     the model zoo (base contract, baselines, counts, dynamics, ml, registry)
   backtest/   walk-forward harness, proper scoring rules, leaderboard
+  partial.py  the day in progress, conditioned in continuous time
+  combine.py  how several predictive distributions become the one on the page
   forecast.py current-week projection
+  live.py     the append-only record of what was forecast before the fact
   pipeline.py orchestration -> data/exports/*.json
 site/         static HTML/CSS/vanilla JS reading those JSON files
 daemon.py     the self-updating local runner
@@ -146,11 +168,51 @@ thresholds — plus PIT-based calibration and interval width for sharpness. Accu
 absent: a model can be more accurate on average while being systematically overconfident, and
 overconfidence is the failure that stays invisible until the tail event arrives.
 
-Two caveats the numbers themselves demand:
+Three caveats the numbers themselves demand:
 - Each week is scored at seven cuts, so forecasts aren't independent. PIT p-values are a strong
   directional signal about over/under-confidence, not exact significance.
 - Gaps of a few hundredths of CRPS between neighbouring models are inside the noise of ~50 weeks.
   Read the groupings, not the ordering.
+- Every draw is seeded from `(model, week, cut)`, so the board reproduces exactly on unchanged
+  data. That is not tidiness: re-running under a different seed moves individual models by up to
+  **0.05 CRPS** and reorders the top five, so anything smaller than that is the random number
+  generator rather than a result. Set `TTF_SEED` to measure it yourself.
+
+Skill is also reported **at each cut**, not only on average. A model's average CRPS is mostly a
+statement about the calendar — 28.0 with nothing observed against 7.6 with six days banked — so
+dividing by climatology at the *same* cut is what isolates the model. The same split is worth
+applying to calibration: the leading model's headline 80% coverage is an average of **0.71 early in
+the week and 0.89 late**. It is not calibrated at any cut; it is wrong in two directions that
+happen to cancel.
+
+### The number on the front page is scored too
+
+The tracker does not show a model, it shows a rule, and a combination is not entitled to its
+members' scores. That rule is replayed week by week under the name `headline-top3`, choosing its
+models using only weeks that had already closed, and it appears on the models page with its own
+CRPS and coverage — alongside the three alternatives it had never been measured against.
+
+### The prospective record
+
+Everything above is retrospective. However careful the embargoes, the *choices* — which models,
+which window, which convention — were all made with the whole series visible, so a backtest is an
+upper bound on live performance and cannot be anything else.
+
+So every forecast the pipeline publishes is appended to `data/live_forecasts.jsonl` the moment it
+is built, committed, and scored once the week closes. One line per (week, cut), and it is the
+**first** forecast made at that cut that stands: a register you may keep amending until the answer
+arrives is not a register. The site reports how many weeks it has and declines to draw conclusions
+from four.
+
+The file is not in the repository — it appears on the first scheduled run. Seeding it with
+forecasts made during development, by code still being changed against a database being rebuilt,
+would put the least checkable rows at the very start of a record whose only value is that it can be
+checked.
+
+```bash
+python -m truthforecast.live --score   # grade the weeks that have closed
+python -m truthforecast.live --list    # the raw register
+```
 
 ## What it can't tell you
 

@@ -5,21 +5,18 @@
     "days": 558
   },
   "ingest_lag": {
-    "available": true,
-    "n": 5,
-    "median_minutes": 310.3,
-    "p90_minutes": 766.2,
-    "max_minutes": 857.1,
-    "note": "Post timestamp to the moment this pipeline stored it: Truth Social publishing, trumpstruth.org crawling, and our poll interval combined. Only the poll interval is ours to shorten; the rest is the floor."
+    "available": false,
+    "n": 0,
+    "note": "not enough posts observed live yet \u2014 this fills in as the poller runs"
   },
   "dispersion": {
     "n": 558,
-    "mean": 18.875,
+    "mean": 18.86,
     "median": 15.0,
-    "variance": 290.914,
-    "sd": 17.056,
+    "variance": 290.655,
+    "sd": 17.049,
     "dispersion_ratio": 15.41,
-    "chi2": 8585.1,
+    "chi2": 8583.9,
     "p_value": 0.0,
     "poisson_plausible": false,
     "poisson_sd": 4.34,
@@ -40,7 +37,7 @@
     "available": true,
     "raw": 15.41,
     "by_weekday": 14.3,
-    "by_weekday_and_level": 15.35,
+    "by_weekday_and_level": 15.36,
     "note": "Pearson chi-square per degree of freedom. A well-specified Poisson model sits near 1. The raw ratio compares against a single fixed rate, which the weekly cycle refutes on its own; these two compare against what a Poisson GLM actually assumes."
   },
   "tail": {
@@ -65,17 +62,17 @@
       {
         "day": "Mon",
         "n": 80,
-        "mean": 25.54,
+        "mean": 25.49,
         "median": 19.0,
-        "sd": 26.63,
-        "index_vs_overall": 1.353
+        "sd": 26.61,
+        "index_vs_overall": 1.351
       },
       {
         "day": "Tue",
         "n": 80,
-        "mean": 20.98,
+        "mean": 20.96,
         "median": 18.0,
-        "sd": 12.67,
+        "sd": 12.64,
         "index_vs_overall": 1.111
       },
       {
@@ -84,22 +81,22 @@
         "mean": 16.76,
         "median": 15.0,
         "sd": 10.11,
-        "index_vs_overall": 0.888
+        "index_vs_overall": 0.889
       },
       {
         "day": "Thu",
         "n": 80,
-        "mean": 18.41,
+        "mean": 18.39,
         "median": 14.0,
-        "sd": 18.05,
-        "index_vs_overall": 0.976
+        "sd": 18.07,
+        "index_vs_overall": 0.975
       },
       {
         "day": "Fri",
         "n": 80,
-        "mean": 17.9,
+        "mean": 17.89,
         "median": 15.0,
-        "sd": 15.18,
+        "sd": 15.19,
         "index_vs_overall": 0.948
       },
       {
@@ -108,7 +105,7 @@
         "mean": 15.14,
         "median": 11.0,
         "sd": 13.8,
-        "index_vs_overall": 0.802
+        "index_vs_overall": 0.803
       },
       {
         "day": "Sun",
@@ -116,10 +113,10 @@
         "mean": 17.33,
         "median": 12.0,
         "sd": 16.33,
-        "index_vs_overall": 0.918
+        "index_vs_overall": 0.919
       }
     ],
-    "overall_mean": 18.87
+    "overall_mean": 18.86
   },
   "autocorrelation": {
     "lags": [
@@ -148,75 +145,75 @@
     ],
     "acf": [
       1.0,
-      0.1006,
-      0.0098,
-      -0.0402,
-      -0.0732,
-      0.0376,
+      0.0997,
+      0.01,
+      -0.04,
+      -0.0736,
+      0.0375,
       0.0414,
-      -0.0018,
-      0.0371,
-      0.061,
-      -0.1015,
-      0.0509,
-      -0.0222,
-      0.0371,
-      0.0443,
-      -0.0381,
-      -0.0429,
-      -0.0088,
-      -0.0304,
+      -0.0015,
+      0.0368,
+      0.0611,
+      -0.1013,
+      0.0508,
+      -0.022,
+      0.037,
+      0.0439,
+      -0.038,
+      -0.043,
+      -0.0093,
+      -0.0301,
       -0.0042,
-      0.0563,
-      0.003
+      0.0561,
+      0.0028
     ],
     "pacf": [
       1.0,
-      0.1006,
-      -0.0003,
-      -0.0416,
-      -0.0658,
-      0.0527,
+      0.0997,
+      0.0001,
+      -0.0414,
+      -0.0663,
+      0.0526,
       0.0327,
-      -0.0157,
-      0.037,
-      0.0644,
-      -0.1148,
-      0.0717,
-      -0.0238,
-      0.0405,
-      0.0174,
-      -0.0338,
-      -0.0353,
-      -0.0005,
-      -0.0262,
+      -0.0154,
+      0.0365,
+      0.0645,
+      -0.1144,
+      0.0713,
+      -0.0235,
+      0.0404,
+      0.0171,
+      -0.0336,
+      -0.0356,
+      -0.0009,
+      -0.0259,
       -0.0011,
-      0.0371,
-      0.0115
+      0.0368,
+      0.0112
     ],
     "acf_raw_with_weekly_cycle": [
       1.0,
-      0.1013,
-      0.0023,
-      -0.0421,
-      -0.0849,
+      0.1001,
+      0.0027,
+      -0.0419,
+      -0.0851,
       0.0114,
-      0.0361,
-      0.0193,
-      0.0451,
-      0.0262,
-      -0.1021,
+      0.0359,
+      0.0196,
+      0.0447,
+      0.0264,
+      -0.1019,
       0.056,
-      -0.0329,
-      0.0292,
-      0.0761,
+      -0.0327,
+      0.029,
+      0.0754,
       -0.0221,
-      -0.0607,
-      -0.0065,
-      -0.0277,
-      -0.0297,
-      0.0409,
-      0.0359
+      -0.0608,
+      -0.0071,
+      -0.0274,
+      -0.0296,
+      0.0408,
+      0.0353
     ],
     "conf": 0.083,
     "note": "ACF/PACF computed after removing the weekly cycle; the raw series is shown for contrast."
@@ -225,57 +222,57 @@
     "available": true,
     "segments": [
       {
-        "start": "2025-01-26",
-        "end": "2026-01-11",
+        "start": "2025-01-25",
+        "end": "2026-01-10",
         "weeks": 50,
-        "mean_posts_per_day": 17.32
+        "mean_posts_per_day": 17.36
       },
       {
-        "start": "2026-01-11",
-        "end": "2026-02-15",
+        "start": "2026-01-10",
+        "end": "2026-02-14",
         "weeks": 5,
-        "mean_posts_per_day": 24.89
+        "mean_posts_per_day": 24.57
       },
       {
-        "start": "2026-02-15",
-        "end": "2026-03-22",
+        "start": "2026-02-14",
+        "end": "2026-03-21",
         "weeks": 5,
-        "mean_posts_per_day": 19.31
+        "mean_posts_per_day": 19.51
       },
       {
-        "start": "2026-03-22",
-        "end": "2026-04-26",
+        "start": "2026-03-21",
+        "end": "2026-04-25",
         "weeks": 5,
-        "mean_posts_per_day": 16.66
+        "mean_posts_per_day": 16.4
       },
       {
-        "start": "2026-04-26",
-        "end": "2026-08-02",
+        "start": "2026-04-25",
+        "end": "2026-08-01",
         "weeks": 15,
-        "mean_posts_per_day": 22.69
+        "mean_posts_per_day": 22.58
       }
     ],
     "breaks": [
-      "2026-01-11",
-      "2026-02-15",
-      "2026-03-22",
-      "2026-04-26"
+      "2026-01-10",
+      "2026-02-14",
+      "2026-03-21",
+      "2026-04-25"
     ],
     "n_breaks_penalized": 0,
-    "penalty": 0.8761,
+    "penalty": 0.8445,
     "note": "The segment list comes from a search told in advance how many breaks to find, so its count is a setting, not a result. `n_breaks_penalized` lets the data choose instead: if it is 0, the segmentation above is a partition of noise."
   },
   "window_vs_breaks": {
     "window_start": "2025-01-20",
     "window_label": "Second term (from inauguration)",
     "breaks_inside_window": [
-      "2026-01-11",
-      "2026-02-15",
-      "2026-03-22",
-      "2026-04-26"
+      "2026-01-10",
+      "2026-02-14",
+      "2026-03-21",
+      "2026-04-25"
     ],
-    "most_recent_break": "2026-04-26",
-    "weeks_since_most_recent_break": 13,
+    "most_recent_break": "2026-04-25",
+    "weeks_since_most_recent_break": 14,
     "n_breaks_penalized": 0,
     "note": "Every model here is fitted from the window start, across any break listed above. That is the practice the window exists to avoid. Whether it matters depends on whether the breaks are real \u2014 see n_breaks_penalized, which is what the data says when it is not told how many to find."
   },
@@ -298,16 +295,16 @@
       ],
       "sample_posts": [
         {
-          "text": "Ther are laws that effect our Nation. Read Title 18, Chapter 115, Section 2387, \u201cWhoever with the intent to interfere, impair, influence the loyalty, moral or discipline of the military and Naval Forces,\u2026\u2026to be fined or imprisoned up to 10 years.\u201d Commander Kirk Lippold, U.S. Nav",
-          "id": 34069
-        },
-        {
           "text": "There are laws that impact our Nation. Read Title 18, Chapter 115, Section 2387, \u201cWhoever with the intent to interfere, impair, influence the loyalty, moral or discipline of the military and Naval Forces,\u2026\u2026to be fined or imprisoned up to 10 years.\u201d Commander Kirk Lippold, U.S. Na",
           "id": 34070
         },
         {
           "text": "The United States is very satisfied with the results displayed, through hard work and determination, in the Country of Syria. We are doing everything within our power to make sure the Government of Syria continues to do what was intended, which is substantial, in order to build a",
           "id": 34071
+        },
+        {
+          "text": "First Lady giving Christmas salutations at the White House. So nice!",
+          "id": 34073
         }
       ]
     },
@@ -333,12 +330,12 @@
           "id": 30020
         },
         {
-          "text": "https://amgreatness.com/2025/02/25/no-trumps-tariffs-will-not-cause-inflation/",
-          "id": 30039
-        },
-        {
           "text": "https://www.washingtontimes.com/news/2025/feb/25/trump-rebuilding-domestic-manufacturing-fighting-american-aluminum/",
           "id": 30041
+        },
+        {
+          "text": "https://www.foxnews.com/politics/trump-calls-company-building-keystone-xl-pipeline-return-america-get-built",
+          "id": 30038
         }
       ]
     },
@@ -392,7 +389,7 @@
       "sample_posts": [
         {
           "text": "",
-          "id": 34791
+          "id": 34789
         },
         {
           "text": "",
@@ -400,7 +397,7 @@
         },
         {
           "text": "",
-          "id": 34789
+          "id": 34791
         }
       ]
     },
@@ -462,7 +459,7 @@
         },
         {
           "text": "",
-          "id": 34998
+          "id": 35000
         }
       ]
     },
@@ -480,7 +477,7 @@
         "congressional",
         "district",
         "border",
-        "military"
+        "energy"
       ],
       "sample_posts": [
         {
@@ -569,9 +566,9 @@
         "secure",
         "energy",
         "american",
+        "never",
         "election",
         "down",
-        "never",
         "always",
         "let"
       ],
@@ -694,19 +691,19 @@
         "energy",
         "american",
         "down",
+        "congressman",
         "district",
         "complete",
-        "total",
-        "election"
+        "total"
       ],
       "sample_posts": [
         {
-          "text": "Congressman Vern Buchanan, who has been with us from the very beginning, is a Fantastic Advocate of Florida\u2019s 16th Congressional District! As a very successful Businessman, and the Vice Chairman of the POWERFUL House Ways & Means Committee, Vern understands the America First Poli",
-          "id": 33634
-        },
-        {
           "text": "Congressman Gus Bilirakis is a Tremendous Champion for Florida\u2019s 12th Congressional District! As a Senior Member of the POWERFUL House Energy and Commerce Committee, Gus is working tirelessly to Advance American Energy DOMINANCE, Create GREAT Jobs, Cut Taxes and Regulations, Prom",
           "id": 33635
+        },
+        {
+          "text": "Congressman Vern Buchanan, who has been with us from the very beginning, is a Fantastic Advocate of Florida\u2019s 16th Congressional District! As a very successful Businessman, and the Vice Chairman of the POWERFUL House Ways & Means Committee, Vern understands the America First Poli",
+          "id": 33634
         },
         {
           "text": "Scott Franklin is a fantastic Representative for the Great People of Florida\u2019s 18th Congressional District! A U.S. Naval Academy Graduate and retired Navy Commander, Scott knows the Wisdom and Courage that is required to Defend our Country, Support our incredible Military/Veteran",
@@ -798,12 +795,12 @@
           "id": 37052
         },
         {
-          "text": "",
-          "id": 37054
-        },
-        {
           "text": "Deranged Jack Smith should be brought to Justice, NOW!!!",
           "id": 37053
+        },
+        {
+          "text": "",
+          "id": 37054
         }
       ]
     },
@@ -907,14 +904,14 @@
       "vs_median": 3.7,
       "peak_hour": 13,
       "keywords": [
-        "america",
-        "all",
         "country",
+        "all",
         "president",
+        "america",
+        "fitness",
         "tariffs",
         "there",
-        "trump",
-        "great"
+        "presidential"
       ],
       "sample_posts": [
         {
@@ -988,8 +985,8 @@
           "id": 39824
         },
         {
-          "text": "Exclusive\u2014Trump: SCOTUS Slaughter Decision \u2018More Than Made Up\u2019 for \u2018Disappointing\u2019 Birthright Citizenship Ruling: https://www.breitbart.com/politics/2026/07/01/exclusive-trump-scotus-slaughter-decision-more-than-made-up-disappointing-birthright-citizenship-ruling/",
-          "id": 39823
+          "text": "How President Trump Revived American Pride and Patriotism in Time for America\u2019s 250th Birthday: https://mattkaneusa.substack.com/p/how-president-trump-revived-american",
+          "id": 39822
         }
       ]
     },
@@ -1057,35 +1054,36 @@
     }
   ],
   "hourly_profile": [
-    1099,
-    612,
-    168,
-    53,
-    40,
-    156,
-    369,
-    857,
-    950,
-    1275,
-    1766,
-    2179,
-    1813,
-    1822,
-    1996,
-    2005,
-    1982,
-    1871,
-    1765,
-    1503,
-    1273,
-    1783,
-    1418,
-    1450
+    1264,
+    735,
+    296,
+    132,
+    107,
+    230,
+    440,
+    974,
+    1117,
+    1412,
+    1897,
+    2352,
+    1943,
+    1964,
+    2159,
+    2197,
+    2215,
+    2126,
+    1977,
+    1749,
+    1472,
+    1955,
+    1588,
+    1599
   ],
   "retruths": {
-    "total": 195,
+    "total": 187,
     "share_of_all_posts": 0.018,
-    "note": "ReTruths are excluded from the modeled series. The mirror stores them with the ORIGINAL author's timestamp, not the moment Trump reshared, so counting them would place activity on days he did nothing."
+    "counted_in_series": true,
+    "note": "ReTruths are counted, on the day Trump reshared rather than the day the original ran. The mirror files them under the ORIGINAL author's timestamp, so counting them as filed would credit activity to days on which nothing happened; the mirror's own ingest order brackets the real reshare moment and recovers it to within hours."
   },
   "source": {
     "name": "trumpstruth.org",

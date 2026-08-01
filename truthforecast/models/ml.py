@@ -12,11 +12,19 @@ import warnings
 import numpy as np
 import pandas as pd
 
+from ..config import CONVENTION
 from .base import ForecastTask, Model
 
 warnings.filterwarnings("ignore")
 
 GBM_QUANTILES = (0.05, 0.1, 0.25, 0.5, 0.75, 0.9, 0.95)
+
+
+def _week_starts(index: pd.DatetimeIndex) -> pd.DatetimeIndex:
+    """First day of each day's week, under the counting convention."""
+    dow = index.dayofweek.to_numpy()
+    into = (dow + 1) % 7 if CONVENTION.week_anchor == "SUN" else dow
+    return index - pd.to_timedelta(into, unit="D")
 
 
 def _features(index: pd.DatetimeIndex, values: np.ndarray) -> np.ndarray:
@@ -62,15 +70,22 @@ class QuantileGBM(Model):
         self.trained = False
 
     def _build_training(self, history: pd.Series):
-        """Rows are (week, cut) pairs; the target is the remaining-days total."""
+        """Rows are (week, cut) pairs; the target is the remaining-days total.
+
+        The weeks are cut where the *convention* cuts them. Anchoring training
+        on Monday while every prediction is made against a Sunday-anchored week
+        makes `cut`, `observed_sum` and `days_left` mean one thing in training
+        and a different thing at prediction time: cut 0 taught the model
+        "Monday is banked, six days to go" and then asked it about a Sunday.
+        """
         values = history.to_numpy(dtype=float)
         index = history.index
         feats = _features(index, values)
 
         X, y = [], []
-        mondays = index - pd.to_timedelta(index.dayofweek, unit="D")
-        for monday in pd.unique(mondays):
-            mask = mondays == monday
+        starts = _week_starts(index)
+        for monday in pd.unique(starts):
+            mask = starts == monday
             week_vals = values[mask]
             if len(week_vals) != 7:
                 continue
@@ -80,8 +95,14 @@ class QuantileGBM(Model):
                 # Feature row taken at the cut: the last observed day of the
                 # week, or the day before the week starts when cut == -1.
                 anchor = week_pos[cut] if cut >= 0 else week_pos[0] - 1
-                if anchor < 0 or np.isnan(feats[anchor]).any():
+                if anchor < 0:
                     continue
+                # NaN lag features are kept rather than dropped. LightGBM treats
+                # missing values natively, and the prediction row genuinely has
+                # one — the embargoed day sits in lag-1 at the earliest cuts. A
+                # training set scrubbed of every NaN teaches the model nothing
+                # about what to do when one arrives, which is the whole reason
+                # its predictions used to fall back to a crude pool.
                 observed_sum = week_vals[: cut + 1].sum() if cut >= 0 else 0.0
                 X.append(np.concatenate([feats[anchor], [cut, observed_sum, 6 - cut]]))
                 y.append(remaining)
@@ -124,18 +145,48 @@ class QuantileGBM(Model):
         distribution it never saw, which is the ordinary way a gradient booster
         is made to look worthless by its plumbing rather than by its merits.
         """
-        index = self._history.index
-        values = self._history.to_numpy(dtype=float)
+        # Features come from the history attached to the TASK, not from the copy
+        # kept at fit time. This model refits every fourth week, so the fitted
+        # copy can be three weeks stale — and lag-1 through lag-14 on a
+        # three-week-old series are not lags, they are old news. The fitted
+        # trees are what refitting is saving; the input row costs nothing to
+        # build fresh.
+        source = task.history if len(task.history) else self._history
+        series = source[source.index < task.week_start].astype(float)
+        if series.empty:
+            series = self._history
         if task.cut_dow >= 0 and len(task.observed):
             # Extend the series with the days of the target week already known,
             # so lag and rolling features are anchored where training put them.
-            obs_index = pd.date_range(task.week_start, periods=len(task.observed), freq="D")
-            index = index.append(obs_index)
-            values = np.concatenate([values, np.asarray(task.observed, dtype=float)])
+            series = pd.concat([
+                series,
+                pd.Series(np.asarray(task.observed, dtype=float), index=task.observed_dates),
+            ])
 
+        # Reindex onto a gapless calendar, running right up to the anchor day
+        # training would have used: the last observed day of the week, or the
+        # day before the week starts at cut -1. Two things break without it.
+        # `_features` computes lags by POSITION, so the embargoed day between
+        # history and the target week silently turns "yesterday" into two days
+        # ago for every lag on the row, while training — built on a contiguous
+        # index — meant yesterday. And at cut -1 the row would be anchored on
+        # the last day of history, which the embargo puts a day earlier than the
+        # day training anchored on, so the calendar features were for the wrong
+        # weekday. Unknown days become NaN: a value LightGBM handles natively,
+        # and an honest statement that the day was withheld.
+        anchor_day = (
+            task.week_start + pd.Timedelta(days=task.cut_dow)
+            if task.cut_dow >= 0
+            else task.week_start - pd.Timedelta(days=1)
+        )
+        last = max(anchor_day, series.index[-1])
+        series = series.reindex(pd.date_range(series.index[0], last, freq="D"))
+
+        index, values = series.index, series.to_numpy(dtype=float)
         feats = _features(index, values)
+        pos = int(index.get_loc(anchor_day))
         return np.concatenate(
-            [feats[-1], [task.cut_dow, task.observed_total, 6 - task.cut_dow]]
+            [feats[pos], [task.cut_dow, task.observed_total, 6 - task.cut_dow]]
         ).reshape(1, -1)
 
     def sample_remaining(self, task: ForecastTask, n: int) -> np.ndarray:
@@ -147,7 +198,9 @@ class QuantileGBM(Model):
             return np.random.choice(pool, size=n, replace=True) * len(dows)
 
         row = self._anchor_row(task)
-        if not np.isfinite(row).all():
+        # NaN is a legitimate feature value here (see `_build_training`); an
+        # infinity is not, and neither is an all-missing row.
+        if np.isinf(row).any() or np.isnan(row).all():
             pool = self.fallback if self.fallback is not None else np.array([0.0])
             return np.random.choice(pool, size=n, replace=True) * len(dows)
 
@@ -211,7 +264,8 @@ class VincentizedEnsemble(LinearPoolEnsemble):
 
     def sample_week_total(self, task: ForecastTask, n: int = 20000) -> np.ndarray:
         grid = np.linspace(0.001, 0.999, 512)
-        qs = [np.quantile(m.sample_week_total(task, 4000), grid) for m in self.members]
+        per = max(n // max(len(self.members), 1), 2000)
+        qs = [np.quantile(m.sample_week_total(task, per), grid) for m in self.members]
         averaged = np.mean(qs, axis=0)
         u = np.random.uniform(0.001, 0.999, size=n)
         return np.interp(u, grid, averaged)
