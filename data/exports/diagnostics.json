@@ -1,25 +1,25 @@
 {
   "window": {
     "start": "2025-01-20",
-    "end": "2026-08-01",
-    "days": 559
+    "end": "2026-08-02",
+    "days": 560
   },
   "ingest_lag": {
     "available": true,
-    "n": 39,
-    "median_minutes": 31.5,
-    "p90_minutes": 66.8,
-    "max_minutes": 179.0,
+    "n": 48,
+    "median_minutes": 32.2,
+    "p90_minutes": 104.1,
+    "max_minutes": 222.6,
     "note": "Post timestamp to the moment this pipeline stored it: Truth Social publishing, trumpstruth.org crawling, and our poll interval combined. Only the poll interval is ours to shorten; the rest is the floor."
   },
   "dispersion": {
-    "n": 559,
-    "mean": 18.921,
+    "n": 560,
+    "mean": 18.904,
     "median": 15.0,
-    "variance": 291.614,
-    "sd": 17.077,
+    "variance": 291.268,
+    "sd": 17.067,
     "dispersion_ratio": 15.41,
-    "chi2": 8599.9,
+    "chi2": 8613.1,
     "p_value": 0.0,
     "poisson_plausible": false,
     "poisson_sd": 4.35,
@@ -39,8 +39,8 @@
   "conditional_dispersion": {
     "available": true,
     "raw": 15.41,
-    "by_weekday": 14.33,
-    "by_weekday_and_level": 15.37,
+    "by_weekday": 14.32,
+    "by_weekday_and_level": 15.36,
     "note": "Pearson chi-square per degree of freedom. A well-specified Poisson model sits near 1. The raw ratio compares against a single fixed rate, which the weekly cycle refutes on its own; these two compare against what a Poisson GLM actually assumes."
   },
   "tail": {
@@ -57,7 +57,7 @@
       "0.75": 23.0,
       "0.9": 35.0,
       "0.95": 48.0,
-      "0.99": 89.45999999999947
+      "0.99": 89.32999999999959
     }
   },
   "day_of_week": {
@@ -68,7 +68,7 @@
         "mean": 25.54,
         "median": 19.0,
         "sd": 26.63,
-        "index_vs_overall": 1.35
+        "index_vs_overall": 1.351
       },
       {
         "day": "Tue",
@@ -76,7 +76,7 @@
         "mean": 20.98,
         "median": 18.0,
         "sd": 12.67,
-        "index_vs_overall": 1.109
+        "index_vs_overall": 1.11
       },
       {
         "day": "Wed",
@@ -84,7 +84,7 @@
         "mean": 16.76,
         "median": 15.0,
         "sd": 10.11,
-        "index_vs_overall": 0.886
+        "index_vs_overall": 0.887
       },
       {
         "day": "Thu",
@@ -92,7 +92,7 @@
         "mean": 18.41,
         "median": 14.0,
         "sd": 18.05,
-        "index_vs_overall": 0.973
+        "index_vs_overall": 0.974
       },
       {
         "day": "Fri",
@@ -100,7 +100,7 @@
         "mean": 17.9,
         "median": 15.0,
         "sd": 15.18,
-        "index_vs_overall": 0.946
+        "index_vs_overall": 0.947
       },
       {
         "day": "Sat",
@@ -108,18 +108,18 @@
         "mean": 15.51,
         "median": 11.0,
         "sd": 14.11,
-        "index_vs_overall": 0.82
+        "index_vs_overall": 0.821
       },
       {
         "day": "Sun",
-        "n": 79,
-        "mean": 17.33,
+        "n": 80,
+        "mean": 17.23,
         "median": 12.0,
-        "sd": 16.33,
-        "index_vs_overall": 0.916
+        "sd": 16.25,
+        "index_vs_overall": 0.911
       }
     ],
-    "overall_mean": 18.92
+    "overall_mean": 18.9
   },
   "autocorrelation": {
     "lags": [
@@ -148,77 +148,77 @@
     ],
     "acf": [
       1.0,
-      0.0976,
-      0.0062,
-      -0.0435,
-      -0.0668,
-      0.0406,
-      0.0519,
-      -0.0055,
-      0.0358,
-      0.0571,
-      -0.1003,
-      0.0532,
-      -0.0243,
-      0.0424,
-      0.04,
-      -0.0383,
-      -0.0425,
-      -0.0097,
-      -0.0263,
-      -0.0006,
-      0.0532,
-      0.0027
+      0.0954,
+      0.0069,
+      -0.0428,
+      -0.0659,
+      0.0389,
+      0.0512,
+      -0.0081,
+      0.0369,
+      0.0574,
+      -0.0997,
+      0.0529,
+      -0.025,
+      0.0431,
+      0.0386,
+      -0.0372,
+      -0.0422,
+      -0.0096,
+      -0.0261,
+      -0.0016,
+      0.052,
+      0.0034
     ],
     "pacf": [
       1.0,
-      0.0976,
-      -0.0034,
-      -0.0442,
-      -0.0589,
-      0.0538,
-      0.0424,
-      -0.0208,
-      0.0379,
-      0.0614,
-      -0.112,
-      0.072,
-      -0.0272,
-      0.0453,
-      0.0138,
-      -0.0347,
-      -0.0314,
-      -0.0043,
-      -0.0217,
-      -0.0006,
-      0.0348,
-      0.0128
+      0.0954,
+      -0.0023,
+      -0.0436,
+      -0.0583,
+      0.0517,
+      0.0423,
+      -0.023,
+      0.0392,
+      0.0612,
+      -0.1113,
+      0.0709,
+      -0.027,
+      0.046,
+      0.0128,
+      -0.0337,
+      -0.031,
+      -0.0053,
+      -0.0207,
+      -0.0019,
+      0.0344,
+      0.0134
     ],
     "acf_raw_with_weekly_cycle": [
       1.0,
-      0.0991,
-      0.0003,
-      -0.0443,
-      -0.0796,
-      0.0149,
-      0.0421,
-      0.0167,
-      0.0439,
-      0.0246,
-      -0.1016,
+      0.0975,
+      0.0009,
+      -0.0435,
+      -0.0786,
+      0.013,
+      0.0407,
+      0.0144,
+      0.0449,
+      0.025,
+      -0.101,
       0.0582,
-      -0.0341,
-      0.032,
-      0.0728,
-      -0.0227,
-      -0.0606,
-      -0.0073,
-      -0.0247,
-      -0.0249,
-      0.0394,
-      0.0351
+      -0.035,
+      0.0325,
+      0.0716,
+      -0.0215,
+      -0.0604,
+      -0.0072,
+      -0.0244,
+      -0.026,
+      0.0377,
+      0.0356
     ],
-    "conf": 0.0829,
+    "conf": 0.0828,
     "note": "ACF/PACF computed after removing the weekly cycle; the raw series is shown for contrast."
   },
   "structural_breaks": {
@@ -226,21 +226,21 @@
     "segments": [
       {
         "start": "2025-01-25",
-        "end": "2025-09-27",
-        "weeks": 35,
-        "mean_posts_per_day": 17.22
+        "end": "2026-01-10",
+        "weeks": 50,
+        "mean_posts_per_day": 17.36
       },
       {
-        "start": "2025-09-27",
-        "end": "2025-11-01",
+        "start": "2026-01-10",
+        "end": "2026-02-14",
         "weeks": 5,
-        "mean_posts_per_day": 13.77
+        "mean_posts_per_day": 24.57
       },
       {
-        "start": "2025-11-01",
+        "start": "2026-02-14",
         "end": "2026-03-21",
-        "weeks": 20,
-        "mean_posts_per_day": 20.86
+        "weeks": 5,
+        "mean_posts_per_day": 19.51
       },
       {
         "start": "2026-03-21",
@@ -250,27 +250,27 @@
       },
       {
         "start": "2026-04-25",
-        "end": "2026-08-01",
-        "weeks": 15,
-        "mean_posts_per_day": 22.84
+        "end": "2026-08-08",
+        "weeks": 16,
+        "mean_posts_per_day": 21.97
       }
     ],
     "breaks": [
-      "2025-09-27",
-      "2025-11-01",
+      "2026-01-10",
+      "2026-02-14",
       "2026-03-21",
       "2026-04-25"
     ],
     "n_breaks_penalized": 0,
-    "penalty": 0.8569,
+    "penalty": 0.8924,
     "note": "The segment list comes from a search told in advance how many breaks to find, so its count is a setting, not a result. `n_breaks_penalized` lets the data choose instead: if it is 0, the segmentation above is a partition of noise."
   },
   "window_vs_breaks": {
     "window_start": "2025-01-20",
     "window_label": "Second term (from inauguration)",
     "breaks_inside_window": [
-      "2025-09-27",
-      "2025-11-01",
+      "2026-01-10",
+      "2026-02-14",
       "2026-03-21",
       "2026-04-25"
     ],
@@ -324,8 +324,8 @@
         "foxnews",
         "breitbart",
         "president",
-        "politics",
-        "news"
+        "news",
+        "politics"
       ],
       "sample_posts": [
         {
@@ -333,12 +333,12 @@
           "id": 30020
         },
         {
-          "text": "https://www.foxnews.com/politics/trump-calls-company-building-keystone-xl-pipeline-return-america-get-built",
-          "id": 30038
+          "text": "https://www.washingtontimes.com/news/2025/feb/25/trump-rebuilding-domestic-manufacturing-fighting-american-aluminum/",
+          "id": 30041
         },
         {
-          "text": "https://amgreatness.com/2025/02/25/no-trumps-tariffs-will-not-cause-inflation/",
-          "id": 30039
+          "text": "https://www.breitbart.com/border/2025/02/24/trump-effect-single-day-migrant-apprehension-numbers-on-southwest-border-fall-below-200/",
+          "id": 30040
         }
       ]
     },
@@ -369,7 +369,7 @@
         },
         {
           "text": "",
-          "id": 35157
+          "id": 35158
         }
       ]
     },
@@ -392,7 +392,7 @@
       "sample_posts": [
         {
           "text": "",
-          "id": 34791
+          "id": 34789
         },
         {
           "text": "",
@@ -400,7 +400,7 @@
         },
         {
           "text": "",
-          "id": 34789
+          "id": 34791
         }
       ]
     },
@@ -462,7 +462,7 @@
         },
         {
           "text": "",
-          "id": 34998
+          "id": 34997
         }
       ]
     },
@@ -547,11 +547,11 @@
       "sample_posts": [
         {
           "text": "",
-          "id": 34855
+          "id": 34854
         },
         {
           "text": "",
-          "id": 34854
+          "id": 34855
         },
         {
           "text": "",
@@ -581,12 +581,12 @@
           "id": 33546
         },
         {
-          "text": "https://nypost.com/2025/11/01/us-news/rep-nicole-malliotakis-rips-gerrymandering-lawsuit-for-staten-island-house-seat-as-nonsensical-power-grab/",
-          "id": 33548
-        },
-        {
           "text": "https://dailycaller.com/2025/11/01/opinion-arctic-frost-accountability-starts-with-impeaching-judge-boasberg-dave-bossie/",
           "id": 33547
+        },
+        {
+          "text": "https://nypost.com/2025/11/01/us-news/rep-nicole-malliotakis-rips-gerrymandering-lawsuit-for-staten-island-house-seat-as-nonsensical-power-grab/",
+          "id": 33548
         }
       ]
     },
@@ -671,11 +671,11 @@
       "sample_posts": [
         {
           "text": "",
-          "id": 38882
+          "id": 38881
         },
         {
           "text": "",
-          "id": 38881
+          "id": 38882
         },
         {
           "text": "Can you imagine? A Barack Hussein Obama Judge named Christopher Cooper has stopped a magnificent structural and aesthetic rebuilding of The Trump Kennedy Center where Millions of Dollars of material, marble, furniture, steel, air conditioning, heating, and so much else was ordere",
@@ -725,23 +725,23 @@
         "energy",
         "american",
         "down",
+        "congressman",
         "district",
         "complete",
-        "total",
-        "congressman"
+        "total"
       ],
       "sample_posts": [
         {
-          "text": "Scott Franklin is a fantastic Representative for the Great People of Florida\u2019s 18th Congressional District! A U.S. Naval Academy Graduate and retired Navy Commander, Scott knows the Wisdom and Courage that is required to Defend our Country, Support our incredible Military/Veteran",
-          "id": 33633
+          "text": "Congressman Gus Bilirakis is a Tremendous Champion for Florida\u2019s 12th Congressional District! As a Senior Member of the POWERFUL House Energy and Commerce Committee, Gus is working tirelessly to Advance American Energy DOMINANCE, Create GREAT Jobs, Cut Taxes and Regulations, Prom",
+          "id": 33635
         },
         {
           "text": "Congressman Vern Buchanan, who has been with us from the very beginning, is a Fantastic Advocate of Florida\u2019s 16th Congressional District! As a very successful Businessman, and the Vice Chairman of the POWERFUL House Ways & Means Committee, Vern understands the America First Poli",
           "id": 33634
         },
         {
-          "text": "Congressman Gus Bilirakis is a Tremendous Champion for Florida\u2019s 12th Congressional District! As a Senior Member of the POWERFUL House Energy and Commerce Committee, Gus is working tirelessly to Advance American Energy DOMINANCE, Create GREAT Jobs, Cut Taxes and Regulations, Prom",
-          "id": 33635
+          "text": "Scott Franklin is a fantastic Representative for the Great People of Florida\u2019s 18th Congressional District! A U.S. Naval Academy Graduate and retired Navy Commander, Scott knows the Wisdom and Courage that is required to Defend our Country, Support our incredible Military/Veteran",
+          "id": 33633
         }
       ]
     },
@@ -798,12 +798,12 @@
           "id": 37052
         },
         {
-          "text": "Deranged Jack Smith should be brought to Justice, NOW!!!",
-          "id": 37053
-        },
-        {
           "text": "",
           "id": 37054
+        },
+        {
+          "text": "Deranged Jack Smith should be brought to Justice, NOW!!!",
+          "id": 37053
         }
       ]
     },
@@ -892,11 +892,11 @@
         },
         {
           "text": "",
-          "id": 37867
+          "id": 37866
         },
         {
           "text": "",
-          "id": 37866
+          "id": 37867
         }
       ]
     },
@@ -927,7 +927,7 @@
         },
         {
           "text": "",
-          "id": 35795
+          "id": 35797
         }
       ]
     },
@@ -980,12 +980,12 @@
       ],
       "sample_posts": [
         {
-          "text": "Exclusive \u2014 President Donald Trump: \u2018Certainly Prepared\u2019 for Possible SCOTUS Vacancy, but \u2018Nobody\u2019 Can Replace Justice Alito: https://www.breitbart.com/politics/2026/07/01/exclusive-president-donald-trump-certainly-prepared-possible-scotus-vacancy-nobody-can-replace-justice-alito",
-          "id": 39824
-        },
-        {
           "text": "Hillary Clinton breaks with Democratic critics by backing Trump\u2019s Gaza plan as the 'only game in town': https://www.foxnews.com/media/hillary-clinton-breaks-democratic-critics-backing-trumps-gaza-plan-game-town",
           "id": 39825
+        },
+        {
+          "text": "Exclusive \u2014 President Donald Trump: \u2018Certainly Prepared\u2019 for Possible SCOTUS Vacancy, but \u2018Nobody\u2019 Can Replace Justice Alito: https://www.breitbart.com/politics/2026/07/01/exclusive-president-donald-trump-certainly-prepared-possible-scotus-vacancy-nobody-can-replace-justice-alito",
+          "id": 39824
         },
         {
           "text": "They\u2019re Running the 2024 Anti-Trump Playbook on Nigel Farage: https://thenationalpulse.com/analysis-post/theyre-running-the-2024-anti-trump-playbook-on-nigel-farage-its-failing/",
@@ -1064,20 +1064,20 @@
     107,
     230,
     440,
-    975,
-    1117,
+    977,
+    1121,
     1412,
     1897,
     2352,
-    1946,
+    1947,
     1972,
-    2188,
+    2189,
     2200,
     2216,
     2126,
     1979,
     1753,
-    1472,
+    1473,
     1956,
     1589,
     1600
