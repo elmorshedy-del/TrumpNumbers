@@ -283,6 +283,7 @@ python -m truthforecast.pipeline --poll --forecast
 python -m truthforecast.pipeline --reconcile 30
 python -m truthforecast.record --snapshot     # market order books, both venues
 python -m truthforecast.record --daily        # candles, trades, calendar, rotation
+python -m truthforecast.weather --scan --dry-run   # settled-fact temp edges, printed
 python -m pytest tests/ -q
 ```
 
@@ -485,6 +486,25 @@ codebase is built to prevent. Speed is worth having; it is not worth the series.
 high-frequency trading firms. Reported pricing is $100,000 per month, or $60,000 on a three-year
 contract. That is the actual price of "instant", and it tells you what the latency is worth to the
 people who pay for it. Anything cheaper is polling something that is itself polling.
+
+## A sibling: settled-fact alerts on the temperature markets
+
+`truthforecast/weather.py` is the same discipline pointed at an easier market. Kalshi's daily
+high-temperature contracts settle on NWS climate reports, and a daily maximum can never go back
+down — so the moment the settlement station's observed max-so-far passes a bracket's ceiling,
+that bracket is dead, whatever the order book still charges for it. The motivating case: NO on a
+Philadelphia 89–90° bracket offered at 33 cents more than an hour after the station had recorded
+91°F. That is not a forecast; it is a fact the book had not read.
+
+The scanner reads it. Every city configures itself from Kalshi's own metadata (the settlement
+station is parsed out of each series' climate-report URL, its timezone from the NWS API), the
+trigger fires only on irreversible facts — never "88° and climbing", which is a forecast in a
+fact's clothes — and Fahrenheit is floored during conversion so rounding can only suppress an
+alert, never invent one. Alerts carry the raw reading, its timestamp, the executable price and
+the margin, flag one-degree margins as tight, and go to the same channels the post notifier
+uses (`TELEGRAM_TOKEN`/`TELEGRAM_CHAT_ID`, `NTFY_TOPIC`, and friends). `weather.yml` runs it
+every five GitHub-best-effort minutes; `--watch` on any always-on machine is the faster loop.
+It alerts; it does not trade. The decision, and the double-check of the margin, stay yours.
 
 ## Note
 

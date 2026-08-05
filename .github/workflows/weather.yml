@@ -1,0 +1,74 @@
+# Settled-fact alerts for Kalshi's daily high-temperature markets.
+#
+# The trigger is never a forecast: a station's observed max-so-far has already
+# eliminated a bracket (or guaranteed a threshold) under the same NWS stream
+# the market settles on, and the order book is still pricing the dead side.
+# The Philadelphia case that motivated this — NO on 89-90° offered at 33 cents
+# an hour after the station recorded 91°F — is a fact the book hadn't read,
+# and reading facts is what a five-minute cron is actually good at.
+#
+# Same platform honesty as notify.yml: GitHub cron is best-effort, so "every
+# five minutes" means 5-20 in practice. The stale quotes this hunts lasted an
+# hour in the motivating case; a faster loop is `--watch` on any machine that
+# stays up. Channels come from the same secrets notify.yml uses — configure
+# TELEGRAM_TOKEN + TELEGRAM_CHAT_ID (or NTFY_TOPIC, etc.) and it starts
+# working; with nothing configured the scan still runs and sends nothing.
+#
+# The state file remembers what was already sent so a stale book does not
+# page you every five minutes. Losing it (cache eviction) costs at worst one
+# duplicate alert — the right failure direction for an alerter.
+
+name: weather
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: weather
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  TTF_USER_AGENT: "trump-truth-forecast/0.1 (market research; +${{ github.server_url }}/${{ github.repository }})"
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      # requests is only needed by the notify channels; the scan itself is
+      # standard-library.
+      - run: pip install "requests>=2.31"
+
+      - uses: actions/cache/restore@v4
+        with:
+          path: data/weather_state.json
+          key: weather-state-${{ github.run_id }}
+          restore-keys: |
+            weather-state-
+
+      - name: Scan and alert
+        env:
+          TTF_TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TTF_TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TTF_NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          TTF_DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          TTF_SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          TTF_WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+        run: python -m truthforecast.weather --scan
+
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: data/weather_state.json
+          key: weather-state-${{ github.run_id }}

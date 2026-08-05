@@ -113,11 +113,13 @@ def _ntfy(title: str, body: str, payload: dict) -> bool | None:
     if not topic:
         return None
     url = topic if topic.startswith("http") else f"https://ntfy.sh/{topic}"
-    return _post(
-        url,
-        data=body.encode("utf-8"),
-        headers={"Title": title, "Tags": "loudspeaker", "Click": payload["posts"][0]["url"]},
-    )
+    headers = {"Title": title, "Tags": "loudspeaker"}
+    # Post alerts carry a URL to open on tap; other callers (the weather
+    # alerts) may not, and a missing link must not cost the notification.
+    click = (payload.get("posts") or [{}])[0].get("url")
+    if click:
+        headers["Click"] = click
+    return _post(url, data=body.encode("utf-8"), headers=headers)
 
 
 def _telegram(title: str, body: str, payload: dict) -> bool | None:
