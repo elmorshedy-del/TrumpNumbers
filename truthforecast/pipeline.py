@@ -20,7 +20,7 @@ import numpy as np
 import pandas as pd
 
 from . import diagnostics as diag
-from . import live
+from . import live, record
 from .config import CONVENTION, EXPORT_DIR, WINDOW, ensure_dirs
 from .forecast import current_week_forecast, headline, headline_curve, threshold_probabilities
 from .ingest.run import backfill, poll, reconcile
@@ -140,6 +140,16 @@ def refresh_forecast(df=None) -> dict:
         ],
     }
     _write("forecast.json", _json_safe(payload))
+
+    # The market record's side of this pass: the forecast that will stand while
+    # the market trades against it, and the post provenance the cached database
+    # cannot durably hold. See `record.py` for why both are append-only.
+    try:
+        record.append_forecast_history(_json_safe(payload))
+        record.append_posts_ledger(df)
+    except Exception as exc:  # noqa: BLE001 - the record must never break the build
+        log.warning("market record append failed: %s", exc)
+
     return payload
 
 

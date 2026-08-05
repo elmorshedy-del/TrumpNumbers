@@ -100,6 +100,7 @@ truthforecast/
   combine.py  how several predictive distributions become the one on the page
   forecast.py current-week projection
   live.py     the append-only record of what was forecast before the fact
+  record.py   what the markets said while the week was open (Kalshi, Polymarket, the schedule)
   pipeline.py orchestration -> data/exports/*.json
 site/         static HTML/CSS/vanilla JS reading those JSON files
 daemon.py     the self-updating local runner
@@ -214,6 +215,52 @@ python -m truthforecast.live --score   # grade the weeks that have closed
 python -m truthforecast.live --list    # the raw register
 ```
 
+### The market record
+
+The forecast can be rebuilt from the mirror at any time. What can never be rebuilt is what the
+**markets** believed while the week was still open — and that is the only data that can ever
+answer the question this project keeps walking into: are those markets priced well? Backtests
+against climatology say whether a model has skill; only a record of prices says whether that
+skill was worth anything after fees.
+
+`truthforecast/record.py` collects it as it happens, under one rule: *record whatever cannot be
+reconstructed later, at the finest granularity that is cheap, and decide what it is for
+afterwards.* Kalshi's weekly post-count market — and its deleted-post market, which prices the
+exact quantity this pipeline's counting convention subtracts — gets hourly order-book snapshots
+plus daily pulls of 1-minute candlesticks, the full trade tape and lifecycle metadata.
+Polymarket's parallel post-count markets (same process, *offset* windows) get the same
+treatment, and matter twice over: their public history endpoint returned nothing for closed
+markets when checked, so for that venue the snapshot **is** the record — and two venues pricing
+one process is the cheapest test of market rationality there is. When they disagree, at least
+one of them is wrong.
+
+Two non-market streams ride along. The president's public schedule (Factba.se's feed) is
+recorded point-in-time: entries are appended when first seen, because the published archive is
+revised as pool reports land, and a schedule feature fed to any future backtest must know what
+was knowable the evening before, not what the record was amended to say afterwards. The first
+run seeds the whole archive and marks every entry `retrospective` for exactly that reason. And
+each pipeline pass appends its own headline to `forecast_history.jsonl` — the live register
+keeps the *first* forecast per (week, cut), which is the right rule for a register and too
+coarse to line up against a price that moves all day.
+
+Everything is append-only JSONL under `data/record/`, committed to git the way the live register
+is, with closed days' book files and closed months' candle and trade files gzipped in place.
+The full ten-week backfill plus the calendar archive lands around 15 MB; steady state adds a few
+hundred kilobytes a day, most of it the hourly books. `record.yml` runs it on GitHub's schedule,
+dependency-free — the recorder is standard-library only — and the first daily run performs the
+whole backfill by itself, because every incremental pull starts from each market's open when it
+has no state to say otherwise.
+
+```bash
+python -m truthforecast.record --snapshot   # order books, both venues, right now
+python -m truthforecast.record --daily      # candles, trades, metadata, calendar, rotation
+```
+
+What is deliberately **not** recorded, because it can be fetched retroactively forever: news
+archives, election calendars, court dockets, equity prices. A recorder that hoards the
+reconstructible spends its byte budget insuring the wrong risk — and the risk being insured
+here is specific: the order book at 11pm during a burst exists once, and never again.
+
 ## What it can't tell you
 
 It cannot tell you **why** he posted a lot on a given day. Clustering has two explanations that look
@@ -234,6 +281,8 @@ python daemon.py --serve-only      # just serve existing exports
 python -m truthforecast.pipeline --backfill 2022-02-01
 python -m truthforecast.pipeline --poll --forecast
 python -m truthforecast.pipeline --reconcile 30
+python -m truthforecast.record --snapshot     # market order books, both venues
+python -m truthforecast.record --daily        # candles, trades, calendar, rotation
 python -m pytest tests/ -q
 ```
 
