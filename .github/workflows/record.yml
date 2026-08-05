@@ -1,0 +1,92 @@
+# The market record: what Kalshi and Polymarket believed about the week while
+# it was still open, what the public schedule said before each day happened,
+# and (via the pipeline in update.yml) what this project forecast alongside.
+#
+# One rule decides what gets recorded: anything that cannot be reconstructed
+# later. Order-book depth exists once and never again, so it is snapshotted
+# hourly. Candlesticks and trade tapes are reconstructible from Kalshi today,
+# but on Kalshi's retention promise rather than ours, so a daily pull caps the
+# loss if that changes. Polymarket's history endpoint answered empty for
+# closed markets when this was built — for that venue the snapshot IS the
+# record. Details and file formats: truthforecast/record.py.
+#
+# Kept separate from update.yml for the same reason notify.yml is: this job
+# fetches and appends and nothing else. It installs no dependencies at all —
+# the recorder is standard-library only — so the hourly pass costs seconds.
+#
+# git is the durable home, exactly as it is for data/live_forecasts.jsonl:
+# every run starts from a fresh checkout, so a line appended and not committed
+# is gone. Book files gzip after their day closes to keep the history small.
+#
+# The same honesty note as everywhere else: GitHub cron is best-effort.
+# "Hourly" means "usually within the hour", and every line carries its own
+# timestamp so gaps are visible rather than something to take on trust.
+
+name: record
+
+on:
+  schedule:
+    - cron: "19 * * * *"    # hourly: order books, both venues (~1 min)
+    - cron: "43 6 * * *"    # daily: candles, trades, metadata, calendar, rotate
+  workflow_dispatch:
+    inputs:
+      daily:
+        description: "Run the daily deep pull in this pass"
+        type: boolean
+        default: false
+
+concurrency:
+  group: record
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+env:
+  TTF_USER_AGENT: "trump-truth-forecast/0.1 (posting-volume research; +${{ github.server_url }}/${{ github.repository }})"
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Decide the pass
+        id: mode
+        run: |
+          daily=false
+          if [ "${{ github.event.schedule }}" = "43 6 * * *" ]; then daily=true; fi
+          if [ "${{ inputs.daily }}" = "true" ]; then daily=true; fi
+          echo "daily=$daily" >> "$GITHUB_OUTPUT"
+          echo "daily pass: $daily"
+
+      # No pip install: the recorder imports nothing outside the standard
+      # library, which is what lets an hourly job spend its minute fetching
+      # rather than resolving the modelling stack it never uses.
+      - name: Snapshot the order books
+        run: python -m truthforecast.record --snapshot
+
+      - name: Daily pull
+        if: steps.mode.outputs.daily == 'true'
+        run: python -m truthforecast.record --daily
+
+      # Same commit pattern as update.yml, and non-fatal for the same reason:
+      # a race with another workflow's push is a reason to retry next hour,
+      # not a reason to fail a job whose data is already appended locally.
+      - name: Commit the record
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/record 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "nothing to commit"
+          else
+            git commit -m "Record the market snapshot"
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || true
+            git push origin "HEAD:${GITHUB_REF_NAME}" || echo "push refused; snapshot not recorded"
+          fi
