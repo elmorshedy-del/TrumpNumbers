@@ -64,21 +64,32 @@ class PoissonGLM(DailyModel):
         self.last_index = history.index[-1]
         return self
 
-    def _mu(self, dows: np.ndarray) -> np.ndarray:
-        if self.res is None:
-            return np.full(len(dows), self.fallback_mu)
+    def _design_row(self, dows: np.ndarray, dates=None) -> np.ndarray:
         X = np.zeros((len(dows), 7))
         X[np.arange(len(dows)), dows] = 1.0
         if self.with_trend:
-            weeks = ((self.last_index - self.t0).days / 7.0) + 1.0
-            X = np.hstack([X, np.full((len(dows), 1), weeks)])
+            # Evaluated at each forecast day's own position on the trend line.
+            # A single "one week past the end of history" value for every
+            # remaining day was both wrong for the day and wrong by the gap:
+            # at a Friday cut the last remaining day is nine days past the end
+            # of the backtest's history, not seven.
+            if dates is not None and len(dates) == len(dows):
+                weeks = np.array([(d - self.t0).days / 7.0 for d in dates], dtype=float)
+            else:
+                weeks = np.full(len(dows), ((self.last_index - self.t0).days / 7.0) + 1.0)
+            X = np.hstack([X, weeks.reshape(-1, 1)])
+        return X
+
+    def _mu(self, dows: np.ndarray, dates=None) -> np.ndarray:
+        if self.res is None:
+            return np.full(len(dows), self.fallback_mu)
         try:
-            return safe_positive(self.res.predict(X))
+            return safe_positive(self.res.predict(self._design_row(dows, dates)))
         except Exception:
             return np.full(len(dows), self.fallback_mu)
 
-    def sample_days(self, dows: np.ndarray, n: int) -> np.ndarray:
-        mu = self._mu(dows)
+    def sample_days(self, dows: np.ndarray, n: int, dates=None) -> np.ndarray:
+        mu = self._mu(dows, dates)
         return np.random.poisson(mu, size=(n, len(dows))).astype(float)
 
 
@@ -121,8 +132,8 @@ class NegBinGLM(PoissonGLM):
             self.alpha = float(max((var - mean) / max(mean**2, 1e-9), 1e-6))
             return sm.GLM(y, X, family=sm.families.NegativeBinomial(alpha=self.alpha)).fit()
 
-    def sample_days(self, dows: np.ndarray, n: int) -> np.ndarray:
-        mu = self._mu(dows)
+    def sample_days(self, dows: np.ndarray, n: int, dates=None) -> np.ndarray:
+        mu = self._mu(dows, dates)
         r = 1.0 / max(self.alpha, 1e-9)          # NB2: var = mu + alpha*mu^2
         p = r / (r + mu)
         return np.random.negative_binomial(r, p, size=(n, len(dows))).astype(float)
@@ -163,40 +174,90 @@ class ZeroInflatedPoissonModel(PoissonGLM):
         self._zi_res = res
         return res
 
-    def _mu(self, dows: np.ndarray) -> np.ndarray:
+    def _components(self, dows: np.ndarray, dates=None) -> tuple[np.ndarray, np.ndarray]:
+        """(rate of the count component, probability the switch is ON).
+
+        Both halves are needed to *sample* a zero-inflated model, and asking for
+        `which="mean"` gets neither: that returns the marginal mean
+        (1 - pi) * mu, which drawn through a single Poisson is an ordinary
+        Poisson at a deflated rate — narrower than the plain Poisson this model
+        exists to widen, and with no structural zeros in it at all. The model
+        was scoring identically to `poisson-glm` to two decimal places because
+        it *was* `poisson-glm`.
+        """
         if self.res is None:
-            return np.full(len(dows), self.fallback_mu)
-        X = np.zeros((len(dows), 7))
-        X[np.arange(len(dows)), dows] = 1.0
+            return np.full(len(dows), self.fallback_mu), np.ones(len(dows))
+        X = self._design_row(dows, dates)
+        infl = np.ones((len(dows), 1))
         try:
-            # exog_infl is required; a constant-only inflation model is used.
-            mu = self.res.predict(X, exog_infl=np.ones((len(dows), 1)), which="mean")
-            return safe_positive(mu)
+            mu = safe_positive(self.res.predict(X, exog_infl=infl, which="mean-main"))
+            p_main = np.clip(self.res.predict(X, exog_infl=infl, which="prob-main"), 0.0, 1.0)
+            return mu, p_main
         except Exception:
-            return np.full(len(dows), self.fallback_mu)
+            try:  # older statsmodels: recover pi from the inflation parameters
+                mu = safe_positive(self.res.predict(X, exog_infl=infl, which="mean"))
+                logit = float(np.asarray(self.res.params)[0])
+                pi = 1.0 / (1.0 + np.exp(-logit))
+                return mu / max(1.0 - pi, 1e-6), np.full(len(dows), 1.0 - pi)
+            except Exception:
+                return np.full(len(dows), self.fallback_mu), np.ones(len(dows))
 
-    def sample_days(self, dows: np.ndarray, n: int) -> np.ndarray:
-        mu = self._mu(dows)
-        return np.random.poisson(mu, size=(n, len(dows))).astype(float)
+    def _mu(self, dows: np.ndarray, dates=None) -> np.ndarray:
+        """Marginal mean, for callers that want a point rate."""
+        mu, p_main = self._components(dows, dates)
+        return safe_positive(mu * p_main)
+
+    def _count_draw(self, mu: np.ndarray, n: int) -> np.ndarray:
+        return np.random.poisson(mu, size=(n, len(mu))).astype(float)
+
+    def sample_days(self, dows: np.ndarray, n: int, dates=None) -> np.ndarray:
+        mu, p_main = self._components(dows, dates)
+        on = np.random.random((n, len(dows))) < p_main
+        return self._count_draw(mu, n) * on
 
 
-class ZeroInflatedNegBinModel(NegBinGLM):
+class ZeroInflatedNegBinModel(ZeroInflatedPoissonModel):
+    """Both mechanisms at once: a switch that can turn the day off, and a rate
+    that wanders when it is on.
+
+    It used to be neither. The fit ran, `alpha` was read off it, and then the
+    whole zero-inflated result was thrown away and replaced with a plain
+    Negative Binomial GLM refitted at that alpha — so `zinb-glm` was
+    `negbin-glm` under another name, which is exactly what its score said
+    (18.12 against 18.10 over 52 weeks). The inflation is now carried into the
+    sampler, where it belongs.
+    """
+
     name = "zinb-glm"
     family = "count-glm"
     description = "Zero-inflated Negative Binomial: structural zeros plus overdispersion."
     assumptions = "Both mechanisms operate — off-days and a wandering rate."
     fails_when = "Thin data; the two mechanisms compete to explain the same zeros."
 
+    def __init__(self):
+        super().__init__()
+        self.alpha = 1.0
+
     def _fit_model(self, y, X):
-        import statsmodels.api as sm
         from statsmodels.discrete.count_model import ZeroInflatedNegativeBinomialP
 
-        try:
-            res = ZeroInflatedNegativeBinomialP(y, X, inflation="logit").fit(disp=0, maxiter=200)
-            self.alpha = float(max(res.params[-1], 1e-6))
-            return sm.GLM(y, X, family=sm.families.NegativeBinomial(alpha=self.alpha)).fit()
-        except Exception:
-            return super()._fit_model(y, X)
+        res = ZeroInflatedNegativeBinomialP(y, X, inflation="logit").fit(disp=0, maxiter=200)
+        # Parameter order is [inflation..., exog..., alpha].
+        self.alpha = float(np.clip(np.asarray(res.params)[-1], 1e-6, 50.0))
+        return res
+
+    def fit(self, history: pd.Series) -> "ZeroInflatedNegBinModel":
+        super().fit(history)
+        if self.res is None:  # the ZI fit failed; fall back to moment-matched NB2
+            y = history.to_numpy(dtype=float)
+            mean, var = float(np.mean(y)) if len(y) else 1.0, float(np.var(y)) if len(y) else 1.0
+            self.alpha = float(max((var - mean) / max(mean**2, 1e-9), 1e-4))
+        return self
+
+    def _count_draw(self, mu: np.ndarray, n: int) -> np.ndarray:
+        r = 1.0 / max(self.alpha, 1e-9)
+        p = r / (r + mu)
+        return np.random.negative_binomial(r, p, size=(n, len(mu))).astype(float)
 
 
 class HierarchicalDOWModel(DailyModel):
@@ -268,7 +329,7 @@ class HierarchicalDOWModel(DailyModel):
         self.shrinkage_weight = float(w)
         return self
 
-    def sample_days(self, dows: np.ndarray, n: int) -> np.ndarray:
+    def sample_days(self, dows: np.ndarray, n: int, dates=None) -> np.ndarray:
         out = np.empty((n, len(dows)))
         for j, d in enumerate(dows):
             d = int(d)

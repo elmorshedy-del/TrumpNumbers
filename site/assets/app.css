@@ -185,3 +185,19 @@ summary:hover { color: var(--text-primary); }
 
 footer.site { border-top: 1px solid var(--border); margin-top: 44px; padding-top: 18px; }
 .loading { color: var(--text-muted); font-size: 13.5px; padding: 22px 0; }
+
+/* Freshness banner. A static page cannot know it has gone stale unless the
+   data tells it, and a stale forecast shown as a live one is the failure this
+   project most needs to avoid. Muted when healthy, unmissable when not. */
+.freshness {
+  font-size: 12.5px; color: var(--text-muted); margin: 0 0 18px;
+  padding: 7px 11px; border: 1px solid transparent; border-radius: 8px;
+}
+.freshness.warn {
+  color: var(--warn); border-color: var(--warn);
+  background: color-mix(in srgb, var(--warn) 8%, transparent);
+}
+.freshness.bad {
+  color: var(--bad); border-color: var(--bad);
+  background: color-mix(in srgb, var(--bad) 10%, transparent);
+}

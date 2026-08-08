@@ -48,11 +48,14 @@ class Post:
     ReTruth it is when the ORIGINAL author posted, not when Trump reshared it:
     id 40332 is a ReTruth of a June 26 @SebGorka post but was ingested among the
     July 27 ids. Both the RSS feed and the listing pages agree on this, so the
-    reshare time is simply not recoverable from this source.
+    reshare time is not directly readable from either.
 
-    That is why `is_retruth` exists and why the primary modeled series is
-    originals only (see `series.py`). Including ReTruths would sprinkle counts
-    onto days on which Trump did nothing.
+    It is recoverable, though, which is why `is_retruth` is stored rather than
+    used to drop the row: `trumpstruth_id` is the mirror's arrival order, so the
+    ids either side of a ReTruth bracket the moment it appeared. `series.py`
+    interpolates against them (`redate_retruths`) and counts the reshare on the
+    day it happened. Counting them as *filed* would credit activity to days on
+    which Trump did nothing, sometimes over a year earlier.
     """
 
     trumpstruth_id: int

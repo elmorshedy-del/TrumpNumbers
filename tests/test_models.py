@@ -238,3 +238,80 @@ def test_models_expose_their_metadata():
     for model in build_all_models():
         meta = model.meta()
         assert meta["description"] and meta["assumptions"] and meta["fails_when"], model.name
+
+
+# --- the day in progress ----------------------------------------------------
+
+
+def _events(days, per_hour):
+    """Synthetic post-level frame: `days` dates, posts at the given hours.
+
+    Carries `local` as well as `hour`, because the partial-day estimator works
+    in continuous elapsed time — the hour column alone would exercise only its
+    quantised fallback.
+    """
+    import pandas as pd
+    rows = []
+    for d in days:
+        for h, n in per_hour.items():
+            for i in range(n):
+                day = pd.Timestamp(d)
+                rows.append({
+                    "local_date": day,
+                    "hour": h,
+                    "local": day + pd.Timedelta(hours=h, minutes=i % 60),
+                })
+    df = pd.DataFrame(rows)
+    df["local_date"] = pd.to_datetime(df["local_date"])
+    df["local"] = pd.to_datetime(df["local"])
+    return df
+
+
+def test_a_silent_morning_does_not_predict_a_silent_day():
+    """The failure that rules out naive scaling: 0 by noon is not 0 by midnight."""
+    import numpy as np
+    import pandas as pd
+    from truthforecast.partial import sample_rest_of_today
+
+    # 200 history days that post nothing before noon and 10 posts after it.
+    days = pd.date_range("2025-01-01", periods=200, freq="D")
+    ev = _events(days, {14: 5, 20: 5})
+    # Today contributes no rows at all — that IS the silent morning.
+    today = pd.Timestamp("2025-07-25 12:00")
+
+    rest = sample_rest_of_today(ev, today, n=2000)
+    # Scaling by elapsed share would say 0/0.0 -> 0. History says ~10.
+    assert np.median(rest) > 5, f"predicted {np.median(rest)} more posts after a silent morning"
+
+
+def test_a_finished_day_has_little_left():
+    import numpy as np
+    import pandas as pd
+    from truthforecast.partial import sample_rest_of_today
+
+    days = pd.date_range("2025-01-01", periods=200, freq="D")
+    ev = _events(days, {9: 10, 11: 10})          # all activity before noon
+    today = pd.Timestamp("2025-07-25 23:00")
+    ev = pd.concat([ev, _events([today.normalize()], {9: 10, 11: 10})], ignore_index=True)
+
+    rest = sample_rest_of_today(ev, today, n=2000)
+    assert np.quantile(rest, 0.9) < 2, "a day whose hours are gone should have nothing left"
+
+
+def test_today_is_counted_in_the_week_total():
+    """Regression: today's posts used to be dropped and re-simulated."""
+    import numpy as np
+    import pandas as pd
+    from truthforecast.series import daily_counts
+    from truthforecast.forecast import current_week_forecast
+
+    days = pd.date_range("2025-01-06", periods=180, freq="D")   # a Monday start
+    ev = _events(days, {10: 8, 18: 8})
+    df = ev.copy()
+    df["is_retruth"] = 0
+    series = daily_counts(df, "all")
+
+    now = pd.Timestamp("2025-07-04 23:00")                       # a Friday, nearly over
+    fc = current_week_forecast(series, events=ev, now=now, n_samples=3000)
+    assert fc["today"]["posts_so_far"] == 16
+    assert fc["week"]["week_to_date_including_today"] == fc["week"]["observed_total"] + 16

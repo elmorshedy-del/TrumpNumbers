@@ -9,7 +9,7 @@ every model downstream would faithfully learn from the lie.
 from __future__ import annotations
 
 import sqlite3
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import pytest
@@ -150,3 +150,150 @@ def test_second_precision_supersedes_minute(tmp_path, rss_text, listing_html):
             "SELECT time_precision FROM posts WHERE trumpstruth_id = ?", (sid,)
         ).fetchone()
         assert row["time_precision"] == "second"
+
+
+# --- polling coverage -------------------------------------------------------
+#
+# The poll's failure mode is silent: posts missed during an outage do not show
+# up as a gap, they show up as *quiet days*, which every model downstream then
+# fits as real. These tests pin the two behaviours that prevent it — walk back
+# far enough to cover the gap, and refuse to record a gap as covered when the
+# walk stopped early.
+
+
+class FakeClient:
+    """A client whose walk_back stops after `pages` pages, recording its target."""
+
+    def __init__(self, posts, pages=3, exhausted=False, reach_target=True):
+        self._posts = posts
+        self._pages = pages
+        self._exhausted = exhausted
+        self._reach_target = reach_target
+        self.targets = []
+
+    def fetch_feed(self):
+        return self._posts[:1]
+
+    def walk_back(self, start=None, until=None, max_pages=None):
+        from truthforecast.ingest.client import WalkPage
+
+        self.targets.append(until)
+        for i in range(self._pages):
+            last = i == self._pages - 1
+            reached = until - timedelta(hours=1) if (last and self._reach_target) else start
+            yield WalkPage(self._posts, reached, exhausted=self._exhausted and last)
+
+
+@pytest.fixture
+def isolated_db(tmp_path, monkeypatch):
+    from truthforecast.ingest import store
+
+    monkeypatch.setattr(store, "DB_PATH", tmp_path / "poll.db")
+    return tmp_path / "poll.db"
+
+
+def test_poll_walks_back_to_the_last_covered_point(isolated_db, rss_text):
+    """The catch-up target is the previous watermark, not "the newest page"."""
+    from truthforecast.ingest.run import POLL_OVERLAP, poll
+    from truthforecast.ingest.store import get_state, set_state
+
+    posts = parse_rss(rss_text)
+    watermark = datetime(2026, 3, 1, 12, 0, tzinfo=timezone.utc)
+    with connect(isolated_db) as conn:
+        set_state(conn, "last_poll_utc", watermark.isoformat())
+
+    client = FakeClient(posts)
+    poll(client=client)
+
+    assert client.targets == [watermark - POLL_OVERLAP]
+    with connect(isolated_db) as conn:
+        assert get_state(conn, "last_poll_complete") == "1"
+        assert get_state(conn, "last_poll_utc") != watermark.isoformat()
+
+
+def test_an_incomplete_walk_leaves_the_watermark_alone(isolated_db, rss_text):
+    """A walk that gave up early must not be recorded as coverage."""
+    from truthforecast.ingest.run import poll
+    from truthforecast.ingest.store import get_state, set_state
+
+    posts = parse_rss(rss_text)
+    watermark = datetime(2026, 3, 1, 12, 0, tzinfo=timezone.utc)
+    with connect(isolated_db) as conn:
+        set_state(conn, "last_poll_utc", watermark.isoformat())
+
+    poll(client=FakeClient(posts, pages=2, reach_target=False))
+
+    with connect(isolated_db) as conn:
+        # Unchanged, so the next run retries the same gap rather than skipping it.
+        assert get_state(conn, "last_poll_utc") == watermark.isoformat()
+        assert get_state(conn, "last_poll_complete") == "0"
+
+
+# --- notifications ----------------------------------------------------------
+
+
+def test_notifier_adopts_the_present_on_first_run(isolated_db, rss_text):
+    """A fresh database must not page you about the whole archive."""
+    from truthforecast.ingest.store import get_state
+    from truthforecast.notify import notify
+
+    posts = parse_rss(rss_text)
+    with connect(isolated_db) as conn:
+        upsert_posts(conn, posts)
+
+    assert notify() == 0
+    with connect(isolated_db) as conn:
+        assert get_state(conn, "notified_max_id") == str(max(p.trumpstruth_id for p in posts))
+
+
+def test_a_failed_send_does_not_advance_the_watermark(isolated_db, monkeypatch, rss_text):
+    """Better to notify twice than to drop one silently."""
+    from truthforecast import notify as notify_mod
+    from truthforecast.ingest.store import get_state, set_state
+
+    posts = sorted(parse_rss(rss_text), key=lambda p: p.trumpstruth_id)
+    with connect(isolated_db) as conn:
+        upsert_posts(conn, posts)
+        set_state(conn, "notified_max_id", str(posts[-3].trumpstruth_id))
+
+    monkeypatch.setenv("TTF_WEBHOOK_URL", "http://127.0.0.1:9/never")
+    monkeypatch.setattr(notify_mod, "_post", lambda *a, **k: False)
+
+    assert notify_mod.notify() == 2
+    with connect(isolated_db) as conn:
+        assert get_state(conn, "notified_max_id") == str(posts[-3].trumpstruth_id)
+
+
+# --- reading Truth Social directly ------------------------------------------
+
+
+def test_direct_account_feed_parses():
+    from truthforecast.ingest.direct import parse_account_rss
+
+    xml = (FIXTURES / "truthsocial_account.rss").read_text()
+    posts = parse_account_rss(xml)
+
+    assert [p.status_id for p in posts] == [117011459082239407, 117011459082239400]
+    assert posts[0].text == "THE WITCH HUNT CONTINUES! Second paragraph."
+    assert posts[0].created_utc.isoformat() == "2026-07-30T23:13:14+00:00"
+
+
+def test_direct_feed_rejects_non_rss():
+    from truthforecast.ingest.direct import parse_account_rss
+
+    with pytest.raises(ValueError):
+        parse_account_rss("<html><body>Just a moment...</body></html>")
+
+
+def test_direct_alerts_keep_their_own_watermark(isolated_db):
+    """The direct path must never write into the modelled series."""
+    from truthforecast.ingest.direct import parse_account_rss
+    from truthforecast.ingest.store import get_state, post_count
+    from truthforecast.notify import notify_direct
+
+    posts = parse_account_rss((FIXTURES / "truthsocial_account.rss").read_text())
+
+    assert notify_direct(posts) == 0  # cold start adopts the present
+    with connect(isolated_db) as conn:
+        assert get_state(conn, "notified_direct_max_id") == "117011459082239407"
+        assert post_count(conn) == 0  # nothing entered the archive
