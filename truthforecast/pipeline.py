@@ -32,25 +32,67 @@ log = logging.getLogger(__name__)
 
 
 def _write(name: str, payload: dict) -> Path:
+    """Write an export, refusing to emit anything a browser cannot parse.
+
+    `allow_nan` defaults to True, and what it emits for a NaN is the bare token
+    `NaN` — which Python reads back happily and `JSON.parse` rejects outright.
+    The site loads every export through one `fetch().json()`, so a single NaN
+    anywhere in one file takes the whole page to its "No data yet" fallback,
+    with no console error and no failed request to point at it.
+
+    So the export refuses to be written instead. A failed job leaves the last
+    good deploy up and says so in the run log; a deployed file that will not
+    parse looks exactly like an outage and is invisible from this side.
+    `_json_safe` is what turns the non-finite values into null before we get
+    here — this is the assertion that it did.
+    """
     ensure_dirs()
     path = EXPORT_DIR / name
-    path.write_text(json.dumps(payload, indent=2, default=str))
+    path.write_text(json.dumps(payload, indent=2, default=str, allow_nan=False))
     log.info("wrote %s", path)
     return path
 
 
 def _json_safe(obj):
+    """Payload -> something `json.dumps(allow_nan=False)` accepts.
+
+    Every missing value has to land on null, whatever shape it arrives in.
+    They arrive in several: numpy scalars from the model layer, `float('nan')`
+    from pandas whenever a nullable column is read into object dtype (a NULL
+    TEXT column does this, and `np.nan` is a plain Python float — `isinstance`
+    against `np.floating` does NOT catch it), and `pd.NA`/`NaT` from the newer
+    dtypes. Checking the float protocol rather than the concrete type is what
+    keeps this from having to be extended per source.
+    """
     if isinstance(obj, dict):
         return {k: _json_safe(v) for k, v in obj.items()}
     if isinstance(obj, (list, tuple)):
         return [_json_safe(v) for v in obj]
     if isinstance(obj, (np.integer,)):
         return int(obj)
-    if isinstance(obj, (np.floating,)):
-        return None if not np.isfinite(obj) else float(obj)
+    # bool before float: numpy bools are not floats, but Python bools ARE ints,
+    # and letting one fall through to the int branch below would print 0/1.
+    if isinstance(obj, (bool, np.bool_)):
+        return bool(obj)
+    if isinstance(obj, (float, np.floating)):
+        return float(obj) if np.isfinite(obj) else None
+    # Before the timestamp branch: NaT IS a datetime subclass, and its
+    # `.isoformat()` returns the string "NaT" — which parses, and is a lie.
+    if obj is None or obj is pd.NaT or obj is pd.NA:
+        return None
     if isinstance(obj, (pd.Timestamp, datetime)):
         return obj.isoformat()
     return obj
+
+
+def _text_or_none(value) -> str | None:
+    """A nullable text cell as `str | None`, whichever null pandas handed back."""
+    if value is None or (isinstance(value, float) and not np.isfinite(value)):
+        return None
+    if value is pd.NaT or value is pd.NA:
+        return None
+    text = str(value).strip()
+    return text or None
 
 
 def load_ranking() -> list[str]:
@@ -213,7 +255,10 @@ def refresh_posts(df=None, limit: int = 60) -> dict:
                 "at": r.local.isoformat(),
                 "text": (r.text or "")[:600],
                 "is_retruth": bool(r.is_retruth),
-                "source_handle": r.source_handle,
+                # A NULL TEXT column comes back from pandas as float NaN, not
+                # None. The site prints this straight into the ReTruth pill, so
+                # it wants the absent case to be absent, not the string "nan".
+                "source_handle": _text_or_none(r.source_handle),
                 "has_media": bool(r.has_media),
                 "url": r.truth_url or f"https://trumpstruth.org/statuses/{int(r.trumpstruth_id)}",
             }

@@ -10,6 +10,8 @@ by a docstring sitting directly above the code.
 
 from __future__ import annotations
 
+import json
+
 import numpy as np
 import pandas as pd
 import pytest
@@ -584,3 +586,56 @@ def test_the_live_record_is_append_only_and_scores_closed_weeks(tmp_path):
     assert scored["enough_to_conclude"] is False
     # One week is not a calibration claim, and the record has to say so.
     assert "Too short" in scored["note"]
+
+
+# --------------------------------------------------- the exports have to parse
+
+def test_an_export_is_valid_json_when_a_value_is_missing():
+    """A single NaN made the whole site say "No data yet".
+
+    A NULL TEXT column comes back from pandas as float NaN — a plain Python
+    float, which the old `_json_safe` did not treat as missing because it only
+    tested `np.floating`. `json.dumps` then wrote the bare token `NaN`, which
+    Python reads back without complaint and `JSON.parse` refuses. Every page
+    loads its data through one `fetch().json()`, so that one cell blanked the
+    tracker until the post it belonged to aged out of the 60-post feed: no
+    console error, no failed request, and it fixed itself before anyone could
+    look. The property worth pinning is that an export parses under the rules
+    the *browser* applies, not the ones Python is lenient about.
+    """
+    from truthforecast.pipeline import _json_safe
+
+    payload = _json_safe({
+        "source_handle": float("nan"),         # what broke it: a plain float
+        "np_missing": np.float64("nan"),
+        "infinite": np.float64("inf"),
+        "pandas_na": pd.NA,
+        "not_a_time": pd.NaT,
+        "nested": [{"deep": float("nan")}],
+        "kept": {"count": np.int64(7), "rate": np.float64(1.5), "flag": np.bool_(True)},
+    })
+
+    # strict=True is what a browser does; Python's default accepts NaN.
+    text = json.dumps(payload, allow_nan=False)
+    assert json.loads(text, parse_constant=_reject) == {
+        "source_handle": None, "np_missing": None, "infinite": None,
+        "pandas_na": None, "not_a_time": None,
+        "nested": [{"deep": None}],
+        "kept": {"count": 7, "rate": 1.5, "flag": True},
+    }
+
+
+def test_a_missing_handle_never_reaches_the_feed_as_a_number():
+    """The site prints `source_handle` straight into the ReTruth pill."""
+    from truthforecast.pipeline import _text_or_none
+
+    assert _text_or_none(float("nan")) is None
+    assert _text_or_none(pd.NA) is None
+    assert _text_or_none(None) is None
+    assert _text_or_none("") is None
+    assert _text_or_none("  ") is None
+    assert _text_or_none("@realDonaldTrump") == "@realDonaldTrump"
+
+
+def _reject(token):
+    raise AssertionError(f"a browser would refuse this export: {token}")
