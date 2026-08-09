@@ -1,344 +1,408 @@
 {
-  "generated_at": "2026-07-31T04:14:57.531700+00:00",
+  "generated_at": "2026-08-08T08:59:29.299639+00:00",
+  "coverage": {
+    "posts_stored": 34449,
+    "earliest_post_utc": "2022-02-14T15:54:00+00:00",
+    "latest_post_utc": "2026-08-08T02:53:58+00:00",
+    "last_poll_utc": "2026-08-08T08:55:28.125039+00:00",
+    "last_poll_attempt_utc": "2026-08-08T08:55:28.125039+00:00",
+    "last_poll_complete": true,
+    "last_reconcile_utc": "2026-08-08T08:55:29.920496+00:00",
+    "last_backfill_utc": "2026-07-31T09:02:17.594720+00:00"
+  },
   "window": {
     "start": "2025-01-20",
     "label": "Second term (from inauguration)"
   },
+  "ranking_basis": "development leaderboard (the holdout is reported, never used to select)",
   "headline": {
     "models_used": [
+      "hier-dow-eb",
       "negbin-glm-trend",
-      "ingarch",
-      "hawkes"
+      "log-sarima"
     ],
-    "median": 153.3,
+    "median": 213.4,
     "interval_50": [
-      139.3,
-      169.7
+      207.7,
+      223.2
     ],
     "interval_80": [
-      129.0,
-      187.0
+      203.8,
+      234.8
     ],
     "interval_95": [
-      119.3,
-      209.7
+      201.6,
+      250.7
     ],
     "quantiles": {
-      "0.025": 119.3,
-      "0.05": 124.0,
-      "0.1": 129.0,
-      "0.25": 139.3,
-      "0.5": 153.3,
-      "0.75": 169.7,
-      "0.9": 187.0,
-      "0.95": 198.7,
-      "0.975": 209.7
+      "0.025": 201.6,
+      "0.05": 202.5,
+      "0.1": 203.8,
+      "0.25": 207.7,
+      "0.5": 213.4,
+      "0.75": 223.2,
+      "0.9": 234.8,
+      "0.95": 241.1,
+      "0.975": 250.7
     },
     "asymmetry": {
-      "downside": 24.3,
-      "upside": 33.7,
+      "downside": 9.6,
+      "upside": 21.4,
       "note": "Upside exceeding downside is the heavy right tail, not a rounding artefact."
     },
-    "week_to_date": 93,
-    "implied_remaining": 60.3
+    "week_to_date": 200,
+    "implied_remaining": 13.4
   },
   "week": {
-    "week_start": "2026-07-27",
-    "week_end": "2026-08-02",
-    "days_observed": 4,
-    "observed_total": 93,
-    "today": "2026-07-31",
+    "week_start": "2026-08-02",
+    "week_end": "2026-08-08",
+    "convention": "Sunday\u2013Saturday, all post types, excluding deleted",
+    "days_observed": 6,
+    "observed_total": 200,
+    "today": "2026-08-08",
     "today_partial_count": 0,
-    "today_dow": 4,
-    "days_remaining": 2,
-    "week_to_date_including_today": 93
+    "today_dow": 5,
+    "days_into_week": 6,
+    "days_remaining": 0,
+    "week_to_date_including_today": 200
+  },
+  "today": {
+    "posts_so_far": 0,
+    "share_of_day_elapsed": 0.2079,
+    "share_of_posts_elapsed": 0.039,
+    "rest_of_today_median": 11.7,
+    "rest_of_today_80": [
+      3.9,
+      27.4
+    ],
+    "day_total_median": 11.7,
+    "comparable_days": 433.1,
+    "method": "Each model's own distribution for today is conditioned on how today has actually gone, using the days whose posting looked most like it at this exact moment. Neither ignores today nor scales it up \u2014 both of those score worse, in opposite halves of the day. At midnight the conditioning is the identity, so the projection does not jump when the date changes."
   },
   "threshold_probabilities": [
     {
-      "threshold": 125.0,
-      "probability": 0.937,
+      "threshold": 123.0,
+      "probability": 0.999,
       "soft": true,
-      "note": "estimated in the tail \u2014 treat as approximate"
+      "bounded": true,
+      "note": "outside the sampled range \u2014 the honest statement is >99.9%",
+      "models_used": [
+        "hier-dow-eb",
+        "negbin-glm-trend",
+        "log-sarima"
+      ]
     },
     {
-      "threshold": 161.5,
-      "probability": 0.373,
-      "soft": false,
-      "note": ""
+      "threshold": 158.0,
+      "probability": 0.999,
+      "soft": true,
+      "bounded": true,
+      "note": "outside the sampled range \u2014 the honest statement is >99.9%",
+      "models_used": [
+        "hier-dow-eb",
+        "negbin-glm-trend",
+        "log-sarima"
+      ]
     },
     {
-      "threshold": 186.4,
-      "probability": 0.107,
-      "soft": false,
-      "note": ""
+      "threshold": 201.4,
+      "probability": 0.977,
+      "soft": true,
+      "bounded": false,
+      "note": "estimated in the tail \u2014 treat as approximate",
+      "models_used": [
+        "hier-dow-eb",
+        "negbin-glm-trend",
+        "log-sarima"
+      ]
     }
   ],
+  "live_record": {
+    "available": true,
+    "n_forecasts": 1,
+    "n_weeks": 1,
+    "first_week": "2026-07-26",
+    "last_week": "2026-07-26",
+    "crps": 4.49,
+    "coverage80": 1.0,
+    "coverage95": 1.0,
+    "median_abs_error": 5.4,
+    "by_cut": {
+      "6": {
+        "n": 1.0,
+        "crps": 4.493,
+        "coverage80": 1.0
+      }
+    },
+    "enough_to_conclude": false,
+    "note": "Scored prospectively: 1 week(s) forecast before the fact and graded after. Too short to conclude anything \u2014 this fills in as the deployment runs."
+  },
   "per_model": [
     {
       "model": "empirical-dow",
       "family": "baseline",
-      "median": 137.0,
-      "mean": 143.2,
+      "median": 210.4,
+      "mean": 214.3,
       "quantiles": {
-        "0.025": 111.0,
-        "0.05": 114.0,
-        "0.1": 118.0,
-        "0.25": 126.0,
-        "0.5": 137.0,
-        "0.75": 153.0,
-        "0.9": 177.0,
-        "0.95": 195.0,
-        "0.975": 215.0
+        "0.025": 201.8,
+        "0.05": 203.0,
+        "0.1": 203.0,
+        "0.25": 206.6,
+        "0.5": 210.4,
+        "0.75": 218.0,
+        "0.9": 231.9,
+        "0.95": 239.9,
+        "0.975": 250.0
       }
     },
     {
       "model": "empirical-dow-8w",
       "family": "baseline",
-      "median": 145.0,
-      "mean": 154.8,
+      "median": 214.4,
+      "mean": 216.1,
       "quantiles": {
-        "0.025": 115.0,
-        "0.05": 118.0,
-        "0.1": 122.0,
-        "0.25": 132.0,
-        "0.5": 145.0,
-        "0.75": 171.0,
-        "0.9": 215.0,
-        "0.95": 228.0,
-        "0.975": 234.0
+        "0.025": 200.0,
+        "0.05": 200.0,
+        "0.1": 200.0,
+        "0.25": 203.0,
+        "0.5": 214.4,
+        "0.75": 218.0,
+        "0.9": 239.9,
+        "0.95": 239.9,
+        "0.975": 239.9
       }
     },
     {
       "model": "last-week",
       "family": "baseline",
-      "median": 157.8,
-      "mean": 158.4,
+      "median": 211.5,
+      "mean": 214.3,
       "quantiles": {
-        "0.025": 108.7,
-        "0.05": 120.6,
-        "0.1": 131.8,
-        "0.25": 144.0,
-        "0.5": 157.8,
-        "0.75": 171.3,
-        "0.9": 182.0,
-        "0.95": 202.0,
-        "0.975": 225.4
+        "0.025": 201.9,
+        "0.05": 203.0,
+        "0.1": 203.8,
+        "0.25": 207.0,
+        "0.5": 211.5,
+        "0.75": 218.0,
+        "0.9": 226.6,
+        "0.95": 235.0,
+        "0.975": 248.0
       }
     },
     {
       "model": "trailing-median-4w",
       "family": "baseline",
-      "median": 141.0,
-      "mean": 143.8,
+      "median": 211.2,
+      "mean": 214.2,
       "quantiles": {
-        "0.025": 116.8,
-        "0.05": 119.5,
-        "0.1": 122.9,
-        "0.25": 129.5,
-        "0.5": 141.0,
-        "0.75": 155.9,
-        "0.9": 165.1,
-        "0.95": 173.2,
-        "0.975": 192.4
+        "0.025": 201.9,
+        "0.05": 202.9,
+        "0.1": 203.6,
+        "0.25": 206.8,
+        "0.5": 211.2,
+        "0.75": 218.0,
+        "0.9": 226.7,
+        "0.95": 235.1,
+        "0.975": 250.7
       }
     },
     {
       "model": "block-bootstrap",
       "family": "resampling",
-      "median": 134.0,
-      "mean": 143.4,
+      "median": 211.4,
+      "mean": 214.3,
       "quantiles": {
-        "0.025": 113.0,
-        "0.05": 116.0,
-        "0.1": 119.0,
-        "0.25": 125.0,
-        "0.5": 134.0,
-        "0.75": 152.0,
-        "0.9": 179.0,
-        "0.95": 201.0,
-        "0.975": 225.0
+        "0.025": 201.9,
+        "0.05": 203.0,
+        "0.1": 203.6,
+        "0.25": 206.9,
+        "0.5": 211.4,
+        "0.75": 218.0,
+        "0.9": 226.7,
+        "0.95": 235.1,
+        "0.975": 249.8
       }
     },
     {
       "model": "iid-day-bootstrap",
       "family": "resampling",
-      "median": 137.0,
-      "mean": 143.5,
+      "median": 211.5,
+      "mean": 214.4,
       "quantiles": {
-        "0.025": 112.0,
-        "0.05": 115.0,
-        "0.1": 119.0,
-        "0.25": 126.0,
-        "0.5": 137.0,
-        "0.75": 153.0,
-        "0.9": 177.0,
-        "0.95": 197.0,
-        "0.975": 217.0
+        "0.025": 201.9,
+        "0.05": 203.0,
+        "0.1": 203.6,
+        "0.25": 206.9,
+        "0.5": 211.5,
+        "0.75": 218.0,
+        "0.9": 227.2,
+        "0.95": 235.1,
+        "0.975": 249.7
       }
     },
     {
       "model": "poisson-glm",
       "family": "count-glm",
-      "median": 143.0,
-      "mean": 143.5,
+      "median": 214.4,
+      "mean": 214.7,
       "quantiles": {
-        "0.025": 130.0,
-        "0.05": 132.0,
-        "0.1": 135.0,
-        "0.25": 139.0,
-        "0.5": 143.0,
-        "0.75": 148.0,
-        "0.9": 153.0,
-        "0.95": 155.0,
-        "0.975": 158.0
+        "0.025": 207.8,
+        "0.05": 208.6,
+        "0.1": 210.4,
+        "0.25": 212.6,
+        "0.5": 214.4,
+        "0.75": 217.1,
+        "0.9": 219.8,
+        "0.95": 220.5,
+        "0.975": 223.0
       }
     },
     {
       "model": "negbin-glm",
       "family": "count-glm",
-      "median": 141.0,
-      "mean": 143.5,
+      "median": 212.6,
+      "mean": 214.4,
       "quantiles": {
-        "0.025": 110.0,
-        "0.05": 114.0,
-        "0.1": 118.0,
-        "0.25": 128.0,
-        "0.5": 141.0,
-        "0.75": 156.0,
-        "0.9": 172.0,
-        "0.95": 183.0,
-        "0.975": 192.0
+        "0.025": 200.9,
+        "0.05": 201.8,
+        "0.1": 203.6,
+        "0.25": 206.6,
+        "0.5": 212.6,
+        "0.75": 219.8,
+        "0.9": 227.7,
+        "0.95": 234.6,
+        "0.975": 238.3
       }
     },
     {
       "model": "negbin-glm-trend",
       "family": "count-glm",
-      "median": 150.0,
-      "mean": 153.1,
+      "median": 214.4,
+      "mean": 216.9,
       "quantiles": {
-        "0.025": 114.0,
-        "0.05": 119.0,
-        "0.1": 124.0,
-        "0.25": 135.0,
-        "0.5": 150.0,
-        "0.75": 167.0,
-        "0.9": 186.0,
-        "0.95": 199.0,
-        "0.975": 210.0
+        "0.025": 201.8,
+        "0.05": 203.0,
+        "0.1": 204.5,
+        "0.25": 208.6,
+        "0.5": 214.4,
+        "0.75": 223.7,
+        "0.9": 234.1,
+        "0.95": 238.3,
+        "0.975": 243.0
       }
     },
     {
       "model": "zip-glm",
       "family": "count-glm",
-      "median": 143.0,
-      "mean": 143.5,
+      "median": 214.4,
+      "mean": 214.8,
       "quantiles": {
-        "0.025": 130.0,
-        "0.05": 132.0,
-        "0.1": 134.0,
-        "0.25": 139.0,
-        "0.5": 143.0,
-        "0.75": 148.0,
-        "0.9": 153.0,
-        "0.95": 156.0,
-        "0.975": 158.0
+        "0.025": 207.8,
+        "0.05": 208.6,
+        "0.1": 210.4,
+        "0.25": 212.6,
+        "0.5": 214.4,
+        "0.75": 217.1,
+        "0.9": 219.8,
+        "0.95": 220.5,
+        "0.975": 223.0
       }
     },
     {
       "model": "zinb-glm",
       "family": "count-glm",
-      "median": 141.0,
-      "mean": 143.4,
+      "median": 212.6,
+      "mean": 214.5,
       "quantiles": {
-        "0.025": 110.0,
-        "0.05": 114.0,
-        "0.1": 118.0,
-        "0.25": 128.0,
-        "0.5": 141.0,
-        "0.75": 156.0,
-        "0.9": 172.0,
-        "0.95": 182.0,
-        "0.975": 193.0
+        "0.025": 200.9,
+        "0.05": 201.8,
+        "0.1": 203.6,
+        "0.25": 206.6,
+        "0.5": 212.6,
+        "0.75": 219.8,
+        "0.9": 227.7,
+        "0.95": 234.6,
+        "0.975": 238.3
       }
     },
     {
       "model": "hier-dow-eb",
       "family": "shrinkage",
-      "median": 141.0,
-      "mean": 145.7,
+      "median": 211.2,
+      "mean": 215.4,
       "quantiles": {
-        "0.025": 106.0,
-        "0.05": 109.0,
-        "0.1": 115.0,
-        "0.25": 126.0,
-        "0.5": 141.0,
-        "0.75": 161.0,
-        "0.9": 183.0,
-        "0.95": 197.0,
-        "0.975": 212.0
+        "0.025": 200.0,
+        "0.05": 200.9,
+        "0.1": 201.8,
+        "0.25": 205.6,
+        "0.5": 211.2,
+        "0.75": 222.2,
+        "0.9": 234.6,
+        "0.95": 242.0,
+        "0.975": 247.9
       }
     },
     {
       "model": "ingarch",
       "family": "dynamics",
-      "median": 155.0,
-      "mean": 158.7,
+      "median": 211.5,
+      "mean": 214.3,
       "quantiles": {
-        "0.025": 117.0,
-        "0.05": 122.0,
-        "0.1": 128.0,
-        "0.25": 139.0,
-        "0.5": 155.0,
-        "0.75": 174.0,
-        "0.9": 194.0,
-        "0.95": 208.0,
-        "0.975": 221.0
+        "0.025": 202.0,
+        "0.05": 203.0,
+        "0.1": 203.8,
+        "0.25": 207.0,
+        "0.5": 211.5,
+        "0.75": 218.0,
+        "0.9": 226.6,
+        "0.95": 234.9,
+        "0.975": 245.3
       }
     },
     {
       "model": "log-sarima",
       "family": "dynamics",
-      "median": 148.9,
-      "mean": 155.2,
+      "median": 214.7,
+      "mean": 218.5,
       "quantiles": {
-        "0.025": 115.2,
-        "0.05": 118.6,
-        "0.1": 123.6,
-        "0.25": 133.7,
-        "0.5": 148.9,
-        "0.75": 169.3,
-        "0.9": 194.2,
-        "0.95": 214.4,
-        "0.975": 233.2
+        "0.025": 203.0,
+        "0.05": 203.6,
+        "0.1": 205.0,
+        "0.25": 209.0,
+        "0.5": 214.7,
+        "0.75": 223.8,
+        "0.9": 235.6,
+        "0.95": 243.0,
+        "0.975": 261.2
       }
     },
     {
       "model": "poisson-hmm",
       "family": "regime",
-      "median": 143.0,
-      "mean": 154.9,
+      "median": 214.4,
+      "mean": 220.9,
       "quantiles": {
-        "0.025": 123.0,
-        "0.05": 125.0,
-        "0.1": 128.0,
-        "0.25": 132.0,
-        "0.5": 143.0,
-        "0.75": 171.0,
-        "0.9": 198.0,
-        "0.95": 210.0,
-        "0.975": 223.0
+        "0.025": 206.6,
+        "0.05": 207.8,
+        "0.1": 208.6,
+        "0.25": 211.2,
+        "0.5": 214.4,
+        "0.75": 235.5,
+        "0.9": 242.5,
+        "0.95": 243.4,
+        "0.975": 247.9
       },
       "detail": {
         "state_rates": [
-          13.38,
-          47.46
+          13.25,
+          46.18
         ],
         "stickiness": [
-          0.866,
-          0.295
+          0.854,
+          0.3
         ],
         "expected_run_length_days": [
-          7.5,
+          6.8,
           1.4
         ]
       }
@@ -346,29 +410,29 @@
     {
       "model": "negbin-hmm",
       "family": "regime",
-      "median": 149.0,
-      "mean": 159.0,
+      "median": 215.7,
+      "mean": 220.3,
       "quantiles": {
-        "0.025": 114.0,
-        "0.05": 118.0,
-        "0.1": 123.0,
-        "0.25": 133.0,
-        "0.5": 149.0,
-        "0.75": 173.0,
-        "0.9": 209.0,
-        "0.95": 237.0,
-        "0.975": 261.0
+        "0.025": 203.0,
+        "0.05": 203.6,
+        "0.1": 205.6,
+        "0.25": 208.6,
+        "0.5": 215.7,
+        "0.75": 226.2,
+        "0.9": 236.9,
+        "0.95": 256.2,
+        "0.975": 268.7
       },
       "detail": {
         "state_rates": [
-          9.41,
-          24.51,
-          74.8
+          9.5,
+          24.37,
+          70.31
         ],
         "stickiness": [
-          0.607,
-          0.456,
-          0.114
+          0.601,
+          0.437,
+          0.096
         ],
         "expected_run_length_days": [
           2.5,
@@ -380,23 +444,23 @@
     {
       "model": "hawkes",
       "family": "self-exciting",
-      "median": 155.0,
-      "mean": 157.0,
+      "median": 211.5,
+      "mean": 214.3,
       "quantiles": {
-        "0.025": 127.0,
-        "0.05": 131.0,
-        "0.1": 135.0,
-        "0.25": 144.0,
-        "0.5": 155.0,
-        "0.75": 168.0,
-        "0.9": 181.0,
-        "0.95": 189.0,
-        "0.975": 198.0
+        "0.025": 201.9,
+        "0.05": 203.0,
+        "0.1": 203.6,
+        "0.25": 206.9,
+        "0.5": 211.5,
+        "0.75": 218.0,
+        "0.9": 226.7,
+        "0.95": 235.3,
+        "0.975": 250.0
       },
       "detail": {
         "fitted": true,
-        "branching_ratio": 0.559,
-        "decay_beta_per_day": 1012.34,
+        "branching_ratio": 0.558,
+        "decay_beta_per_day": 1000.95,
         "kernel_half_life_hours": 0.02,
         "interpretation": "each post triggers on average 0.56 further posts; a burst dies out below 1.0"
       }
@@ -404,118 +468,78 @@
     {
       "model": "lgbm-quantile",
       "family": "ml",
-      "median": 139.4,
-      "mean": 145.0,
+      "median": 211.5,
+      "mean": 214.2,
       "quantiles": {
-        "0.025": 119.2,
-        "0.05": 121.7,
-        "0.1": 124.6,
-        "0.25": 131.7,
-        "0.5": 139.4,
-        "0.75": 158.0,
-        "0.9": 169.6,
-        "0.95": 176.2,
-        "0.975": 187.6
+        "0.025": 201.9,
+        "0.05": 203.0,
+        "0.1": 203.6,
+        "0.25": 206.9,
+        "0.5": 211.5,
+        "0.75": 218.0,
+        "0.9": 226.6,
+        "0.95": 235.0,
+        "0.975": 247.6
       }
     },
     {
       "model": "ensemble-pool",
       "family": "ensemble",
-      "median": 139.0,
-      "mean": 144.2,
+      "median": 211.4,
+      "mean": 214.4,
       "quantiles": {
-        "0.025": 110.0,
-        "0.05": 114.0,
-        "0.1": 118.0,
-        "0.25": 126.0,
-        "0.5": 139.0,
-        "0.75": 156.0,
-        "0.9": 178.0,
-        "0.95": 195.0,
-        "0.975": 214.0
+        "0.025": 202.0,
+        "0.05": 203.0,
+        "0.1": 203.6,
+        "0.25": 207.0,
+        "0.5": 211.4,
+        "0.75": 218.0,
+        "0.9": 227.0,
+        "0.95": 235.5,
+        "0.975": 250.7
       }
     },
     {
       "model": "ensemble-vincent",
       "family": "ensemble",
-      "median": 138.2,
-      "mean": 144.0,
+      "median": 211.5,
+      "mean": 214.3,
       "quantiles": {
-        "0.025": 110.4,
-        "0.05": 114.0,
-        "0.1": 117.8,
-        "0.25": 126.2,
-        "0.5": 138.2,
-        "0.75": 155.3,
-        "0.9": 177.0,
-        "0.95": 194.8,
-        "0.975": 209.0
+        "0.025": 201.9,
+        "0.05": 203.0,
+        "0.1": 203.6,
+        "0.25": 207.0,
+        "0.5": 211.5,
+        "0.75": 218.0,
+        "0.9": 226.6,
+        "0.95": 235.0,
+        "0.975": 249.2
       }
     }
   ],
   "ranking": [
-    "negbin-glm-trend",
-    "ingarch",
-    "hawkes",
-    "log-sarima",
-    "poisson-hmm",
-    "negbin-hmm",
     "hier-dow-eb",
+    "negbin-glm-trend",
+    "log-sarima",
+    "negbin-hmm",
+    "poisson-hmm",
+    "ensemble-pool",
+    "ensemble-vincent",
     "zinb-glm",
     "negbin-glm",
-    "ensemble-vincent",
-    "ensemble-pool",
-    "trailing-median-4w",
     "iid-day-bootstrap",
     "empirical-dow",
     "block-bootstrap",
+    "trailing-median-4w",
+    "hawkes",
     "empirical-dow-8w",
-    "lgbm-quantile",
-    "poisson-glm",
+    "ingarch",
     "zip-glm",
+    "poisson-glm",
+    "lgbm-quantile",
     "last-week"
   ],
   "daily_recent": [
-    {
-      "date": "2026-05-22",
-      "count": 16,
-      "dow": 4
-    },
-    {
-      "date": "2026-05-23",
-      "count": 24,
-      "dow": 5
-    },
-    {
-      "date": "2026-05-24",
-      "count": 18,
-      "dow": 6
-    },
-    {
-      "date": "2026-05-25",
-      "count": 23,
-      "dow": 0
-    },
-    {
-      "date": "2026-05-26",
-      "count": 33,
-      "dow": 1
-    },
-    {
-      "date": "2026-05-27",
-      "count": 20,
-      "dow": 2
-    },
-    {
-      "date": "2026-05-28",
-      "count": 8,
-      "dow": 3
-    },
-    {
-      "date": "2026-05-29",
-      "count": 22,
-      "dow": 4
-    },
     {
       "date": "2026-05-30",
       "count": 64,
@@ -563,7 +587,7 @@
     },
     {
       "date": "2026-06-08",
-      "count": 28,
+      "count": 29,
       "dow": 0
     },
     {
@@ -618,12 +642,12 @@
     },
     {
       "date": "2026-06-19",
-      "count": 25,
+      "count": 24,
       "dow": 4
     },
     {
       "date": "2026-06-20",
-      "count": 21,
+      "count": 19,
       "dow": 5
     },
     {
@@ -738,7 +762,7 @@
     },
     {
       "date": "2026-07-13",
-      "count": 47,
+      "count": 48,
       "dow": 0
     },
     {
@@ -753,7 +777,7 @@
     },
     {
       "date": "2026-07-16",
-      "count": 19,
+      "count": 18,
       "dow": 3
     },
     {
@@ -808,12 +832,12 @@
     },
     {
       "date": "2026-07-27",
-      "count": 36,
+      "count": 41,
       "dow": 0
     },
     {
       "date": "2026-07-28",
-      "count": 49,
+      "count": 50,
       "dow": 1
     },
     {
@@ -823,250 +847,290 @@
     },
     {
       "date": "2026-07-30",
-      "count": 4,
+      "count": 6,
       "dow": 3
+    },
+    {
+      "date": "2026-07-31",
+      "count": 8,
+      "dow": 4
+    },
+    {
+      "date": "2026-08-01",
+      "count": 45,
+      "dow": 5
+    },
+    {
+      "date": "2026-08-02",
+      "count": 9,
+      "dow": 6
+    },
+    {
+      "date": "2026-08-03",
+      "count": 48,
+      "dow": 0
+    },
+    {
+      "date": "2026-08-04",
+      "count": 70,
+      "dow": 1
+    },
+    {
+      "date": "2026-08-05",
+      "count": 16,
+      "dow": 2
+    },
+    {
+      "date": "2026-08-06",
+      "count": 35,
+      "dow": 3
+    },
+    {
+      "date": "2026-08-07",
+      "count": 22,
+      "dow": 4
     }
   ],
   "weekly_history": [
     {
-      "week_ending": "2025-06-08",
-      "total": 79
+      "week_ending": "2025-06-14",
+      "total": 99
     },
     {
-      "week_ending": "2025-06-15",
-      "total": 100
+      "week_ending": "2025-06-21",
+      "total": 109
     },
     {
-      "week_ending": "2025-06-22",
-      "total": 112
+      "week_ending": "2025-06-28",
+      "total": 162
     },
     {
-      "week_ending": "2025-06-29",
-      "total": 182
-    },
-    {
-      "week_ending": "2025-07-06",
-      "total": 150
-    },
-    {
-      "week_ending": "2025-07-13",
-      "total": 95
-    },
-    {
-      "week_ending": "2025-07-20",
-      "total": 151
-    },
-    {
-      "week_ending": "2025-07-27",
-      "total": 123
-    },
-    {
-      "week_ending": "2025-08-03",
-      "total": 159
-    },
-    {
-      "week_ending": "2025-08-10",
-      "total": 122
-    },
-    {
-      "week_ending": "2025-08-17",
-      "total": 142
-    },
-    {
-      "week_ending": "2025-08-24",
-      "total": 132
-    },
-    {
-      "week_ending": "2025-08-31",
-      "total": 132
-    },
-    {
-      "week_ending": "2025-09-07",
-      "total": 78
-    },
-    {
-      "week_ending": "2025-09-14",
-      "total": 91
-    },
-    {
-      "week_ending": "2025-09-21",
-      "total": 112
-    },
-    {
-      "week_ending": "2025-09-28",
-      "total": 98
-    },
-    {
-      "week_ending": "2025-10-05",
-      "total": 76
-    },
-    {
-      "week_ending": "2025-10-12",
-      "total": 123
-    },
-    {
-      "week_ending": "2025-10-19",
-      "total": 69
-    },
-    {
-      "week_ending": "2025-10-26",
-      "total": 108
-    },
-    {
-      "week_ending": "2025-11-02",
+      "week_ending": "2025-07-05",
       "total": 171
     },
     {
-      "week_ending": "2025-11-09",
-      "total": 196
+      "week_ending": "2025-07-12",
+      "total": 99
     },
     {
-      "week_ending": "2025-11-16",
-      "total": 79
+      "week_ending": "2025-07-19",
+      "total": 118
     },
     {
-      "week_ending": "2025-11-23",
-      "total": 136
-    },
-    {
-      "week_ending": "2025-11-30",
-      "total": 83
-    },
-    {
-      "week_ending": "2025-12-07",
-      "total": 259
-    },
-    {
-      "week_ending": "2025-12-14",
-      "total": 62
-    },
-    {
-      "week_ending": "2025-12-21",
-      "total": 55
-    },
-    {
-      "week_ending": "2025-12-28",
-      "total": 185
-    },
-    {
-      "week_ending": "2026-01-04",
-      "total": 117
-    },
-    {
-      "week_ending": "2026-01-11",
-      "total": 191
-    },
-    {
-      "week_ending": "2026-01-18",
-      "total": 63
-    },
-    {
-      "week_ending": "2026-01-25",
-      "total": 270
-    },
-    {
-      "week_ending": "2026-02-01",
-      "total": 173
-    },
-    {
-      "week_ending": "2026-02-08",
-      "total": 182
-    },
-    {
-      "week_ending": "2026-02-15",
-      "total": 94
-    },
-    {
-      "week_ending": "2026-02-22",
+      "week_ending": "2025-07-26",
       "total": 151
     },
     {
-      "week_ending": "2026-03-01",
-      "total": 164
+      "week_ending": "2025-08-02",
+      "total": 152
     },
     {
-      "week_ending": "2026-03-08",
-      "total": 179
+      "week_ending": "2025-08-09",
+      "total": 123
     },
     {
-      "week_ending": "2026-03-15",
-      "total": 93
-    },
-    {
-      "week_ending": "2026-03-22",
-      "total": 90
-    },
-    {
-      "week_ending": "2026-03-29",
+      "week_ending": "2025-08-16",
       "total": 106
     },
     {
-      "week_ending": "2026-04-05",
-      "total": 77
+      "week_ending": "2025-08-23",
+      "total": 157
     },
     {
-      "week_ending": "2026-04-12",
-      "total": 127
+      "week_ending": "2025-08-30",
+      "total": 109
     },
     {
-      "week_ending": "2026-04-19",
-      "total": 188
+      "week_ending": "2025-09-06",
+      "total": 110
     },
     {
-      "week_ending": "2026-04-26",
-      "total": 125
+      "week_ending": "2025-09-13",
+      "total": 92
     },
     {
-      "week_ending": "2026-05-03",
-      "total": 88
+      "week_ending": "2025-09-20",
+      "total": 113
     },
     {
-      "week_ending": "2026-05-10",
-      "total": 183
+      "week_ending": "2025-09-27",
+      "total": 87
     },
     {
-      "week_ending": "2026-05-17",
-      "total": 209
+      "week_ending": "2025-10-04",
+      "total": 90
     },
     {
-      "week_ending": "2026-05-24",
-      "total": 183
-    },
-    {
-      "week_ending": "2026-05-31",
-      "total": 186
-    },
-    {
-      "week_ending": "2026-06-07",
-      "total": 159
-    },
-    {
-      "week_ending": "2026-06-14",
+      "week_ending": "2025-10-11",
       "total": 122
     },
     {
-      "week_ending": "2026-06-21",
-      "total": 145
+      "week_ending": "2025-10-18",
+      "total": 80
     },
     {
-      "week_ending": "2026-06-28",
+      "week_ending": "2025-10-25",
+      "total": 103
+    },
+    {
+      "week_ending": "2025-11-01",
+      "total": 111
+    },
+    {
+      "week_ending": "2025-11-08",
+      "total": 222
+    },
+    {
+      "week_ending": "2025-11-15",
+      "total": 114
+    },
+    {
+      "week_ending": "2025-11-22",
+      "total": 125
+    },
+    {
+      "week_ending": "2025-11-29",
+      "total": 110
+    },
+    {
+      "week_ending": "2025-12-06",
+      "total": 259
+    },
+    {
+      "week_ending": "2025-12-13",
+      "total": 67
+    },
+    {
+      "week_ending": "2025-12-20",
+      "total": 58
+    },
+    {
+      "week_ending": "2025-12-27",
+      "total": 188
+    },
+    {
+      "week_ending": "2026-01-03",
+      "total": 123
+    },
+    {
+      "week_ending": "2026-01-10",
       "total": 171
     },
     {
-      "week_ending": "2026-07-05",
-      "total": 197
+      "week_ending": "2026-01-17",
+      "total": 71
     },
     {
-      "week_ending": "2026-07-12",
-      "total": 149
+      "week_ending": "2026-01-24",
+      "total": 271
     },
     {
-      "week_ending": "2026-07-19",
-      "total": 169
+      "week_ending": "2026-01-31",
+      "total": 164
     },
     {
-      "week_ending": "2026-07-26",
-      "total": 147
+      "week_ending": "2026-02-07",
+      "total": 183
+    },
+    {
+      "week_ending": "2026-02-14",
+      "total": 105
+    },
+    {
+      "week_ending": "2026-02-21",
+      "total": 143
+    },
+    {
+      "week_ending": "2026-02-28",
+      "total": 141
+    },
+    {
+      "week_ending": "2026-03-07",
+      "total": 201
+    },
+    {
+      "week_ending": "2026-03-14",
+      "total": 93
+    },
+    {
+      "week_ending": "2026-03-21",
+      "total": 79
+    },
+    {
+      "week_ending": "2026-03-28",
+      "total": 97
+    },
+    {
+      "week_ending": "2026-04-04",
+      "total": 90
+    },
+    {
+      "week_ending": "2026-04-11",
+      "total": 118
+    },
+    {
+      "week_ending": "2026-04-18",
+      "total": 190
+    },
+    {
+      "week_ending": "2026-04-25",
+      "total": 132
+    },
+    {
+      "week_ending": "2026-05-02",
+      "total": 79
+    },
+    {
+      "week_ending": "2026-05-09",
+      "total": 159
+    },
+    {
+      "week_ending": "2026-05-16",
+      "total": 209
+    },
+    {
+      "week_ending": "2026-05-23",
+      "total": 203
+    },
+    {
+      "week_ending": "2026-05-30",
+      "total": 189
+    },
+    {
+      "week_ending": "2026-06-06",
+      "total": 174
+    },
+    {
+      "week_ending": "2026-06-13",
+      "total": 109
+    },
+    {
+      "week_ending": "2026-06-20",
+      "total": 144
+    },
+    {
+      "week_ending": "2026-06-27",
+      "total": 166
+    },
+    {
+      "week_ending": "2026-07-04",
+      "total": 114
+    },
+    {
+      "week_ending": "2026-07-11",
+      "total": 239
+    },
+    {
+      "week_ending": "2026-07-18",
+      "total": 143
+    },
+    {
+      "week_ending": "2026-07-25",
+      "total": 127
+    },
+    {
+      "week_ending": "2026-08-01",
+      "total": 211
     }
   ]
 }

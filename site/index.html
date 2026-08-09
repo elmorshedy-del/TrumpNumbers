@@ -23,8 +23,12 @@
 
 <div class="wrap">
   <h1>Where does this week finish?</h1>
-  <p class="lede">Posts are counted in US Eastern days, Monday to Sunday. The projection below
-  is a distribution, not a target — read the interval, not just the middle number.</p>
+  <p class="lede">Posts are counted in US Eastern days, <b>Sunday to Saturday</b>, including
+  ReTruths and Quote Truths and excluding deleted posts — the same week and the same rules the
+  Kalshi weekly market resolves on, so this number is comparable to that one. The projection is a
+  distribution, not a target: read the interval, not just the middle number.</p>
+
+  <div id="freshness" class="freshness"></div>
 
   <div id="hero" class="loading">Loading…</div>
 
@@ -53,6 +57,9 @@
     </figure>
   </div>
 
+  <h2>How this page has done, before the fact</h2>
+  <div class="card" id="live-record"></div>
+
   <h2>Chance the week clears a threshold</h2>
   <div class="card">
     <div class="scroll-x"><table id="thresholds"><thead><tr>
@@ -78,24 +85,37 @@
 
   <footer class="site">
     <p class="small">Source: <a href="https://trumpstruth.org">trumpstruth.org</a>, a complete mirror of
-    @realDonaldTrump on Truth Social. ReTruths are tracked but excluded from the modelled series —
-    the mirror stores them under the original author's timestamp, so counting them would place
-    activity on days nothing happened. <span id="generated"></span></p>
+    @realDonaldTrump on Truth Social. ReTruths are counted, on the day he reshared: the mirror
+    files them under the original author's timestamp, so they are re-dated from its ingest order
+    first — counting them as filed would place activity on days nothing happened.
+    <span id="generated"></span></p>
   </footer>
 </div>
 
 <script type="module">
 import { barChart, forecastChart, onResize } from "./assets/charts.js";
+import { autoRefresh, loadExport, renderFreshness } from "./assets/data.js";
 
 const num = (v) => Math.round(v).toLocaleString();
 
-async function load(name) {
-  const res = await fetch(`../data/exports/${name}?t=${Date.now()}`);
-  if (!res.ok) throw new Error(`${name}: ${res.status}`);
-  return res.json();
-}
+// Matches the deployed cadence in .github/workflows/update.yml. It is only used
+// to decide when "overdue" starts, so it can be generous without hiding a real
+// outage.
+const EXPECTED_UPDATE_MINUTES = 30;
 
 let fc, posts;
+
+/* The day in progress is neither ignored nor extrapolated — both score worse,
+   in opposite halves of the day. Say how much of it is already decided, in the
+   unit that matters: the share of a typical day's POSTS that have landed, not
+   the share of the clock. By 9am the clock is 38% gone and the posting is not. */
+function todaySub() {
+  const t = fc.today;
+  const share = t && (t.share_of_posts_elapsed ?? t.share_of_day_elapsed);
+  if (share === undefined || share === null) return "still accumulating";
+  const [lo, hi] = t.rest_of_today_80 || [0, 0];
+  return `${Math.round(share * 100)}% of a normal day's posting is past · ${num(lo)}–${num(hi)} more likely`;
+}
 
 function renderHero() {
   const h = fc.headline, w = fc.week;
@@ -122,7 +142,7 @@ function renderHero() {
 
   document.getElementById("tiles").innerHTML = [
     ["Week to date", num(h.week_to_date), `${w.days_observed} complete day${w.days_observed === 1 ? "" : "s"}`],
-    ["Today so far", num(w.today_partial_count), "still accumulating"],
+    ["Today so far", num(w.today_partial_count), todaySub()],
     ["Projected median", num(h.median), "top-3 model blend"],
     ["Days remaining", w.days_remaining, "after today"],
   ].map(([l, n, s]) => `<div class="card tile"><div class="label">${l}</div><div class="num">${n}</div><div class="sub">${s}</div></div>`).join("");
@@ -131,12 +151,44 @@ function renderHero() {
 function renderThresholds() {
   const tb = document.querySelector("#thresholds tbody");
   tb.innerHTML = (fc.threshold_probabilities || []).map((t) => {
-    const pct = (t.probability * 100).toFixed(0);
-    const pill = t.soft
-      ? `<span class="pill warn">soft — tail estimate</span>`
-      : `<span class="pill good">reasonably supported</span>`;
-    return `<tr><td>${num(t.threshold)} posts</td><td class="num">${pct}%</td><td>${pill}</td></tr>`;
+    // Never print a bare 0% or 100% for an unbounded count: past the ends of
+    // the sampled distribution the honest statement is an inequality.
+    const pct = t.bounded
+      ? (t.probability > 0.5 ? "&gt;99.9%" : "&lt;0.1%")
+      : `${(t.probability * 100).toFixed(t.probability > 0.99 || t.probability < 0.01 ? 1 : 0)}%`;
+    const pill = t.bounded
+      ? `<span class="pill warn">beyond the sampled range</span>`
+      : t.soft
+        ? `<span class="pill warn">soft — tail estimate</span>`
+        : `<span class="pill good">reasonably supported</span>`;
+    return `<tr><td>${num(t.threshold)} posts</td><td class="num">${pct}</td><td>${pill}</td></tr>`;
   }).join("") || `<tr><td colspan="3" class="small">Not enough history yet.</td></tr>`;
+}
+
+/* The prospective record. Everything else on this site is retrospective — the
+   models are graded on history by code written afterwards. This is the part
+   that is not, and it is deliberately allowed to say it has too little. */
+function renderLiveRecord() {
+  const r = fc.live_record || {};
+  const el = document.getElementById("live-record");
+  if (!r.available) {
+    el.innerHTML = `<p class="small"><b>Nothing scored yet.</b> Every forecast this page makes is
+      appended to an append-only log the moment it is built, and graded once the week closes.
+      ${r.note ? r.note : ""} The backtest is an upper bound on live performance; this is the
+      number that will not be.</p>`;
+    return;
+  }
+  el.innerHTML = `
+    <div class="grid c3">
+      <div class="tile"><div class="label">Weeks forecast in advance</div>
+        <div class="num">${r.n_weeks}</div><div class="sub">${r.first_week} → ${r.last_week}</div></div>
+      <div class="tile"><div class="label">CRPS</div>
+        <div class="num">${r.crps}</div><div class="sub">posts, lower is better</div></div>
+      <div class="tile"><div class="label">80% interval covered</div>
+        <div class="num">${(r.coverage80 * 100).toFixed(0)}%</div>
+        <div class="sub">nominal 80%</div></div>
+    </div>
+    <p class="small" style="margin-top:12px">${r.note}</p>`;
 }
 
 function renderPerModel() {
@@ -184,18 +236,26 @@ function drawCharts() {
     });
 }
 
+async function refresh() {
+  [fc, posts] = await Promise.all([loadExport("forecast.json"), loadExport("posts.json")]);
+  renderHero(); renderLiveRecord(); renderThresholds(); renderPerModel(); renderPosts(); drawCharts();
+  renderFreshness(document.getElementById("freshness"), fc, EXPECTED_UPDATE_MINUTES);
+  document.getElementById("generated").textContent =
+    `Updated ${new Date(fc.generated_at).toLocaleString()}.`;
+}
+
 (async function () {
   try {
-    [fc, posts] = await Promise.all([load("forecast.json"), load("posts.json")]);
+    await refresh();
   } catch (err) {
     document.getElementById("hero").innerHTML =
       `<div class="card"><b>No data yet.</b><br><span class="small">Run <code>python daemon.py --once</code> to build the exports.</span></div>`;
     return;
   }
-  renderHero(); renderThresholds(); renderPerModel(); renderPosts(); drawCharts();
-  document.getElementById("generated").textContent =
-    `Updated ${new Date(fc.generated_at).toLocaleString()}.`;
   onResize(drawCharts);
+  // The page outlives one build: a tab left open through a Sunday evening
+  // should follow the week closing, not freeze at whatever it loaded with.
+  autoRefresh(refresh, 60);
 })();
 </script>
 </body>

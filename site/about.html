@@ -25,8 +25,9 @@
 
   <h2>What it does</h2>
   <p>It counts how many times Donald Trump posts on Truth Social, and projects where the current
-  Monday-to-Sunday total will land. Roughly twenty statistical models compete on the same task, and
-  every one of them is scored on forecasts of weeks it was never allowed to see.</p>
+  <b>Sunday-to-Saturday</b> total will land — the same week the Kalshi weekly market resolves on, so
+  the two numbers describe the same thing. Roughly twenty statistical models compete on the same
+  task, and every one of them is scored on forecasts of weeks it was never allowed to see.</p>
 
   <h2>Where the numbers come from</h2>
   <p>Posts are read from <a href="https://trumpstruth.org">trumpstruth.org</a>, a complete public
@@ -38,11 +39,22 @@
   smear it.</p>
 
   <div class="note">
-    <b>ReTruths are excluded from the modelled series.</b> The mirror records a ReTruth under the
-    <i>original</i> author's timestamp, not the moment Trump reshared it — one ReTruth of a
-    month-old post is stored with the month-old date. Counting them would credit activity to days on
-    which he did nothing. They are still ingested, labelled, and shown in the live feed.
+    <b>ReTruths are counted, on the day he reshared them.</b> The mirror records a ReTruth under
+    the <i>original</i> author's timestamp — a ReTruth of a month-old post arrives filed under the
+    month-old date — so they were once excluded entirely, since counting them as filed would credit
+    activity to days on which he did nothing. They are recoverable: the mirror's own ingest order
+    brackets the moment each one appeared, which places the reshare within hours. Measured against
+    the stored dates, 72% agree to within a day and the other 28% are precisely the ones the stored
+    date gets wrong — one of them by 420 days.
   </div>
+
+  <p><b>What the series actually measures.</b> Not "how often he posted", quite: posts visible on a
+  third-party mirror, all post types counted, deleted posts removed, bucketed by Eastern midnight
+  into Sunday-to-Saturday weeks — the Kalshi convention. Each of
+  those is a defensible choice and each moves the number. Deleted posts are excluded, matching how the market
+  resolves — though that makes the count depend on when the mirror looked, and anything deleted
+  before its first pass is invisible to everyone, here and elsewhere. Midnight is a convention: a burst
+  running from 11pm to 1am is two days here and one day under a 4am boundary.</p>
 
   <h2>How the models are graded</h2>
   <p>Every model outputs a full distribution, never a single number, and is scored with
@@ -57,7 +69,19 @@
   <p>Validation is <b>walk-forward</b>: train on the past, forecast the next week, roll forward.
   A random train/test split would let a model see Tuesday and Thursday while being scored on
   Wednesday — not mild optimism, but reading tomorrow's newspaper. A one-day embargo sits at the seam,
-  and a final stretch of weeks is held back untouched.</p>
+  and a final stretch of weeks is held back untouched. The live headline picks its models from the
+  development leaderboard and never from the holdout: a holdout can answer "how does the chosen
+  procedure do on weeks nobody looked at" only for as long as nothing is chosen with it.</p>
+
+  <div class="note">
+    <b>A backtest is an upper bound, and it cannot be anything else.</b> However careful the
+    embargoes, the <i>choices</i> — which models, which window, which counting convention — were all
+    made with the whole series already visible. So the tracker now also keeps a prospective record:
+    every forecast it publishes is appended to an append-only log the moment it is built, and graded
+    once the week closes. The first forecast made at each point in the week is the one that stands;
+    it is never amended afterwards. That number starts at zero weeks and is worth exactly as much as
+    its length, which the page says out loud rather than implying otherwise.
+  </div>
 
   <h2>What the data turned out to be</h2>
   <ul>

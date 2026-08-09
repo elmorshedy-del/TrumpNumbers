@@ -25,9 +25,15 @@ class ForecastTask:
     the walk-forward harness is responsible for that, so a model physically
     cannot see the future it is being asked about.
 
-    `cut_dow` is the last *completed* day of the target week (0=Mon..6=Sun),
-    or -1 when the week has not started. `observed` holds that week's counts for
-    days 0..cut_dow.
+    `cut_dow` is the last *completed* POSITION in the target week (0 = the
+    week's first day .. 6 = its last), or -1 when the week has not started.
+    `observed` holds that week's counts for positions 0..cut_dow.
+
+    Position is not the same as weekday once the week can start on a Sunday:
+    under the Kalshi convention position 0 is Sunday (pandas weekday 6), and a
+    model looking up "weekday 0" for the week's opening day would be reading
+    Monday's history to forecast a Sunday. `remaining_dows` does that mapping so
+    no model has to know about it.
     """
 
     history: pd.Series
@@ -37,8 +43,47 @@ class ForecastTask:
 
     @property
     def remaining_dows(self) -> np.ndarray:
-        """Day-of-week indices still to be predicted."""
-        return np.arange(self.cut_dow + 1, 7)
+        """Pandas weekday indices (Mon=0..Sun=6) still to be predicted."""
+        start = int(self.week_start.dayofweek)
+        return np.array([(start + p) % 7 for p in range(self.cut_dow + 1, 7)], dtype=int)
+
+    @property
+    def remaining_dates(self) -> pd.DatetimeIndex:
+        """The actual calendar days still to be predicted.
+
+        A weekday index is not enough for every model. Anything that forecasts
+        *forward from the end of history* — a SARIMA, a state-space filter —
+        needs to know how far ahead the first unobserved day is, and that gap is
+        not constant: the backtest embargoes a day before the week starts, the
+        live path does not, and at a mid-week cut the observed days sit in
+        between. Forecasting `len(remaining)` steps from the end of history and
+        calling it the rest of the week is off by that gap, and for a
+        seasonal model it is off by a phase as well.
+        """
+        n = 6 - self.cut_dow
+        if n <= 0:
+            return pd.DatetimeIndex([])
+        first = self.week_start + pd.Timedelta(days=self.cut_dow + 1)
+        return pd.date_range(first, periods=n, freq="D")
+
+    @property
+    def observed_dates(self) -> pd.DatetimeIndex:
+        """The days of the target week already banked."""
+        if not len(self.observed):
+            return pd.DatetimeIndex([])
+        return pd.date_range(self.week_start, periods=len(self.observed), freq="D")
+
+    @property
+    def gap_days(self) -> int:
+        """Unobserved days between the end of history and the target week.
+
+        Zero on the live path, `embargo_days` in the backtest. A filter that
+        propagates state forward has to step over these blind rather than
+        pretend the week starts the day after history ends.
+        """
+        if not len(self.history):
+            return 0
+        return max(int((self.week_start - self.history.index[-1]).days) - 1, 0)
 
     @property
     def observed_total(self) -> int:
@@ -76,6 +121,23 @@ class Model:
         """Samples of the sum of the week's not-yet-observed days."""
         raise NotImplementedError
 
+    def sample_one_day(self, date: pd.Timestamp, n: int) -> np.ndarray | None:
+        """This model's own distribution for a single whole day, or None.
+
+        Used for the day in progress. A model that can say what an ordinary
+        Saturday looks like can have that answer conditioned on how *this*
+        Saturday is going (`partial.DayConditioner`), which is strictly better
+        than substituting a different estimator for it — and it is what keeps
+        the projection continuous when the date rolls over, since at midnight
+        the conditioning is the identity and the model is drawing exactly the
+        day it was drawing a minute earlier.
+
+        Returning None is allowed: models that only ever produce a *sum* over
+        several days (last-week, the bootstraps, the ensembles) genuinely have
+        no per-day distribution to offer, and fall back to the empirical one.
+        """
+        return None
+
     def meta(self) -> dict:
         return {
             "name": self.name,
@@ -95,15 +157,34 @@ class DailyModel(Model):
     own state forward instead.
     """
 
-    def sample_days(self, dows: np.ndarray, n: int) -> np.ndarray:
-        """Return an (n, len(dows)) array of sampled daily counts."""
+    def sample_days(
+        self, dows: np.ndarray, n: int, dates: pd.DatetimeIndex | None = None
+    ) -> np.ndarray:
+        """Return an (n, len(dows)) array of sampled daily counts.
+
+        `dates` carries the calendar days those weekdays correspond to, for the
+        models whose answer depends on *when* and not only on *which weekday* —
+        a linear trend has to be evaluated at the right week, a SARIMA has to be
+        stepped the right number of days forward. Models that genuinely only
+        need the weekday ignore it.
+        """
         raise NotImplementedError
 
     def sample_remaining(self, task: ForecastTask, n: int) -> np.ndarray:
         dows = task.remaining_dows
         if len(dows) == 0:
             return np.zeros(n)
-        return self.sample_days(dows, n).sum(axis=1)
+        return self.sample_days(dows, n, task.remaining_dates).sum(axis=1)
+
+    def sample_one_day(self, date: pd.Timestamp, n: int) -> np.ndarray | None:
+        """A daily model always has a view of a single day: ask it for one."""
+        try:
+            out = self.sample_days(
+                np.array([int(date.dayofweek)]), n, pd.DatetimeIndex([date])
+            )
+        except Exception:
+            return None
+        return np.asarray(out, dtype=float).ravel()
 
 
 @dataclass
