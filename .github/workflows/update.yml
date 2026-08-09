@@ -141,7 +141,7 @@ jobs:
           path: data/posts.db
           key: posts-db-${{ github.run_id }}
 
-      # Two different things go into git, for two different reasons.
+      # Three different things go into git, for three different reasons.
       #
       # The exports are the cold-start seed: after a cache eviction the site
       # still has a leaderboard to show while the first backfill runs. Only the
@@ -154,12 +154,24 @@ jobs:
       # because the forecast it registers is the first one made at each cut and
       # the nightly pass is not the first. The file only changes when the cut
       # changes, so this is about one commit a day, not fifty.
+      #
+      # `data/record` is here for exactly the same reason, and was missing.
+      # `refresh_forecast` appends to `forecast_history.jsonl` (the fine-grained
+      # companion to the register, so a market snapshot can be matched to the
+      # forecast that was on the page at that moment) and `posts_ledger.jsonl`
+      # (first-seen times and deletion history — the two things a rebuild from
+      # the mirror cannot return, and the evidence the ReTruth re-dating and the
+      # deleted-post exclusion rest on). Both were written on every pass and
+      # discarded with the container, which also meant the ledger saw an empty
+      # file every time and re-fingerprinted all 34k posts as if it were its
+      # first run. record.yml commits the same directory on its own schedule;
+      # the two workflows write disjoint files in it, so appends rebase cleanly.
       - name: Commit the record and, nightly, the exports
         if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/live_forecasts.jsonl 2>/dev/null || true
+          git add data/live_forecasts.jsonl data/record 2>/dev/null || true
           msg="Register the live forecast"
           if [ "${{ steps.mode.outputs.nightly }}" = "true" ]; then
             git add data/exports
