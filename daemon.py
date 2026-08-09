@@ -115,16 +115,42 @@ def push_notifications() -> None:
         log.exception("notification pass failed")
 
 
+def best_effort(what: str, fn, *args) -> None:
+    """Run a derived export, and never let it take the pass down with it.
+
+    The order of work in a pass is not the order of its consequences. The feed,
+    the diagnostics and the leaderboard are all rebuilt from scratch next pass,
+    so failing one costs half an hour of staleness. `refresh_forecast` runs
+    LAST and is the only step that writes anything irreplaceable: the register
+    keeps the FIRST forecast per (week, cut) and is append-only, so a cut that
+    no pass ever reaches is a permanent hole in the prospective record — the
+    one number here that is not retrospective.
+
+    Letting a cosmetic export abort the pass inverts that. It nearly happened:
+    a single unserialisable value in the posts feed raised before the forecast
+    was ever built, and the condition that caused it persists for as long as
+    the offending post sits in the 60-post window — about a day, which is
+    exactly one cut. So the cheap steps are isolated and the expensive one is
+    not: if `refresh_forecast` fails the job SHOULD go red, leaving the last
+    good deploy up and the reason in the run log.
+    """
+    try:
+        fn(*args)
+    except Exception:
+        log.exception("%s failed; continuing so the forecast still runs", what)
+
+
 def one_pass(do_backtest: bool = False, do_reconcile: bool = False) -> None:
     poll()
     push_notifications()
     if do_reconcile:
         reconcile()
     df = load_frame()
-    refresh_posts(df)
-    refresh_diagnostics(df)
+    best_effort("posts export", refresh_posts, df)
+    best_effort("diagnostics export", refresh_diagnostics, df)
     if do_backtest:
-        refresh_backtest(df)
+        best_effort("backtest", refresh_backtest, df)
+    # Last, and deliberately unguarded — see best_effort.
     refresh_forecast(df)
 
 
@@ -143,15 +169,15 @@ def loop() -> None:
                 last_reconcile = now
 
             df = load_frame()
-            refresh_posts(df)
+            best_effort("posts export", refresh_posts, df)
 
             if now - last_diag > timedelta(seconds=DIAGNOSTICS_SECONDS):
-                refresh_diagnostics(df)
+                best_effort("diagnostics export", refresh_diagnostics, df)
                 last_diag = now
 
             if now - last_backtest > timedelta(seconds=BACKTEST_SECONDS):
                 log.info("running nightly backtest — this takes a few minutes")
-                refresh_backtest(df)
+                best_effort("backtest", refresh_backtest, df)
                 last_backtest = now
 
             # Last, so it picks up any fresh ranking the backtest just wrote.

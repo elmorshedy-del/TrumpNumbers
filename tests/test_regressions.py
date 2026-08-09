@@ -639,3 +639,59 @@ def test_a_missing_handle_never_reaches_the_feed_as_a_number():
 
 def _reject(token):
     raise AssertionError(f"a browser would refuse this export: {token}")
+
+
+# ------------------------------------------- the record has to survive the pass
+
+def test_a_broken_feed_cannot_cost_the_register_a_cut(monkeypatch):
+    """The irreplaceable step runs even when the cosmetic ones fail.
+
+    `refresh_forecast` runs last and is the only step that writes anything that
+    cannot be rebuilt: the register keeps the FIRST forecast per (week, cut) and
+    is append-only, so a cut no pass ever reaches is a permanent hole. The feed
+    and the diagnostics are regenerated from scratch next pass. Letting one of
+    those abort the pass trades half an hour of staleness for a gap in the one
+    record that is not retrospective — and the failure that prompted this
+    persisted for about a day, which is exactly one cut.
+    """
+    import daemon
+
+    called = []
+    monkeypatch.setattr(daemon, "poll", lambda: called.append("poll"))
+    monkeypatch.setattr(daemon, "push_notifications", lambda: None)
+    monkeypatch.setattr(daemon, "load_frame", lambda: "frame")
+    monkeypatch.setattr(daemon, "refresh_forecast", lambda df: called.append("forecast"))
+
+    def explode(df):
+        raise ValueError("Out of range float values are not JSON compliant")
+
+    monkeypatch.setattr(daemon, "refresh_posts", explode)
+    monkeypatch.setattr(daemon, "refresh_diagnostics", explode)
+    monkeypatch.setattr(daemon, "refresh_backtest", explode)
+
+    daemon.one_pass(do_backtest=True)
+
+    assert "forecast" in called, "a broken feed stopped the forecast being registered"
+
+
+def test_a_failed_forecast_still_fails_the_pass(monkeypatch):
+    """The other half: silence about the step that matters is not an option.
+
+    A red job leaves the last good deploy up and puts the reason in the run log.
+    Swallowing this one would publish nothing and say nothing.
+    """
+    import daemon
+
+    monkeypatch.setattr(daemon, "poll", lambda: None)
+    monkeypatch.setattr(daemon, "push_notifications", lambda: None)
+    monkeypatch.setattr(daemon, "load_frame", lambda: "frame")
+    monkeypatch.setattr(daemon, "refresh_posts", lambda df: None)
+    monkeypatch.setattr(daemon, "refresh_diagnostics", lambda df: None)
+
+    def explode(df):
+        raise RuntimeError("no data — run a backfill first")
+
+    monkeypatch.setattr(daemon, "refresh_forecast", explode)
+
+    with pytest.raises(RuntimeError):
+        daemon.one_pass()

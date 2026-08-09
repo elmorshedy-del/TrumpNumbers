@@ -34,3 +34,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: raven-actions/actionlint@v2
+
+  records:
+    # The records are the only data here that cannot be rebuilt, and losing
+    # them looks like an ordinary diff. This job is the reason nobody has to
+    # notice: it re-reads every protected file as it stood before the change
+    # and refuses anything that is not a pure append. See the script for what
+    # counts as protected and why rotation is the one allowed deletion.
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The base commit has to be in the checkout to be compared against,
+          # and the default shallow clone does not contain it.
+          fetch-depth: 0
+      - name: Records may only grow
+        env:
+          BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: python scripts/check_records_append_only.py --base "$BASE"
