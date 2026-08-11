@@ -1,25 +1,25 @@
 {
   "window": {
     "start": "2025-01-20",
-    "end": "2026-08-09",
-    "days": 567
+    "end": "2026-08-10",
+    "days": 568
   },
   "ingest_lag": {
     "available": true,
-    "n": 280,
-    "median_minutes": 55.0,
-    "p90_minutes": 166.7,
+    "n": 308,
+    "median_minutes": 52.7,
+    "p90_minutes": 152.0,
     "max_minutes": 506.5,
     "note": "Post timestamp to the moment this pipeline stored it: Truth Social publishing, trumpstruth.org crawling, and our poll interval combined. Only the poll interval is ours to shorten; the rest is the floor."
   },
   "dispersion": {
-    "n": 567,
-    "mean": 19.088,
+    "n": 568,
+    "mean": 19.104,
     "median": 15.0,
-    "variance": 294.515,
-    "sd": 17.161,
-    "dispersion_ratio": 15.43,
-    "chi2": 8732.9,
+    "variance": 294.136,
+    "sd": 17.15,
+    "dispersion_ratio": 15.4,
+    "chi2": 8729.9,
     "p_value": 0.0,
     "poisson_plausible": false,
     "poisson_sd": 4.37,
@@ -38,15 +38,15 @@
   },
   "conditional_dispersion": {
     "available": true,
-    "raw": 15.43,
-    "by_weekday": 14.31,
-    "by_weekday_and_level": 15.37,
+    "raw": 15.4,
+    "by_weekday": 14.28,
+    "by_weekday_and_level": 15.36,
     "note": "Pearson chi-square per degree of freedom. A well-specified Poisson model sits near 1. The raw ratio compares against a single fixed rate, which the weekly cycle refutes on its own; these two compare against what a Poisson GLM actually assumes."
   },
   "tail": {
     "mean_over_median": 1.27,
     "max_over_median": 11.1,
-    "skewness": 3.44,
+    "skewness": 3.43,
     "top_1pct_share_of_all_posts": 0.059,
     "zero_days": 2,
     "zero_share": 0.004,
@@ -55,20 +55,20 @@
       "0.25": 9.0,
       "0.5": 15.0,
       "0.75": 23.0,
-      "0.9": 35.400000000000034,
+      "0.9": 35.30000000000001,
       "0.95": 48.0,
-      "0.99": 88.42000000000041
+      "0.99": 88.29000000000053
     }
   },
   "day_of_week": {
     "days": [
       {
         "day": "Mon",
-        "n": 81,
-        "mean": 25.81,
-        "median": 19.0,
-        "sd": 26.58,
-        "index_vs_overall": 1.352
+        "n": 82,
+        "mean": 25.84,
+        "median": 19.5,
+        "sd": 26.42,
+        "index_vs_overall": 1.353
       },
       {
         "day": "Tue",
@@ -76,7 +76,7 @@
         "mean": 21.58,
         "median": 18.0,
         "sd": 13.72,
-        "index_vs_overall": 1.131
+        "index_vs_overall": 1.13
       },
       {
         "day": "Wed",
@@ -84,7 +84,7 @@
         "mean": 16.75,
         "median": 15.0,
         "sd": 10.05,
-        "index_vs_overall": 0.878
+        "index_vs_overall": 0.877
       },
       {
         "day": "Thu",
@@ -108,7 +108,7 @@
         "mean": 15.7,
         "median": 11.0,
         "sd": 14.13,
-        "index_vs_overall": 0.823
+        "index_vs_overall": 0.822
       },
       {
         "day": "Sun",
@@ -116,10 +116,10 @@
         "mean": 17.2,
         "median": 12.0,
         "sd": 16.15,
-        "index_vs_overall": 0.901
+        "index_vs_overall": 0.9
       }
     ],
-    "overall_mean": 19.09
+    "overall_mean": 19.1
   },
   "autocorrelation": {
     "lags": [
@@ -149,76 +149,76 @@
     "acf": [
       1.0,
       0.0979,
-      0.0142,
+      0.0144,
       -0.0302,
-      -0.0648,
+      -0.0646,
       0.0389,
-      0.0477,
-      0.0041,
-      0.0405,
-      0.0679,
-      -0.1026,
-      0.0574,
-      -0.0262,
-      0.0489,
-      0.037,
-      -0.0384,
-      -0.0365,
-      -0.0166,
-      -0.0225,
-      -0.0047,
-      0.0534,
-      0.0067
+      0.0481,
+      0.0043,
+      0.0404,
+      0.0683,
+      -0.1027,
+      0.0573,
+      -0.0263,
+      0.0492,
+      0.0371,
+      -0.0379,
+      -0.0366,
+      -0.0167,
+      -0.0226,
+      -0.0046,
+      0.0535,
+      0.0066
     ],
     "pacf": [
       1.0,
       0.0979,
-      0.0047,
-      -0.0324,
-      -0.0594,
-      0.0523,
-      0.0401,
-      -0.0094,
-      0.0388,
-      0.0699,
-      -0.1162,
-      0.0773,
-      -0.0303,
-      0.0545,
+      0.0048,
+      -0.0323,
+      -0.0592,
+      0.0522,
+      0.0406,
+      -0.0093,
+      0.0387,
+      0.0704,
+      -0.1163,
+      0.0771,
+      -0.0305,
+      0.0549,
       0.0068,
-      -0.0341,
-      -0.0289,
-      -0.0104,
-      -0.0181,
-      -0.0011,
+      -0.0339,
+      -0.029,
+      -0.0105,
+      -0.0183,
+      -0.0009,
       0.0332,
-      0.0174
+      0.0173
     ],
     "acf_raw_with_weekly_cycle": [
       1.0,
-      0.1013,
-      0.0078,
-      -0.0332,
-      -0.0796,
-      0.0094,
-      0.0388,
-      0.0283,
-      0.0536,
-      0.0349,
-      -0.1034,
-      0.0604,
-      -0.0368,
-      0.0359,
-      0.0701,
-      -0.0208,
-      -0.0556,
-      -0.0141,
-      -0.0222,
+      0.1011,
+      0.0084,
+      -0.033,
+      -0.0787,
+      0.0093,
+      0.0415,
+      0.0299,
+      0.053,
+      0.0363,
+      -0.1039,
+      0.0596,
+      -0.0376,
+      0.0375,
+      0.0713,
+      -0.0187,
+      -0.0565,
+      -0.0145,
+      -0.0227,
       -0.0289,
-      0.0392,
-      0.0435
+      0.0399,
+      0.043
     ],
-    "conf": 0.0823,
+    "conf": 0.0822,
     "note": "ACF/PACF computed after removing the weekly cycle; the raw series is shown for contrast."
   },
   "structural_breaks": {
@@ -252,7 +252,7 @@
         "start": "2026-04-25",
         "end": "2026-08-15",
         "weeks": 17,
-        "mean_posts_per_day": 22.97
+        "mean_posts_per_day": 23.36
       }
     ],
     "breaks": [
@@ -261,8 +261,8 @@
       "2026-03-21",
       "2026-04-25"
     ],
-    "n_breaks_penalized": 0,
-    "penalty": 0.8803,
+    "n_breaks_penalized": 1,
+    "penalty": 0.8799,
     "note": "The segment list comes from a search told in advance how many breaks to find, so its count is a setting, not a result. `n_breaks_penalized` lets the data choose instead: if it is 0, the segmentation above is a partition of noise."
   },
   "window_vs_breaks": {
@@ -276,7 +276,7 @@
     ],
     "most_recent_break": "2026-04-25",
     "weeks_since_most_recent_break": 15,
-    "n_breaks_penalized": 0,
+    "n_breaks_penalized": 1,
     "note": "Every model here is fitted from the window start, across any break listed above. That is the practice the window exists to avoid. Whether it matters depends on whether the breaks are real \u2014 see n_breaks_penalized, which is what the data says when it is not told how many to find."
   },
   "bursts": [
@@ -333,12 +333,12 @@
           "id": 30020
         },
         {
-          "text": "https://amgreatness.com/2025/02/25/no-trumps-tariffs-will-not-cause-inflation/",
-          "id": 30039
-        },
-        {
           "text": "https://www.foxnews.com/politics/trump-calls-company-building-keystone-xl-pipeline-return-america-get-built",
           "id": 30038
+        },
+        {
+          "text": "https://amgreatness.com/2025/02/25/no-trumps-tariffs-will-not-cause-inflation/",
+          "id": 30039
         }
       ]
     },
@@ -361,11 +361,11 @@
       "sample_posts": [
         {
           "text": "",
-          "id": 35160
+          "id": 35159
         },
         {
           "text": "",
-          "id": 35159
+          "id": 35160
         },
         {
           "text": "",
@@ -480,7 +480,7 @@
         "congressional",
         "district",
         "border",
-        "military"
+        "energy"
       ],
       "sample_posts": [
         {
@@ -671,11 +671,11 @@
       "sample_posts": [
         {
           "text": "",
-          "id": 38881
+          "id": 38882
         },
         {
           "text": "",
-          "id": 38882
+          "id": 38881
         },
         {
           "text": "Can you imagine? A Barack Hussein Obama Judge named Christopher Cooper has stopped a magnificent structural and aesthetic rebuilding of The Trump Kennedy Center where Millions of Dollars of material, marble, furniture, steel, air conditioning, heating, and so much else was ordere",
@@ -763,16 +763,16 @@
       ],
       "sample_posts": [
         {
+          "text": "Congressman Gus Bilirakis is a Tremendous Champion for Florida\u2019s 12th Congressional District! As a Senior Member of the POWERFUL House Energy and Commerce Committee, Gus is working tirelessly to Advance American Energy DOMINANCE, Create GREAT Jobs, Cut Taxes and Regulations, Prom",
+          "id": 33635
+        },
+        {
           "text": "Congressman Vern Buchanan, who has been with us from the very beginning, is a Fantastic Advocate of Florida\u2019s 16th Congressional District! As a very successful Businessman, and the Vice Chairman of the POWERFUL House Ways & Means Committee, Vern understands the America First Poli",
           "id": 33634
         },
         {
           "text": "Scott Franklin is a fantastic Representative for the Great People of Florida\u2019s 18th Congressional District! A U.S. Naval Academy Graduate and retired Navy Commander, Scott knows the Wisdom and Courage that is required to Defend our Country, Support our incredible Military/Veteran",
           "id": 33633
-        },
-        {
-          "text": "Congressman Gus Bilirakis is a Tremendous Champion for Florida\u2019s 12th Congressional District! As a Senior Member of the POWERFUL House Energy and Commerce Committee, Gus is working tirelessly to Advance American Energy DOMINANCE, Create GREAT Jobs, Cut Taxes and Regulations, Prom",
-          "id": 33635
         }
       ]
     },
@@ -896,7 +896,7 @@
         },
         {
           "text": "",
-          "id": 40248
+          "id": 40250
         }
       ]
     },
@@ -1032,8 +1032,8 @@
       "peak_hour": 20,
       "keywords": [
         "trump",
-        "news",
         "america",
+        "news",
         "tariffs",
         "foxnews",
         "politics",
@@ -1050,8 +1050,8 @@
           "id": 30433
         },
         {
-          "text": "In two months, there has been more Private Investment spoken for, and/or committed to, than in four years of the Sleepy Joe Biden Administration \u2014 A fact that the Fake News hates talking about!",
-          "id": 30435
+          "text": "There will never have been a transformation of a Country like the transformation that is happening, for all to see, in the United States of America. Companies are pouring into our Country at levels never seen before, with Jobs (and Money!) to follow. It is a beautiful thing to wa",
+          "id": 30436
         }
       ]
     }
@@ -1065,21 +1065,21 @@
     230,
     440,
     985,
-    1121,
+    1122,
     1418,
-    1926,
+    1927,
     2355,
-    1961,
-    1974,
+    1962,
+    1975,
     2191,
     2206,
     2236,
     2132,
     2026,
-    1756,
-    1489,
-    1975,
-    1630,
+    1773,
+    1493,
+    1976,
+    1632,
     1600
   ],
   "retruths": {
