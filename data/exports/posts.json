@@ -1,6 +1,240 @@
 {
-  "generated_at": "2026-08-11T09:11:42.038268+00:00",
+  "generated_at": "2026-08-12T09:21:47.718816+00:00",
   "posts": [
+    {
+      "id": 40753,
+      "at": "2026-08-11T22:30:25-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117080183664102958"
+    },
+    {
+      "id": 40752,
+      "at": "2026-08-11T22:16:38-04:00",
+      "text": "RT @realDonaldTrump",
+      "is_retruth": true,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117080184095005006"
+    },
+    {
+      "id": 40751,
+      "at": "2026-08-11T22:02:51-04:00",
+      "text": "RT @realDonaldTrump",
+      "is_retruth": true,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117080057770790960"
+    },
+    {
+      "id": 40748,
+      "at": "2026-08-11T21:49:19-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117080022043498211"
+    },
+    {
+      "id": 40749,
+      "at": "2026-08-11T21:49:11-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117080021493097784"
+    },
+    {
+      "id": 40750,
+      "at": "2026-08-11T21:49:04-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117080021024854674"
+    },
+    {
+      "id": 40747,
+      "at": "2026-08-11T21:43:57.500000-04:00",
+      "text": "RT @realDonaldTrump",
+      "is_retruth": true,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117079988381446372"
+    },
+    {
+      "id": 40740,
+      "at": "2026-08-11T21:39:47-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117079984564810584"
+    },
+    {
+      "id": 40741,
+      "at": "2026-08-11T21:39:22-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117079982881859901"
+    },
+    {
+      "id": 40742,
+      "at": "2026-08-11T21:39:13-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117079982312386819"
+    },
+    {
+      "id": 40743,
+      "at": "2026-08-11T21:39:05-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117079981786797942"
+    },
+    {
+      "id": 40744,
+      "at": "2026-08-11T21:38:54-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117079981096358997"
+    },
+    {
+      "id": 40745,
+      "at": "2026-08-11T21:38:44-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117079980387048786"
+    },
+    {
+      "id": 40746,
+      "at": "2026-08-11T21:38:36-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117079979879118037"
+    },
+    {
+      "id": 40739,
+      "at": "2026-08-11T21:25:21-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117079927751317428"
+    },
+    {
+      "id": 40738,
+      "at": "2026-08-11T21:16:36-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117079893393529222"
+    },
+    {
+      "id": 40737,
+      "at": "2026-08-11T21:16:36-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117079893398792157"
+    },
+    {
+      "id": 40736,
+      "at": "2026-08-11T20:00:09-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117079592745773692"
+    },
+    {
+      "id": 40735,
+      "at": "2026-08-11T19:54:37-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117079571028588906"
+    },
+    {
+      "id": 40734,
+      "at": "2026-08-11T17:21:15-04:00",
+      "text": "Today, at my direction, Dr. Mehemet Oz announced that Medicaid will NO LONGER fund gender transition surgeries and hormones for minors. We are not going to pay for our innocent children to undergo these barbaric surgeries and practices, which result in unthinkable and irreversible harm to their young bodies. Thanks to our strong position and pressure on this issue over the past year and a half, dozens of U.S. hospitals have already ended this so-called \u201cgender-affirming care,\u201d and we expect many more to follow. Just think about all of the young, innocent, and perhaps confused children who will",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117078967972327386"
+    },
+    {
+      "id": 40733,
+      "at": "2026-08-11T15:04:47-04:00",
+      "text": "A GREAT new book out by Todd Starnes called, \u201cThe Golden Age: How Trump Saved America.\u201d Everyone is raving about it!https://a.co/d/01AHD479",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117078431335584148"
+    },
+    {
+      "id": 40732,
+      "at": "2026-08-11T12:10:14-04:00",
+      "text": "I am proud to announce that American Citizen Robert Gilman, a former United States Marine, is coming HOME! In a well known Media story, Robert was imprisoned in Russia in 2022, during the Biden Administration. After my discussions with President Vladimir Putin, Russia has agreed to release him, very much on a Humanitarian Basis. We appreciate this decision, and the fact that Russia asked for no one in return \u2014 No exchange took place. Robert will land at Andrews Air Force Base, in Washington, D.C., tonight, where my Representatives, some of whom are on the plane with him, will welcome Robert ba",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117077744957374868"
+    },
+    {
+      "id": 40731,
+      "at": "2026-08-11T11:38:30-04:00",
+      "text": "The NYC Pied-a-Terre Tax is costing New York City and State a fortune in that the money, eventually to be gotten, is very little compared to to the TAXES PAID by the tens of thousands of people who are fleeing the City, never to return. Florida, Texas, and numerous other States, are making an absolute fortune! This dangerous political \u201cexperiment\u201d in New York will destroy what was once a great City and State. It is pure Amateur Hour, and it\u2019s hard, as President of the United States of America, to sit back and watch it happen, especially to a place I once loved. Financial, and then Social, RUIN",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117077620225720641"
+    },
+    {
+      "id": 40730,
+      "at": "2026-08-11T10:10:37-04:00",
+      "text": "Mike Lindell deserves a BIG WIN IN MINNESOTA today. Nobody has worked harder, and given up so much, in fighting for free and fair Elections. Go out, NOW, and VOTE for Mike Lindell for Governor. He will not let you down. Thank you! President DJT",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117077274595226430"
+    },
+    {
+      "id": 40729,
+      "at": "2026-08-11T07:32:21-04:00",
+      "text": "Obama\u2019s Trump-Russia collusion report was corrupt from start: CIA review: https://nypost.com/2025/07/02/us-news/obamas-trump-russia-collusion-report-was-corrupt-from-start-cia-review/",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117076652297228058"
+    },
+    {
+      "id": 40728,
+      "at": "2026-08-11T07:25:59-04:00",
+      "text": "Newly released documents open a path to the true origins of the Russia hoax: https://nypost.com/2026/08/10/opinion/newly-released-documents-open-a-path-to-the-true-origins-of-the-russia-hoax/",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117076627279264282"
+    },
     {
       "id": 40727,
       "at": "2026-08-10T22:31:44-04:00",
@@ -306,240 +540,6 @@
       "source_handle": "@realDonaldTrump",
       "has_media": false,
       "url": "https://truthsocial.com/@realDonaldTrump/117067668006565228"
-    },
-    {
-      "id": 40693,
-      "at": "2026-08-09T17:14:02-04:00",
-      "text": "Black and Brown Voters don\u2019t want Communism or Socialism \u2014 Not surprisingly, they are flocking to the Republican Party! They remember that Abraham Lincoln was a Republican! President DONALD J. TRUMP",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117067614963933704"
-    },
-    {
-      "id": 40692,
-      "at": "2026-08-09T16:51:43-04:00",
-      "text": "With the great Gary Player, today, at Bedminster!",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117067527191152715"
-    },
-    {
-      "id": 40691,
-      "at": "2026-08-09T16:50:09-04:00",
-      "text": "51 years of bad behavior!",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117067520999490226"
-    },
-    {
-      "id": 40690,
-      "at": "2026-08-09T16:44:16-04:00",
-      "text": "The 10th Hole at Trump International Golf Club, Palm Beach County, Florida!",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117067497912465638"
-    },
-    {
-      "id": 40688,
-      "at": "2026-08-09T16:19:26-04:00",
-      "text": "RT: https://truthsocial.com/users/realDonaldTrump/statuses/117067399388398239",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117067400225404799"
-    },
-    {
-      "id": 40689,
-      "at": "2026-08-09T16:19:13-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117067399388398239"
-    },
-    {
-      "id": 40687,
-      "at": "2026-08-09T12:55:59-04:00",
-      "text": "Gary Player at Trump Turnberry!",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117066600252281502"
-    },
-    {
-      "id": 40686,
-      "at": "2026-08-09T12:51:51-04:00",
-      "text": "Hillary Clinton: \u201cThe world may not like Trump\u2019s Gaza plan \u2014 but there is no alternative: If even I, an implacable opponent of the president, can accept this as the best option, then surely others can too?\u201dhttps://www.ft.com/content/2472e584-758b-4a3f-83d1-9fba042a9312",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117066584024874286"
-    },
-    {
-      "id": 40685,
-      "at": "2026-08-09T09:32:24-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117065799723188252"
-    },
-    {
-      "id": 40674,
-      "at": "2026-08-08T22:22:33-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117063165801239278"
-    },
-    {
-      "id": 40675,
-      "at": "2026-08-08T22:22:26-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117063165308639374"
-    },
-    {
-      "id": 40676,
-      "at": "2026-08-08T22:22:18-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": true,
-      "url": "https://truthsocial.com/@realDonaldTrump/117063164763452313"
-    },
-    {
-      "id": 40677,
-      "at": "2026-08-08T22:22:06-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117063164025384663"
-    },
-    {
-      "id": 40678,
-      "at": "2026-08-08T22:22:00-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117063163593295206"
-    },
-    {
-      "id": 40679,
-      "at": "2026-08-08T22:21:50-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117063162955258981"
-    },
-    {
-      "id": 40680,
-      "at": "2026-08-08T22:21:40-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117063162328917337"
-    },
-    {
-      "id": 40681,
-      "at": "2026-08-08T22:21:32-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117063161789642512"
-    },
-    {
-      "id": 40682,
-      "at": "2026-08-08T22:21:31-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117063161687061697"
-    },
-    {
-      "id": 40683,
-      "at": "2026-08-08T22:20:58-04:00",
-      "text": "Trump's Vegas Visit Hammers Tax Wins: https://townhall.com/news/cameron-arcand/2026/08/05/trumps-vegas-hit-hammers-tax-wins-n2680764",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117063159545723427"
-    },
-    {
-      "id": 40684,
-      "at": "2026-08-08T22:20:41-04:00",
-      "text": "Jobless Claims Remain Below 200,000 For Third Straight Week\u2014First Time in 57 Years: https://www.breitbart.com/economy/2026/08/06/jobless-claims-remain-below-200000-for-third-straight-week-for-first-time-in-57-years/",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117063158411074182"
-    },
-    {
-      "id": 40670,
-      "at": "2026-08-08T22:20:22-04:00",
-      "text": "Trump: US Has 'Massive' Amounts of Munitions: https://www.newsmax.com/politics/donald-trump-munitions-shortages/2026/08/06/id/1265250/",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117063157165945336"
-    },
-    {
-      "id": 40671,
-      "at": "2026-08-08T22:20:09-04:00",
-      "text": "Trump to host more than 120 Team USA Winter Olympians and Paralympians: https://www.usatoday.com/story/news/politics/2026/08/06/trump-hosts-winter-olympians-paralympians-white-house-rose-garden/91189071007/",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117063156331577591"
-    },
-    {
-      "id": 40672,
-      "at": "2026-08-08T22:19:52-04:00",
-      "text": "Trump gets immigration victory as federal judge clears path to end Haiti TPS following Supreme Court ruling: https://nypost.com/2026/08/05/us-news/trump-gets-immigration-victory-as-federal-judge-clears-path-to-end-haiti-tps/",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117063155226329500"
-    },
-    {
-      "id": 40673,
-      "at": "2026-08-08T22:19:36-04:00",
-      "text": "EXCLUSIVE: White House Launches Fraud Website To Highlight Successes Of Task Force: https://www.dailywire.com/news/exclusive-white-house-launches-fraud-website-to-highlight-successes-of-task-force",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117063154145033716"
-    },
-    {
-      "id": 40669,
-      "at": "2026-08-08T20:49:57-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117062801672258297"
-    },
-    {
-      "id": 40668,
-      "at": "2026-08-08T20:31:13-04:00",
-      "text": "Trump Aberdeen!",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117062728016276280"
     }
   ]
 }
