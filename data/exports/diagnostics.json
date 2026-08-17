@@ -1,25 +1,25 @@
 {
   "window": {
     "start": "2025-01-20",
-    "end": "2026-08-15",
-    "days": 573
+    "end": "2026-08-16",
+    "days": 574
   },
   "ingest_lag": {
     "available": true,
-    "n": 454,
-    "median_minutes": 51.2,
-    "p90_minutes": 132.0,
+    "n": 474,
+    "median_minutes": 50.7,
+    "p90_minutes": 131.7,
     "max_minutes": 506.5,
     "note": "Post timestamp to the moment this pipeline stored it: Truth Social publishing, trumpstruth.org crawling, and our poll interval combined. Only the poll interval is ours to shorten; the rest is the floor."
   },
   "dispersion": {
-    "n": 573,
-    "mean": 19.22,
+    "n": 574,
+    "mean": 19.228,
     "median": 15.0,
-    "variance": 294.158,
-    "sd": 17.151,
-    "dispersion_ratio": 15.3,
-    "chi2": 8754.4,
+    "variance": 293.684,
+    "sd": 17.137,
+    "dispersion_ratio": 15.27,
+    "chi2": 8751.8,
     "p_value": 0.0,
     "poisson_plausible": false,
     "poisson_sd": 4.38,
@@ -38,9 +38,9 @@
   },
   "conditional_dispersion": {
     "available": true,
-    "raw": 15.3,
-    "by_weekday": 14.23,
-    "by_weekday_and_level": 15.3,
+    "raw": 15.27,
+    "by_weekday": 14.2,
+    "by_weekday_and_level": 15.27,
     "note": "Pearson chi-square per degree of freedom. A well-specified Poisson model sits near 1. The raw ratio compares against a single fixed rate, which the weekly cycle refutes on its own; these two compare against what a Poisson GLM actually assumes."
   },
   "tail": {
@@ -55,9 +55,9 @@
       "0.25": 9.0,
       "0.5": 15.0,
       "0.75": 24.0,
-      "0.9": 35.80000000000007,
-      "0.95": 48.39999999999998,
-      "0.99": 87.63999999999965
+      "0.9": 35.700000000000045,
+      "0.95": 48.35000000000002,
+      "0.99": 87.50999999999976
     }
   },
   "day_of_week": {
@@ -68,7 +68,7 @@
         "mean": 25.84,
         "median": 19.5,
         "sd": 26.42,
-        "index_vs_overall": 1.345
+        "index_vs_overall": 1.344
       },
       {
         "day": "Tue",
@@ -76,7 +76,7 @@
         "mean": 21.63,
         "median": 18.0,
         "sd": 13.64,
-        "index_vs_overall": 1.126
+        "index_vs_overall": 1.125
       },
       {
         "day": "Wed",
@@ -112,14 +112,14 @@
       },
       {
         "day": "Sun",
-        "n": 81,
-        "mean": 17.2,
+        "n": 82,
+        "mean": 17.28,
         "median": 12.0,
-        "sd": 16.15,
-        "index_vs_overall": 0.895
+        "sd": 16.07,
+        "index_vs_overall": 0.899
       }
     ],
-    "overall_mean": 19.22
+    "overall_mean": 19.23
   },
   "autocorrelation": {
     "lags": [
@@ -148,77 +148,77 @@
     ],
     "acf": [
       1.0,
-      0.1025,
-      0.0203,
-      -0.0281,
-      -0.0615,
-      0.0391,
-      0.0539,
-      0.0081,
-      0.0507,
-      0.073,
-      -0.0904,
+      0.1027,
+      0.0221,
+      -0.0275,
+      -0.0605,
+      0.0393,
+      0.0541,
+      0.0079,
+      0.0514,
+      0.0733,
+      -0.0896,
       0.0662,
-      -0.0265,
-      0.0535,
-      0.0332,
-      -0.0383,
-      -0.0362,
-      -0.0051,
-      -0.0178,
-      0.0041,
-      0.0493,
-      0.0056
+      -0.0243,
+      0.0543,
+      0.0327,
+      -0.0365,
+      -0.0368,
+      -0.0058,
+      -0.0186,
+      0.0055,
+      0.0499,
+      0.0075
     ],
     "pacf": [
       1.0,
-      0.1025,
-      0.0099,
-      -0.0316,
-      -0.0563,
-      0.0527,
-      0.0468,
-      -0.0072,
-      0.0481,
+      0.1027,
+      0.0117,
+      -0.0313,
+      -0.0555,
+      0.0529,
+      0.047,
+      -0.0075,
+      0.0488,
       0.0729,
-      -0.1054,
-      0.0839,
-      -0.0318,
-      0.0584,
-      0.0028,
-      -0.0362,
-      -0.0294,
-      -0.0006,
-      -0.0155,
-      0.0036,
-      0.0293,
-      0.0177
+      -0.1049,
+      0.0835,
+      -0.0292,
+      0.0583,
+      0.0023,
+      -0.0345,
+      -0.0301,
+      -0.0015,
+      -0.016,
+      0.0052,
+      0.0296,
+      0.0187
     ],
     "acf_raw_with_weekly_cycle": [
       1.0,
-      0.1042,
-      0.0122,
-      -0.0305,
-      -0.0753,
-      0.01,
-      0.0448,
-      0.0331,
-      0.061,
-      0.0405,
-      -0.0909,
-      0.0666,
-      -0.0389,
-      0.0399,
-      0.068,
-      -0.0187,
-      -0.054,
-      -0.0045,
-      -0.0171,
-      -0.0226,
-      0.0357,
-      0.0414
+      0.1043,
+      0.0131,
+      -0.0302,
+      -0.0749,
+      0.0102,
+      0.0451,
+      0.0329,
+      0.0613,
+      0.0406,
+      -0.0904,
+      0.0665,
+      -0.0374,
+      0.0408,
+      0.0677,
+      -0.018,
+      -0.0543,
+      -0.0049,
+      -0.0175,
+      -0.0217,
+      0.0363,
+      0.0424
     ],
-    "conf": 0.0819,
+    "conf": 0.0818,
     "note": "ACF/PACF computed after removing the weekly cycle; the raw series is shown for contrast."
   },
   "structural_breaks": {
@@ -250,9 +250,9 @@
       },
       {
         "start": "2026-08-08",
-        "end": "2026-08-15",
-        "weeks": 2,
-        "mean_posts_per_day": 31.14
+        "end": "2026-08-22",
+        "weeks": 3,
+        "mean_posts_per_day": 28.76
       }
     ],
     "breaks": [
@@ -262,7 +262,7 @@
       "2026-08-08"
     ],
     "n_breaks_penalized": 1,
-    "penalty": 0.8997,
+    "penalty": 0.8986,
     "note": "The segment list comes from a search told in advance how many breaks to find, so its count is a setting, not a result. `n_breaks_penalized` lets the data choose instead: if it is 0, the segmentation above is a partition of noise."
   },
   "window_vs_breaks": {
@@ -333,12 +333,12 @@
           "id": 30020
         },
         {
-          "text": "https://amgreatness.com/2025/02/25/no-trumps-tariffs-will-not-cause-inflation/",
-          "id": 30039
-        },
-        {
           "text": "https://www.breitbart.com/border/2025/02/24/trump-effect-single-day-migrant-apprehension-numbers-on-southwest-border-fall-below-200/",
           "id": 30040
+        },
+        {
+          "text": "https://www.washingtontimes.com/news/2025/feb/25/trump-rebuilding-domestic-manufacturing-fighting-american-aluminum/",
+          "id": 30041
         }
       ]
     },
@@ -462,7 +462,7 @@
         },
         {
           "text": "",
-          "id": 35000
+          "id": 34998
         }
       ]
     },
@@ -581,12 +581,12 @@
           "id": 33546
         },
         {
-          "text": "https://dailycaller.com/2025/11/01/opinion-arctic-frost-accountability-starts-with-impeaching-judge-boasberg-dave-bossie/",
-          "id": 33547
-        },
-        {
           "text": "https://nypost.com/2025/11/01/us-news/rep-nicole-malliotakis-rips-gerrymandering-lawsuit-for-staten-island-house-seat-as-nonsensical-power-grab/",
           "id": 33548
+        },
+        {
+          "text": "https://dailycaller.com/2025/11/01/opinion-arctic-frost-accountability-starts-with-impeaching-judge-boasberg-dave-bossie/",
+          "id": 33547
         }
       ]
     },
@@ -671,11 +671,11 @@
       "sample_posts": [
         {
           "text": "",
-          "id": 38882
+          "id": 38881
         },
         {
           "text": "",
-          "id": 38881
+          "id": 38882
         },
         {
           "text": "Can you imagine? A Barack Hussein Obama Judge named Christopher Cooper has stopped a magnificent structural and aesthetic rebuilding of The Trump Kennedy Center where Millions of Dollars of material, marble, furniture, steel, air conditioning, heating, and so much else was ordere",
@@ -725,23 +725,23 @@
         "energy",
         "american",
         "down",
-        "congressman",
         "district",
         "complete",
-        "total"
+        "total",
+        "congressman"
       ],
       "sample_posts": [
         {
-          "text": "Congressman Vern Buchanan, who has been with us from the very beginning, is a Fantastic Advocate of Florida\u2019s 16th Congressional District! As a very successful Businessman, and the Vice Chairman of the POWERFUL House Ways & Means Committee, Vern understands the America First Poli",
-          "id": 33634
+          "text": "Scott Franklin is a fantastic Representative for the Great People of Florida\u2019s 18th Congressional District! A U.S. Naval Academy Graduate and retired Navy Commander, Scott knows the Wisdom and Courage that is required to Defend our Country, Support our incredible Military/Veteran",
+          "id": 33633
         },
         {
           "text": "Congressman Gus Bilirakis is a Tremendous Champion for Florida\u2019s 12th Congressional District! As a Senior Member of the POWERFUL House Energy and Commerce Committee, Gus is working tirelessly to Advance American Energy DOMINANCE, Create GREAT Jobs, Cut Taxes and Regulations, Prom",
           "id": 33635
         },
         {
-          "text": "Scott Franklin is a fantastic Representative for the Great People of Florida\u2019s 18th Congressional District! A U.S. Naval Academy Graduate and retired Navy Commander, Scott knows the Wisdom and Courage that is required to Defend our Country, Support our incredible Military/Veteran",
-          "id": 33633
+          "text": "Congressman Vern Buchanan, who has been with us from the very beginning, is a Fantastic Advocate of Florida\u2019s 16th Congressional District! As a very successful Businessman, and the Vice Chairman of the POWERFUL House Ways & Means Committee, Vern understands the America First Poli",
+          "id": 33634
         }
       ]
     },
@@ -857,15 +857,15 @@
       "sample_posts": [
         {
           "text": "",
-          "id": 40252
-        },
-        {
-          "text": "",
           "id": 40251
         },
         {
           "text": "",
-          "id": 40250
+          "id": 40252
+        },
+        {
+          "text": "",
+          "id": 40248
         }
       ]
     },
@@ -923,11 +923,11 @@
         },
         {
           "text": "",
-          "id": 37867
+          "id": 37866
         },
         {
           "text": "",
-          "id": 37866
+          "id": 37867
         }
       ]
     },
@@ -958,7 +958,7 @@
         },
         {
           "text": "",
-          "id": 35797
+          "id": 35795
         }
       ]
     },
@@ -1050,8 +1050,8 @@
           "id": 39824
         },
         {
-          "text": "They\u2019re Running the 2024 Anti-Trump Playbook on Nigel Farage: https://thenationalpulse.com/analysis-post/theyre-running-the-2024-anti-trump-playbook-on-nigel-farage-its-failing/",
-          "id": 39821
+          "text": "Exclusive\u2014Trump: SCOTUS Slaughter Decision \u2018More Than Made Up\u2019 for \u2018Disappointing\u2019 Birthright Citizenship Ruling: https://www.breitbart.com/politics/2026/07/01/exclusive-trump-scotus-slaughter-decision-more-than-made-up-disappointing-birthright-citizenship-ruling/",
+          "id": 39823
         }
       ]
     }
@@ -1064,27 +1064,27 @@
     107,
     230,
     440,
-    987,
+    988,
     1132,
-    1418,
+    1431,
     1931,
     2361,
     1973,
     1977,
     2194,
     2209,
-    2242,
-    2154,
+    2243,
+    2156,
     2054,
     1778,
-    1496,
-    2019,
+    1500,
+    2022,
     1645,
     1600
   ],
   "retruths": {
-    "total": 227,
-    "share_of_all_posts": 0.02,
+    "total": 231,
+    "share_of_all_posts": 0.021,
     "counted_in_series": true,
     "note": "ReTruths are counted, on the day Trump reshared rather than the day the original ran. The mirror files them under the ORIGINAL author's timestamp, so counting them as filed would credit activity to days on which nothing happened; the mirror's own ingest order brackets the real reshare moment and recovers it to within hours."
   },
