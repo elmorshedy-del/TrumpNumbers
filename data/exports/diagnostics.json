@@ -6,23 +6,23 @@
   },
   "ingest_lag": {
     "available": true,
-    "n": 583,
-    "median_minutes": 43.2,
-    "p90_minutes": 120.1,
+    "n": 598,
+    "median_minutes": 43.1,
+    "p90_minutes": 119.8,
     "max_minutes": 506.5,
     "note": "Post timestamp to the moment this pipeline stored it: Truth Social publishing, trumpstruth.org crawling, and our poll interval combined. Only the poll interval is ours to shorten; the rest is the floor."
   },
   "dispersion": {
     "n": 578,
-    "mean": 19.291,
+    "mean": 19.317,
     "median": 15.0,
-    "variance": 295.097,
-    "sd": 17.178,
-    "dispersion_ratio": 15.3,
-    "chi2": 8826.6,
+    "variance": 294.64,
+    "sd": 17.165,
+    "dispersion_ratio": 15.25,
+    "chi2": 8801.1,
     "p_value": 0.0,
     "poisson_plausible": false,
-    "poisson_sd": 4.39,
+    "poisson_sd": 4.4,
     "poisson_range_95": [
       11,
       28
@@ -38,9 +38,9 @@
   },
   "conditional_dispersion": {
     "available": true,
-    "raw": 15.3,
-    "by_weekday": 14.21,
-    "by_weekday_and_level": 15.26,
+    "raw": 15.25,
+    "by_weekday": 14.16,
+    "by_weekday_and_level": 15.23,
     "note": "Pearson chi-square per degree of freedom. A well-specified Poisson model sits near 1. The raw ratio compares against a single fixed rate, which the weekly cycle refutes on its own; these two compare against what a Poisson GLM actually assumes."
   },
   "tail": {
@@ -68,7 +68,7 @@
         "mean": 26.01,
         "median": 20.0,
         "sd": 26.3,
-        "index_vs_overall": 1.348
+        "index_vs_overall": 1.347
       },
       {
         "day": "Tue",
@@ -76,7 +76,7 @@
         "mean": 22.04,
         "median": 18.0,
         "sd": 14.05,
-        "index_vs_overall": 1.142
+        "index_vs_overall": 1.141
       },
       {
         "day": "Wed",
@@ -84,15 +84,15 @@
         "mean": 16.93,
         "median": 15.0,
         "sd": 10.09,
-        "index_vs_overall": 0.878
+        "index_vs_overall": 0.876
       },
       {
         "day": "Thu",
         "n": 83,
-        "mean": 18.55,
-        "median": 14.0,
-        "sd": 17.93,
-        "index_vs_overall": 0.962
+        "mean": 18.73,
+        "median": 15.0,
+        "sd": 17.85,
+        "index_vs_overall": 0.97
       },
       {
         "day": "Fri",
@@ -100,7 +100,7 @@
         "mean": 18.38,
         "median": 15.0,
         "sd": 15.49,
-        "index_vs_overall": 0.953
+        "index_vs_overall": 0.951
       },
       {
         "day": "Sat",
@@ -108,7 +108,7 @@
         "mean": 15.77,
         "median": 11.0,
         "sd": 14.05,
-        "index_vs_overall": 0.817
+        "index_vs_overall": 0.816
       },
       {
         "day": "Sun",
@@ -116,10 +116,10 @@
         "mean": 17.28,
         "median": 12.0,
         "sd": 16.07,
-        "index_vs_overall": 0.896
+        "index_vs_overall": 0.895
       }
     ],
-    "overall_mean": 19.29
+    "overall_mean": 19.32
   },
   "autocorrelation": {
     "lags": [
@@ -148,75 +148,75 @@
     ],
     "acf": [
       1.0,
-      0.1045,
-      0.0196,
-      -0.0256,
-      -0.0543,
-      0.0411,
-      0.054,
-      0.0071,
-      0.0486,
-      0.073,
-      -0.0857,
-      0.0675,
-      -0.0233,
-      0.0566,
-      0.0402,
+      0.1042,
+      0.0229,
+      -0.0242,
+      -0.053,
+      0.0421,
+      0.0575,
+      0.0083,
+      0.0508,
+      0.0734,
+      -0.0854,
+      0.0673,
+      -0.0214,
+      0.0569,
+      0.0418,
       -0.035,
-      -0.0406,
-      -0.0018,
-      -0.0212,
-      -0.0012,
-      0.0494,
-      0.0139
+      -0.0364,
+      -0.0001,
+      -0.0218,
+      0.0025,
+      0.0487,
+      0.013
     ],
     "pacf": [
       1.0,
-      0.1045,
-      0.0088,
-      -0.0288,
-      -0.0494,
-      0.0534,
-      0.0461,
-      -0.0077,
-      0.0469,
-      0.0722,
-      -0.1014,
-      0.0844,
-      -0.0306,
-      0.0612,
-      0.0107,
-      -0.0353,
-      -0.0343,
-      0.0038,
-      -0.0202,
-      -0.002,
-      0.0306,
-      0.0261
+      0.1042,
+      0.0122,
+      -0.0282,
+      -0.0485,
+      0.0542,
+      0.0499,
+      -0.0074,
+      0.0485,
+      0.0724,
+      -0.1012,
+      0.0832,
+      -0.028,
+      0.0601,
+      0.0121,
+      -0.0367,
+      -0.0294,
+      0.0037,
+      -0.0206,
+      0.0014,
+      0.0297,
+      0.0246
     ],
     "acf_raw_with_weekly_cycle": [
       1.0,
-      0.1075,
-      0.0103,
-      -0.0275,
-      -0.0663,
-      0.0128,
-      0.0448,
-      0.0338,
-      0.0604,
-      0.0398,
-      -0.0872,
-      0.0683,
-      -0.0353,
-      0.0451,
-      0.0796,
-      -0.0139,
-      -0.0582,
-      -0.0032,
-      -0.0209,
-      -0.0282,
-      0.0379,
-      0.0527
+      0.1073,
+      0.0134,
+      -0.0257,
+      -0.066,
+      0.013,
+      0.0479,
+      0.0347,
+      0.0617,
+      0.0405,
+      -0.0866,
+      0.0681,
+      -0.0343,
+      0.0455,
+      0.0812,
+      -0.0142,
+      -0.0538,
+      -0.0007,
+      -0.0218,
+      -0.026,
+      0.0369,
+      0.0517
     ],
     "conf": 0.0815,
     "note": "ACF/PACF computed after removing the weekly cycle; the raw series is shown for contrast."
@@ -252,7 +252,7 @@
         "start": "2026-08-08",
         "end": "2026-08-22",
         "weeks": 3,
-        "mean_posts_per_day": 29.9
+        "mean_posts_per_day": 30.9
       }
     ],
     "breaks": [
@@ -262,7 +262,7 @@
       "2026-08-08"
     ],
     "n_breaks_penalized": 1,
-    "penalty": 0.9074,
+    "penalty": 0.9168,
     "note": "The segment list comes from a search told in advance how many breaks to find, so its count is a setting, not a result. `n_breaks_penalized` lets the data choose instead: if it is 0, the segmentation above is a partition of noise."
   },
   "window_vs_breaks": {
@@ -454,15 +454,15 @@
       "sample_posts": [
         {
           "text": "",
-          "id": 35002
-        },
-        {
-          "text": "",
           "id": 35001
         },
         {
           "text": "",
-          "id": 35000
+          "id": 35002
+        },
+        {
+          "text": "",
+          "id": 34998
         }
       ]
     },
@@ -520,11 +520,11 @@
         },
         {
           "text": "",
-          "id": 36472
+          "id": 36473
         },
         {
           "text": "",
-          "id": 36473
+          "id": 36472
         }
       ]
     },
@@ -581,12 +581,12 @@
           "id": 33546
         },
         {
-          "text": "https://dailycaller.com/2025/11/01/opinion-arctic-frost-accountability-starts-with-impeaching-judge-boasberg-dave-bossie/",
-          "id": 33547
-        },
-        {
           "text": "https://nypost.com/2025/11/01/us-news/rep-nicole-malliotakis-rips-gerrymandering-lawsuit-for-staten-island-house-seat-as-nonsensical-power-grab/",
           "id": 33548
+        },
+        {
+          "text": "https://dailycaller.com/2025/11/01/opinion-arctic-frost-accountability-starts-with-impeaching-judge-boasberg-dave-bossie/",
+          "id": 33547
         }
       ]
     },
@@ -732,16 +732,16 @@
       ],
       "sample_posts": [
         {
+          "text": "Congressman Vern Buchanan, who has been with us from the very beginning, is a Fantastic Advocate of Florida\u2019s 16th Congressional District! As a very successful Businessman, and the Vice Chairman of the POWERFUL House Ways & Means Committee, Vern understands the America First Poli",
+          "id": 33634
+        },
+        {
           "text": "Congressman Gus Bilirakis is a Tremendous Champion for Florida\u2019s 12th Congressional District! As a Senior Member of the POWERFUL House Energy and Commerce Committee, Gus is working tirelessly to Advance American Energy DOMINANCE, Create GREAT Jobs, Cut Taxes and Regulations, Prom",
           "id": 33635
         },
         {
           "text": "Scott Franklin is a fantastic Representative for the Great People of Florida\u2019s 18th Congressional District! A U.S. Naval Academy Graduate and retired Navy Commander, Scott knows the Wisdom and Courage that is required to Defend our Country, Support our incredible Military/Veteran",
           "id": 33633
-        },
-        {
-          "text": "Congressman Vern Buchanan, who has been with us from the very beginning, is a Fantastic Advocate of Florida\u2019s 16th Congressional District! As a very successful Businessman, and the Vice Chairman of the POWERFUL House Ways & Means Committee, Vern understands the America First Poli",
-          "id": 33634
         }
       ]
     },
@@ -829,12 +829,12 @@
           "id": 37052
         },
         {
-          "text": "Deranged Jack Smith should be brought to Justice, NOW!!!",
-          "id": 37053
-        },
-        {
           "text": "",
           "id": 37054
+        },
+        {
+          "text": "Deranged Jack Smith should be brought to Justice, NOW!!!",
+          "id": 37053
         }
       ]
     },
@@ -919,15 +919,15 @@
       "sample_posts": [
         {
           "text": "",
-          "id": 40252
-        },
-        {
-          "text": "",
           "id": 40251
         },
         {
           "text": "",
-          "id": 40250
+          "id": 40252
+        },
+        {
+          "text": "",
+          "id": 40248
         }
       ]
     },
@@ -1066,21 +1066,21 @@
     442,
     992,
     1132,
-    1435,
+    1436,
     1933,
     2363,
     1975,
-    1978,
-    2197,
+    1979,
+    2198,
     2209,
     2245,
-    2167,
-    2060,
+    2173,
+    2062,
     1827,
     1508,
     2028,
     1647,
-    1603
+    1607
   ],
   "retruths": {
     "total": 235,
