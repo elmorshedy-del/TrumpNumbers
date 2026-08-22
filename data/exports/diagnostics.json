@@ -1,28 +1,28 @@
 {
   "window": {
     "start": "2025-01-20",
-    "end": "2026-08-20",
-    "days": 578
+    "end": "2026-08-21",
+    "days": 579
   },
   "ingest_lag": {
     "available": true,
-    "n": 598,
-    "median_minutes": 43.1,
-    "p90_minutes": 119.8,
+    "n": 672,
+    "median_minutes": 39.6,
+    "p90_minutes": 116.3,
     "max_minutes": 506.5,
     "note": "Post timestamp to the moment this pipeline stored it: Truth Social publishing, trumpstruth.org crawling, and our poll interval combined. Only the poll interval is ours to shorten; the rest is the floor."
   },
   "dispersion": {
-    "n": 578,
-    "mean": 19.317,
+    "n": 579,
+    "mean": 19.416,
     "median": 15.0,
-    "variance": 294.64,
-    "sd": 17.165,
-    "dispersion_ratio": 15.25,
-    "chi2": 8801.1,
+    "variance": 299.877,
+    "sd": 17.317,
+    "dispersion_ratio": 15.44,
+    "chi2": 8927.0,
     "p_value": 0.0,
     "poisson_plausible": false,
-    "poisson_sd": 4.4,
+    "poisson_sd": 4.41,
     "poisson_range_95": [
       11,
       28
@@ -33,20 +33,20 @@
     ],
     "actual_range_95": [
       3.0,
-      63.0
+      63.549999999999955
     ]
   },
   "conditional_dispersion": {
     "available": true,
-    "raw": 15.25,
-    "by_weekday": 14.16,
-    "by_weekday_and_level": 15.23,
+    "raw": 15.44,
+    "by_weekday": 14.38,
+    "by_weekday_and_level": 15.35,
     "note": "Pearson chi-square per degree of freedom. A well-specified Poisson model sits near 1. The raw ratio compares against a single fixed rate, which the weekly cycle refutes on its own; these two compare against what a Poisson GLM actually assumes."
   },
   "tail": {
     "mean_over_median": 1.29,
     "max_over_median": 11.1,
-    "skewness": 3.36,
+    "skewness": 3.32,
     "top_1pct_share_of_all_posts": 0.057,
     "zero_days": 2,
     "zero_share": 0.003,
@@ -55,9 +55,9 @@
       "0.25": 9.0,
       "0.5": 15.0,
       "0.75": 24.0,
-      "0.9": 36.0,
-      "0.95": 49.14999999999998,
-      "0.99": 86.99000000000024
+      "0.9": 36.200000000000045,
+      "0.95": 50.0,
+      "0.99": 86.86000000000035
     }
   },
   "day_of_week": {
@@ -68,7 +68,7 @@
         "mean": 26.01,
         "median": 20.0,
         "sd": 26.3,
-        "index_vs_overall": 1.347
+        "index_vs_overall": 1.34
       },
       {
         "day": "Tue",
@@ -76,7 +76,7 @@
         "mean": 22.04,
         "median": 18.0,
         "sd": 14.05,
-        "index_vs_overall": 1.141
+        "index_vs_overall": 1.135
       },
       {
         "day": "Wed",
@@ -84,7 +84,7 @@
         "mean": 16.93,
         "median": 15.0,
         "sd": 10.09,
-        "index_vs_overall": 0.876
+        "index_vs_overall": 0.872
       },
       {
         "day": "Thu",
@@ -92,15 +92,15 @@
         "mean": 18.73,
         "median": 15.0,
         "sd": 17.85,
-        "index_vs_overall": 0.97
+        "index_vs_overall": 0.965
       },
       {
         "day": "Fri",
-        "n": 82,
-        "mean": 18.38,
+        "n": 83,
+        "mean": 19.08,
         "median": 15.0,
-        "sd": 15.49,
-        "index_vs_overall": 0.951
+        "sd": 16.69,
+        "index_vs_overall": 0.983
       },
       {
         "day": "Sat",
@@ -108,7 +108,7 @@
         "mean": 15.77,
         "median": 11.0,
         "sd": 14.05,
-        "index_vs_overall": 0.816
+        "index_vs_overall": 0.812
       },
       {
         "day": "Sun",
@@ -116,10 +116,10 @@
         "mean": 17.28,
         "median": 12.0,
         "sd": 16.07,
-        "index_vs_overall": 0.895
+        "index_vs_overall": 0.89
       }
     ],
-    "overall_mean": 19.32
+    "overall_mean": 19.42
   },
   "autocorrelation": {
     "lags": [
@@ -148,75 +148,75 @@
     ],
     "acf": [
       1.0,
-      0.1042,
-      0.0229,
-      -0.0242,
-      -0.053,
-      0.0421,
-      0.0575,
-      0.0083,
-      0.0508,
-      0.0734,
-      -0.0854,
-      0.0673,
+      0.1013,
+      0.0224,
+      -0.0135,
+      -0.0486,
+      0.0428,
+      0.0588,
+      0.0213,
+      0.055,
+      0.0794,
+      -0.0829,
+      0.067,
       -0.0214,
-      0.0569,
-      0.0418,
-      -0.035,
+      0.0615,
+      0.0422,
+      -0.0273,
       -0.0364,
-      -0.0001,
-      -0.0218,
-      0.0025,
-      0.0487,
-      0.013
+      0.0156,
+      -0.0162,
+      -0.0017,
+      0.0609,
+      0.0101
     ],
     "pacf": [
       1.0,
-      0.1042,
+      0.1013,
       0.0122,
-      -0.0282,
-      -0.0485,
-      0.0542,
-      0.0499,
-      -0.0074,
-      0.0485,
-      0.0724,
-      -0.1012,
-      0.0832,
-      -0.028,
-      0.0601,
-      0.0121,
-      -0.0367,
-      -0.0294,
-      0.0037,
-      -0.0206,
-      0.0014,
-      0.0297,
-      0.0246
+      -0.0171,
+      -0.0463,
+      0.0535,
+      0.0515,
+      0.0073,
+      0.0495,
+      0.0763,
+      -0.0987,
+      0.0823,
+      -0.031,
+      0.0661,
+      0.0098,
+      -0.03,
+      -0.0349,
+      0.0218,
+      -0.0211,
+      -0.0017,
+      0.041,
+      0.0196
     ],
     "acf_raw_with_weekly_cycle": [
       1.0,
-      0.1073,
-      0.0134,
-      -0.0257,
-      -0.066,
-      0.013,
-      0.0479,
-      0.0347,
-      0.0617,
-      0.0405,
-      -0.0866,
-      0.0681,
-      -0.0343,
-      0.0455,
-      0.0812,
-      -0.0142,
+      0.1048,
+      0.0117,
+      -0.0133,
+      -0.0578,
+      0.0143,
+      0.0475,
+      0.0453,
+      0.0638,
+      0.0443,
+      -0.0827,
+      0.0697,
+      -0.035,
+      0.0485,
+      0.0805,
+      -0.0087,
       -0.0538,
-      -0.0007,
-      -0.0218,
-      -0.026,
-      0.0369,
-      0.0517
+      0.0162,
+      -0.0118,
+      -0.0288,
+      0.0448,
+      0.047
     ],
     "conf": 0.0815,
     "note": "ACF/PACF computed after removing the weekly cycle; the raw series is shown for contrast."
@@ -252,7 +252,7 @@
         "start": "2026-08-08",
         "end": "2026-08-22",
         "weeks": 3,
-        "mean_posts_per_day": 30.9
+        "mean_posts_per_day": 33.48
       }
     ],
     "breaks": [
@@ -262,7 +262,7 @@
       "2026-08-08"
     ],
     "n_breaks_penalized": 1,
-    "penalty": 0.9168,
+    "penalty": 0.9448,
     "note": "The segment list comes from a search told in advance how many breaks to find, so its count is a setting, not a result. `n_breaks_penalized` lets the data choose instead: if it is 0, the segmentation above is a partition of noise."
   },
   "window_vs_breaks": {
@@ -275,7 +275,7 @@
       "2026-08-08"
     ],
     "most_recent_break": "2026-08-08",
-    "weeks_since_most_recent_break": 1,
+    "weeks_since_most_recent_break": 2,
     "n_breaks_penalized": 1,
     "note": "Every model here is fitted from the window start, across any break listed above. That is the practice the window exists to avoid. Whether it matters depends on whether the breaks are real \u2014 see n_breaks_penalized, which is what the data says when it is not told how many to find."
   },
@@ -324,8 +324,8 @@
         "foxnews",
         "breitbart",
         "president",
-        "news",
-        "politics"
+        "politics",
+        "news"
       ],
       "sample_posts": [
         {
@@ -333,8 +333,8 @@
           "id": 30020
         },
         {
-          "text": "https://www.washingtontimes.com/news/2025/feb/25/trump-rebuilding-domestic-manufacturing-fighting-american-aluminum/",
-          "id": 30041
+          "text": "https://www.breitbart.com/border/2025/02/24/trump-effect-single-day-migrant-apprehension-numbers-on-southwest-border-fall-below-200/",
+          "id": 30040
         },
         {
           "text": "https://www.foxnews.com/politics/trump-calls-company-building-keystone-xl-pipeline-return-america-get-built",
@@ -462,7 +462,7 @@
         },
         {
           "text": "",
-          "id": 34998
+          "id": 35000
         }
       ]
     },
@@ -520,11 +520,42 @@
         },
         {
           "text": "",
-          "id": 36473
+          "id": 36472
         },
         {
           "text": "",
-          "id": 36472
+          "id": 36473
+        }
+      ]
+    },
+    {
+      "date": "2026-08-21",
+      "dow": "Fri",
+      "count": 77,
+      "vs_median": 5.1,
+      "peak_hour": 13,
+      "keywords": [
+        "trump",
+        "president",
+        "house",
+        "white",
+        "iran",
+        "politics",
+        "news",
+        "donald"
+      ],
+      "sample_posts": [
+        {
+          "text": "Today, I concluded a deal to substantially lower the price of ground beef for working American families. As everyone knows, under President Biden, beef prices soared at their fastest rate and the American beef herd fell to its smallest size in modern history. As we work to rebuil",
+          "id": 41042
+        },
+        {
+          "text": "",
+          "id": 41043
+        },
+        {
+          "text": "Trump Is Right: Judges Can\u2019t Be Construction Foremen: https://www.wsj.com/opinion/trump-is-right-judges-cant-be-construction-foremen-5e264681",
+          "id": 41044
         }
       ]
     },
@@ -653,37 +684,6 @@
       ]
     },
     {
-      "date": "2026-05-11",
-      "dow": "Mon",
-      "count": 64,
-      "vs_median": 4.3,
-      "peak_hour": 22,
-      "keywords": [
-        "judge",
-        "law",
-        "district",
-        "great",
-        "court",
-        "university",
-        "serve",
-        "federal"
-      ],
-      "sample_posts": [
-        {
-          "text": "Red states follow Trump\u2019s model, seek to rid Islamist influence in local lawmaking: https://justthenews.com/politics-policy/red-states-follow-trumps-model-seek-de-islamify-homeland",
-          "id": 38351
-        },
-        {
-          "text": "I am very much looking forward to my trip to China, an amazing Country, with a Leader, President Xi, respected by all. Great things will happen for both Countries! President DONALD J. TRUMP",
-          "id": 38355
-        },
-        {
-          "text": "I am pleased to announce the nomination of Daniel Traynor to serve as Judge on the United States Court of Appeals for the Eighth Circuit in North Dakota. During his time as a Federal District Court Judge, Daniel has issued courageous decisions, and blocked illegal Federal Governm",
-          "id": 38354
-        }
-      ]
-    },
-    {
       "date": "2026-05-30",
       "dow": "Sat",
       "count": 64,
@@ -715,6 +715,37 @@
       ]
     },
     {
+      "date": "2026-05-11",
+      "dow": "Mon",
+      "count": 64,
+      "vs_median": 4.3,
+      "peak_hour": 22,
+      "keywords": [
+        "judge",
+        "law",
+        "district",
+        "great",
+        "court",
+        "university",
+        "serve",
+        "federal"
+      ],
+      "sample_posts": [
+        {
+          "text": "Red states follow Trump\u2019s model, seek to rid Islamist influence in local lawmaking: https://justthenews.com/politics-policy/red-states-follow-trumps-model-seek-de-islamify-homeland",
+          "id": 38351
+        },
+        {
+          "text": "I am very much looking forward to my trip to China, an amazing Country, with a Leader, President Xi, respected by all. Great things will happen for both Countries! President DONALD J. TRUMP",
+          "id": 38355
+        },
+        {
+          "text": "I am pleased to announce the nomination of Daniel Traynor to serve as Judge on the United States Court of Appeals for the Eighth Circuit in North Dakota. During his time as a Federal District Court Judge, Daniel has issued courageous decisions, and blocked illegal Federal Governm",
+          "id": 38354
+        }
+      ]
+    },
+    {
       "date": "2025-11-03",
       "dow": "Mon",
       "count": 63,
@@ -732,12 +763,12 @@
       ],
       "sample_posts": [
         {
-          "text": "Congressman Vern Buchanan, who has been with us from the very beginning, is a Fantastic Advocate of Florida\u2019s 16th Congressional District! As a very successful Businessman, and the Vice Chairman of the POWERFUL House Ways & Means Committee, Vern understands the America First Poli",
-          "id": 33634
-        },
-        {
           "text": "Congressman Gus Bilirakis is a Tremendous Champion for Florida\u2019s 12th Congressional District! As a Senior Member of the POWERFUL House Energy and Commerce Committee, Gus is working tirelessly to Advance American Energy DOMINANCE, Create GREAT Jobs, Cut Taxes and Regulations, Prom",
           "id": 33635
+        },
+        {
+          "text": "Congressman Vern Buchanan, who has been with us from the very beginning, is a Fantastic Advocate of Florida\u2019s 16th Congressional District! As a very successful Businessman, and the Vice Chairman of the POWERFUL House Ways & Means Committee, Vern understands the America First Poli",
+          "id": 33634
         },
         {
           "text": "Scott Franklin is a fantastic Representative for the Great People of Florida\u2019s 18th Congressional District! A U.S. Naval Academy Graduate and retired Navy Commander, Scott knows the Wisdom and Courage that is required to Defend our Country, Support our incredible Military/Veteran",
@@ -829,43 +860,12 @@
           "id": 37052
         },
         {
-          "text": "",
-          "id": 37054
-        },
-        {
           "text": "Deranged Jack Smith should be brought to Justice, NOW!!!",
           "id": 37053
-        }
-      ]
-    },
-    {
-      "date": "2026-05-18",
-      "dow": "Mon",
-      "count": 57,
-      "vs_median": 3.8,
-      "peak_hour": 13,
-      "keywords": [
-        "election",
-        "american",
-        "out",
-        "vote",
-        "military",
-        "never",
-        "congressman",
-        "day"
-      ],
-      "sample_posts": [
-        {
-          "text": "",
-          "id": 38567
         },
         {
           "text": "",
-          "id": 38566
-        },
-        {
-          "text": "",
-          "id": 38565
+          "id": 37054
         }
       ]
     },
@@ -897,6 +897,37 @@
         {
           "text": "",
           "id": 37867
+        }
+      ]
+    },
+    {
+      "date": "2026-05-18",
+      "dow": "Mon",
+      "count": 57,
+      "vs_median": 3.8,
+      "peak_hour": 13,
+      "keywords": [
+        "election",
+        "american",
+        "out",
+        "vote",
+        "military",
+        "never",
+        "congressman",
+        "day"
+      ],
+      "sample_posts": [
+        {
+          "text": "",
+          "id": 38567
+        },
+        {
+          "text": "",
+          "id": 38566
+        },
+        {
+          "text": "",
+          "id": 38565
         }
       ]
     },
@@ -989,7 +1020,7 @@
         },
         {
           "text": "",
-          "id": 35795
+          "id": 35797
         }
       ]
     },
@@ -1023,37 +1054,6 @@
           "id": 38473
         }
       ]
-    },
-    {
-      "date": "2026-08-14",
-      "dow": "Fri",
-      "count": 53,
-      "vs_median": 3.5,
-      "peak_hour": 21,
-      "keywords": [
-        "president",
-        "states",
-        "united",
-        "national",
-        "trump",
-        "military",
-        "state",
-        "security"
-      ],
-      "sample_posts": [
-        {
-          "text": "White House report details \u2018Great Transshipment Scam\u2019 costing tens of billions in tariff evasion: https://justthenews.com/government/white-house/white-house-report-details-great-transshipment-scam-costing-tens-billions",
-          "id": 40816
-        },
-        {
-          "text": "Bessent to Newsmax: US to Hit Iran With Unprecedented Economic Isolation: https://www.newsmax.com/newsmax-tv/scott-bessent-iran-economic/2026/08/13/id/1266059/",
-          "id": 40817
-        },
-        {
-          "text": "Our beautiful World War II Memorial was just hit by Spray Painting Vandals. THERE CAN BE NO GREATER INSULT TO THOSE AMERICAN HEROES WHO DIED IN WORLD WAR II. First the Reflecting Pool, now this. We are on their trail! Where do these animals come from??? President DJT",
-          "id": 40818
-        }
-      ]
     }
   ],
   "hourly_profile": [
@@ -1063,27 +1063,27 @@
     132,
     107,
     233,
-    442,
+    443,
     992,
     1132,
     1436,
-    1933,
-    2363,
-    1975,
-    1979,
-    2198,
+    1934,
+    2366,
+    1991,
+    2020,
+    2202,
     2209,
-    2245,
-    2173,
-    2062,
+    2246,
+    2176,
+    2066,
     1827,
     1508,
-    2028,
-    1647,
+    2029,
+    1649,
     1607
   ],
   "retruths": {
-    "total": 235,
+    "total": 238,
     "share_of_all_posts": 0.021,
     "counted_in_series": true,
     "note": "ReTruths are counted, on the day Trump reshared rather than the day the original ran. The mirror files them under the ORIGINAL author's timestamp, so counting them as filed would credit activity to days on which nothing happened; the mirror's own ingest order brackets the real reshare moment and recovers it to within hours."
