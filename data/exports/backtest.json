@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-24T09:04:48.117488+00:00",
+  "generated_at": "2026-08-25T08:59:11.603677+00:00",
   "leaderboard": [
     {
       "model": "negbin-glm-trend",
@@ -383,7 +383,7 @@
       "n_forecasts": 56,
       "crps": 24.24,
       "crps_skill_vs_climatology": 0.064,
-      "log_score": 5.015,
+      "log_score": 5.016,
       "pinball": 7.846,
       "width80": 72.1,
       "coverage80": 0.625,
