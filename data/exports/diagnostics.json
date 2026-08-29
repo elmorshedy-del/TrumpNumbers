@@ -1,25 +1,25 @@
 {
   "window": {
     "start": "2025-01-20",
-    "end": "2026-08-28",
-    "days": 586
+    "end": "2026-08-29",
+    "days": 587
   },
   "ingest_lag": {
     "available": true,
-    "n": 892,
-    "median_minutes": 39.9,
-    "p90_minutes": 149.6,
+    "n": 900,
+    "median_minutes": 40.1,
+    "p90_minutes": 153.8,
     "max_minutes": 601.5,
     "note": "Post timestamp to the moment this pipeline stored it: Truth Social publishing, trumpstruth.org crawling, and our poll interval combined. Only the poll interval is ours to shorten; the rest is the floor."
   },
   "dispersion": {
-    "n": 586,
-    "mean": 19.58,
+    "n": 587,
+    "mean": 19.566,
     "median": 15.0,
-    "variance": 301.143,
-    "sd": 17.353,
-    "dispersion_ratio": 15.38,
-    "chi2": 8997.3,
+    "variance": 302.359,
+    "sd": 17.388,
+    "dispersion_ratio": 15.45,
+    "chi2": 9055.8,
     "p_value": 0.0,
     "poisson_plausible": false,
     "poisson_sd": 4.42,
@@ -33,20 +33,20 @@
     ],
     "actual_range_95": [
       3.0,
-      63.375
+      63.35000000000002
     ]
   },
   "conditional_dispersion": {
     "available": true,
-    "raw": 15.38,
-    "by_weekday": 14.34,
-    "by_weekday_and_level": 15.27,
+    "raw": 15.45,
+    "by_weekday": 14.41,
+    "by_weekday_and_level": 15.31,
     "note": "Pearson chi-square per degree of freedom. A well-specified Poisson model sits near 1. The raw ratio compares against a single fixed rate, which the weekly cycle refutes on its own; these two compare against what a Poisson GLM actually assumes."
   },
   "tail": {
-    "mean_over_median": 1.31,
+    "mean_over_median": 1.3,
     "max_over_median": 11.1,
-    "skewness": 3.25,
+    "skewness": 3.24,
     "top_1pct_share_of_all_posts": 0.056,
     "zero_days": 2,
     "zero_share": 0.003,
@@ -57,7 +57,7 @@
       "0.75": 24.0,
       "0.9": 37.0,
       "0.95": 50.0,
-      "0.99": 85.9499999999997
+      "0.99": 85.81999999999982
     }
   },
   "day_of_week": {
@@ -68,7 +68,7 @@
         "mean": 26.19,
         "median": 20.0,
         "sd": 26.2,
-        "index_vs_overall": 1.338
+        "index_vs_overall": 1.339
       },
       {
         "day": "Tue",
@@ -76,7 +76,7 @@
         "mean": 22.18,
         "median": 18.0,
         "sd": 14.02,
-        "index_vs_overall": 1.133
+        "index_vs_overall": 1.134
       },
       {
         "day": "Wed",
@@ -92,23 +92,23 @@
         "mean": 18.94,
         "median": 15.0,
         "sd": 17.84,
-        "index_vs_overall": 0.967
+        "index_vs_overall": 0.968
       },
       {
         "day": "Fri",
         "n": 84,
-        "mean": 19.43,
+        "mean": 19.55,
         "median": 15.0,
-        "sd": 16.89,
-        "index_vs_overall": 0.992
+        "sd": 17.12,
+        "index_vs_overall": 0.999
       },
       {
         "day": "Sat",
-        "n": 83,
-        "mean": 15.67,
+        "n": 84,
+        "mean": 15.5,
         "median": 11.0,
-        "sd": 13.99,
-        "index_vs_overall": 0.801
+        "sd": 14.0,
+        "index_vs_overall": 0.792
       },
       {
         "day": "Sun",
@@ -116,10 +116,10 @@
         "mean": 17.25,
         "median": 12.0,
         "sd": 15.97,
-        "index_vs_overall": 0.881
+        "index_vs_overall": 0.882
       }
     ],
-    "overall_mean": 19.58
+    "overall_mean": 19.57
   },
   "autocorrelation": {
     "lags": [
@@ -148,77 +148,77 @@
     ],
     "acf": [
       1.0,
-      0.1061,
-      0.0314,
-      -0.0073,
-      -0.0461,
-      0.0517,
-      0.063,
-      0.0329,
-      0.0597,
-      0.0836,
-      -0.0716,
-      0.0727,
-      -0.0092,
-      0.0692,
-      0.0514,
-      -0.0226,
-      -0.0317,
-      0.017,
-      -0.0129,
-      -0.0001,
-      0.0711,
-      0.0152
+      0.1018,
+      0.0317,
+      -0.011,
+      -0.0462,
+      0.0495,
+      0.0623,
+      0.0371,
+      0.0526,
+      0.0835,
+      -0.0692,
+      0.0698,
+      -0.01,
+      0.0682,
+      0.0519,
+      -0.0259,
+      -0.0318,
+      0.0149,
+      -0.0134,
+      -0.0003,
+      0.0726,
+      0.0133
     ],
     "pacf": [
       1.0,
-      0.1061,
-      0.0203,
-      -0.0129,
-      -0.0452,
-      0.0625,
-      0.0545,
-      0.017,
-      0.0508,
-      0.0792,
-      -0.0901,
-      0.0846,
+      0.1018,
+      0.0215,
+      -0.0166,
+      -0.0446,
+      0.06,
+      0.0547,
+      0.0215,
+      0.0432,
+      0.0807,
+      -0.0862,
+      0.0808,
       -0.021,
-      0.0696,
-      0.0157,
-      -0.0286,
-      -0.0352,
-      0.0231,
-      -0.0218,
-      -0.004,
-      0.0497,
-      0.0188
+      0.0685,
+      0.0188,
+      -0.0335,
+      -0.0343,
+      0.0228,
+      -0.0236,
+      -0.0036,
+      0.0517,
+      0.0165
     ],
     "acf_raw_with_weekly_cycle": [
       1.0,
-      0.1089,
-      0.0184,
-      -0.0031,
+      0.1052,
+      0.0183,
+      -0.0055,
       -0.0534,
-      0.0194,
-      0.0532,
-      0.0582,
-      0.0684,
-      0.0489,
-      -0.0697,
-      0.0758,
-      -0.026,
-      0.0548,
-      0.0889,
-      -0.0048,
+      0.0167,
+      0.0528,
+      0.0623,
+      0.0619,
+      0.0485,
+      -0.0669,
+      0.0728,
+      -0.0277,
+      0.0541,
+      0.0902,
+      -0.0078,
       -0.0486,
-      0.0182,
-      -0.0096,
-      -0.0297,
-      0.0549,
-      0.0539
+      0.0171,
+      -0.0098,
+      -0.0307,
+      0.0557,
+      0.0525
     ],
-    "conf": 0.081,
+    "conf": 0.0809,
     "note": "ACF/PACF computed after removing the weekly cycle; the raw series is shown for contrast."
   },
   "structural_breaks": {
@@ -252,7 +252,7 @@
         "start": "2026-08-08",
         "end": "2026-08-29",
         "weeks": 4,
-        "mean_posts_per_day": 33.37
+        "mean_posts_per_day": 32.43
       }
     ],
     "breaks": [
@@ -262,7 +262,7 @@
       "2026-08-08"
     ],
     "n_breaks_penalized": 1,
-    "penalty": 0.9691,
+    "penalty": 0.9554,
     "note": "The segment list comes from a search told in advance how many breaks to find, so its count is a setting, not a result. `n_breaks_penalized` lets the data choose instead: if it is 0, the segmentation above is a partition of noise."
   },
   "window_vs_breaks": {
@@ -275,7 +275,7 @@
       "2026-08-08"
     ],
     "most_recent_break": "2026-08-08",
-    "weeks_since_most_recent_break": 2,
+    "weeks_since_most_recent_break": 3,
     "n_breaks_penalized": 1,
     "note": "Every model here is fitted from the window start, across any break listed above. That is the practice the window exists to avoid. Whether it matters depends on whether the breaks are real \u2014 see n_breaks_penalized, which is what the data says when it is not told how many to find."
   },
@@ -333,8 +333,8 @@
           "id": 30020
         },
         {
-          "text": "https://www.foxnews.com/politics/trump-calls-company-building-keystone-xl-pipeline-return-america-get-built",
-          "id": 30038
+          "text": "https://www.breitbart.com/border/2025/02/24/trump-effect-single-day-migrant-apprehension-numbers-on-southwest-border-fall-below-200/",
+          "id": 30040
         },
         {
           "text": "https://amgreatness.com/2025/02/25/no-trumps-tariffs-will-not-cause-inflation/",
@@ -361,15 +361,15 @@
       "sample_posts": [
         {
           "text": "",
-          "id": 35160
-        },
-        {
-          "text": "",
           "id": 35159
         },
         {
           "text": "",
-          "id": 35157
+          "id": 35160
+        },
+        {
+          "text": "",
+          "id": 35158
         }
       ]
     },
@@ -392,15 +392,15 @@
       "sample_posts": [
         {
           "text": "",
+          "id": 34789
+        },
+        {
+          "text": "",
           "id": 34791
         },
         {
           "text": "",
           "id": 34790
-        },
-        {
-          "text": "",
-          "id": 34789
         }
       ]
     },
@@ -462,7 +462,7 @@
         },
         {
           "text": "",
-          "id": 34999
+          "id": 35000
         }
       ]
     },
@@ -480,7 +480,7 @@
         "congressional",
         "district",
         "border",
-        "military"
+        "energy"
       ],
       "sample_posts": [
         {
@@ -612,12 +612,12 @@
           "id": 33546
         },
         {
-          "text": "https://nypost.com/2025/11/01/us-news/rep-nicole-malliotakis-rips-gerrymandering-lawsuit-for-staten-island-house-seat-as-nonsensical-power-grab/",
-          "id": 33548
-        },
-        {
           "text": "https://dailycaller.com/2025/11/01/opinion-arctic-frost-accountability-starts-with-impeaching-judge-boasberg-dave-bossie/",
           "id": 33547
+        },
+        {
+          "text": "https://nypost.com/2025/11/01/us-news/rep-nicole-malliotakis-rips-gerrymandering-lawsuit-for-staten-island-house-seat-as-nonsensical-power-grab/",
+          "id": 33548
         }
       ]
     },
@@ -860,43 +860,43 @@
           "id": 37052
         },
         {
-          "text": "Deranged Jack Smith should be brought to Justice, NOW!!!",
-          "id": 37053
-        },
-        {
           "text": "",
           "id": 37054
+        },
+        {
+          "text": "Deranged Jack Smith should be brought to Justice, NOW!!!",
+          "id": 37053
         }
       ]
     },
     {
-      "date": "2026-04-18",
-      "dow": "Sat",
-      "count": 57,
-      "vs_median": 3.8,
-      "peak_hour": 21,
+      "date": "2026-08-28",
+      "dow": "Fri",
+      "count": 58,
+      "vs_median": 3.9,
+      "peak_hour": 14,
       "keywords": [
-        "thank",
-        "how",
-        "status",
-        "israel",
-        "great",
-        "robert",
-        "anybody",
-        "looked"
+        "trump",
+        "new",
+        "york",
+        "president",
+        "news",
+        "donald",
+        "all",
+        "out"
       ],
       "sample_posts": [
         {
-          "text": "",
-          "id": 37863
+          "text": "Ranchers and Farmers have always been a number one priority for me. They work very hard, are smart, efficient, and immaculately CLEAN, but for years I have heard that they have had a tremendous problem with the Big Processors, who many say are a nasty Monopoly. There are, essenti",
+          "id": 41303
         },
         {
           "text": "",
-          "id": 37866
+          "id": 41305
         },
         {
           "text": "",
-          "id": 37867
+          "id": 41304
         }
       ]
     },
@@ -928,6 +928,37 @@
         {
           "text": "",
           "id": 38565
+        }
+      ]
+    },
+    {
+      "date": "2026-04-18",
+      "dow": "Sat",
+      "count": 57,
+      "vs_median": 3.8,
+      "peak_hour": 21,
+      "keywords": [
+        "thank",
+        "how",
+        "status",
+        "israel",
+        "great",
+        "robert",
+        "anybody",
+        "looked"
+      ],
+      "sample_posts": [
+        {
+          "text": "",
+          "id": 37863
+        },
+        {
+          "text": "",
+          "id": 37867
+        },
+        {
+          "text": "",
+          "id": 37866
         }
       ]
     },
@@ -1023,37 +1054,6 @@
           "id": 40955
         }
       ]
-    },
-    {
-      "date": "2026-05-16",
-      "dow": "Sat",
-      "count": 54,
-      "vs_median": 3.6,
-      "peak_hour": 17,
-      "keywords": [
-        "trump",
-        "president",
-        "donald",
-        "great",
-        "all",
-        "get",
-        "after",
-        "justthenews"
-      ],
-      "sample_posts": [
-        {
-          "text": "Biden FBI secretly set up Trump to be indicted after he leaves office, Arctic Frost memos suggest: https://justthenews.com/government/courts-law/fbi-and-jack-smith-prosecutor-sought-hold-anti-trump-evidence-until-he-left",
-          "id": 38472
-        },
-        {
-          "text": "One Nation Under Fraud: Trump administration uncovers massive welfare, citizenship abuses: https://justthenews.com/accountability/waste-fraud-and-abuse/one-nation-under-fraud-trump-admin-uncovers-mass-welfare",
-          "id": 38471
-        },
-        {
-          "text": "Judicial Watch files lawsuit seeking records on $2 billion grant to nonprofit tied to Stacey Abrams: https://justthenews.com/government/courts-law/judicial-watch-files-lawsuit-seeking-records-2-billion-grant-nonprofit-tied",
-          "id": 38473
-        }
-      ]
     }
   ],
   "hourly_profile": [
@@ -1065,26 +1065,26 @@
     233,
     445,
     997,
-    1136,
+    1137,
     1444,
     1938,
     2425,
     2033,
     2023,
     2231,
-    2211,
-    2265,
-    2185,
-    2078,
+    2212,
+    2267,
+    2187,
+    2079,
     1827,
-    1510,
-    2037,
-    1661,
+    1511,
+    2038,
+    1663,
     1607
   ],
   "retruths": {
-    "total": 250,
-    "share_of_all_posts": 0.021,
+    "total": 253,
+    "share_of_all_posts": 0.022,
     "counted_in_series": true,
     "note": "ReTruths are counted, on the day Trump reshared rather than the day the original ran. The mirror files them under the ORIGINAL author's timestamp, so counting them as filed would credit activity to days on which nothing happened; the mirror's own ingest order brackets the real reshare moment and recovers it to within hours."
   },
