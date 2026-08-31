@@ -1,9 +1,423 @@
 {
-  "generated_at": "2026-08-30T13:47:16.977498+00:00",
+  "generated_at": "2026-08-31T16:07:53.815967+00:00",
   "posts": [
     {
+      "id": 41433,
+      "at": "2026-08-31T11:35:00-04:00",
+      "text": "The Supreme Court will not survive another Democratic trifecta: https://www.washingtonexaminer.com/opinion/editorials/4687679/the-supreme-court-will-not-survive-another-democratic-trifecta-independent-body/",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117190853591078458"
+    },
+    {
+      "id": 41432,
+      "at": "2026-08-31T11:35:00-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": true,
+      "url": "https://truthsocial.com/@realDonaldTrump/117190855202153056"
+    },
+    {
+      "id": 41435,
+      "at": "2026-08-31T11:34:00-04:00",
+      "text": "Democratic Committee Urges Congress to Defund ICE, Free Illegal Migrants: https://www.breitbart.com/immigration/2026/08/17/democratic-committee-urges-congress-to-defund-ice-free-illegal-migrants/",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117190849749284139"
+    },
+    {
+      "id": 41434,
+      "at": "2026-08-31T11:34:00-04:00",
+      "text": "Exclusive: First Lady Melania Trump Facilitates 34th Family Reunification of Children Displaced in Russia-Ukraine War: https://www.breitbart.com/politics/2026/08/17/exclusive-first-lady-melania-trump-facilitates-34th-family-reunification/",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117190852116503625"
+    },
+    {
+      "id": 41436,
+      "at": "2026-08-31T11:33:00-04:00",
+      "text": "\u2018Abolish ICE\u2019 Is Now Official DNC Policy: https://www.dailywire.com/news/dnc-formally-adopts-resolution-calling-for-abolishing-ice",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117190848540733687"
+    },
+    {
+      "id": 41414,
+      "at": "2026-08-31T11:33:00-04:00",
+      "text": "Trump on Iran: Preventing a nuke the 'number one goal': https://justthenews.com/politics-policy/trump-iran-preventing-nuke-number-one-goal",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117190845707966830"
+    },
+    {
+      "id": 41413,
+      "at": "2026-08-31T11:33:00-04:00",
+      "text": "Trump Hails Defense Pact, Says Mideast 'Coming Together': https://www.newsmax.com/politics/trump-mecca-defense-pact-mideast/2026/08/16/id/1266287/",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117190846683312793"
+    },
+    {
+      "id": 41412,
+      "at": "2026-08-31T11:33:00-04:00",
+      "text": "Trump\u2019s \u201cAmerica First\u201d Agenda Brings Another Citizen Home: https://amac.us/newsline/trump-s-america-first-agenda-brings-another-citizen-home",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117190847678727118"
+    },
+    {
+      "id": 41418,
+      "at": "2026-08-31T11:32:00-04:00",
+      "text": "Indiana's Ivy Tech program becomes second in the nation to nab Workforce Pell Grant: https://www.indystar.com/story/news/politics/2026/08/19/indiana-ivy-tech-program-nabs-workforce-pell-grant/91368052007/",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117190841665836569"
+    },
+    {
+      "id": 41417,
+      "at": "2026-08-31T11:32:00-04:00",
+      "text": "Sneak peek: Trump administration to talk growth with finance ministers, CEOs in Asheville, N.C.https://www.axios.com/2026/08/19/trump-bessent-g20-finance-ministers-asheville",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117190842890861088"
+    },
+    {
+      "id": 41416,
+      "at": "2026-08-31T11:32:00-04:00",
+      "text": "Trump Asks Congress to Pass Crypto Bill Alongside Executives: https://www.bloomberg.com/news/articles/2026-08-19/trump-asks-congress-to-pass-crypto-bill-alongside-executives",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117190843791390411"
+    },
+    {
+      "id": 41415,
+      "at": "2026-08-31T11:32:00-04:00",
+      "text": "White House takes victory lap as drug prices dip 3.1% in past year: \u2018Steepest drop since 1963\u2019: https://nypost.com/2026/08/17/us-news/white-house-takes-victory-lap-as-drug-prices-dip-3-1-in-past-year-steepest-drop-since-1963/",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117190844666700928"
+    },
+    {
+      "id": 41423,
+      "at": "2026-08-31T11:31:00-04:00",
+      "text": "Trump admin axes refundable tax credits for illegal migrants, saving taxpayers $3B: https://nypost.com/2026/08/19/us-news/trump-admin-axes-refundable-tax-credits-for-illegal-migrants-saving-taxpayers-3b/",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117190837232373323"
+    },
+    {
+      "id": 41422,
+      "at": "2026-08-31T11:31:00-04:00",
+      "text": "Trump Effect: Bessent Ends Tax Breaks for Illegals: https://www.breitbart.com/politics/2026/08/19/trump-effect-bessent-ends-tax-breaks-for-illegals/",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117190838057767304"
+    },
+    {
+      "id": 41421,
+      "at": "2026-08-31T11:31:00-04:00",
+      "text": "Biden-era \u2018ghost gun\u2019 restrictions ruled unconstitutional: https://thehill.com/regulation/court-battles/6037757-biden-ghost-gun-rule-unconstitutional/",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117190838921611219"
+    },
+    {
+      "id": 41420,
+      "at": "2026-08-31T11:31:00-04:00",
+      "text": "Prysmian invests more than $1 billion to expand fiber optic cable manufacturing facility in North Carolina: https://www.plantservices.com/industry-news/news/55399020/prysmian-invests-more-than-1-billion-to-expand-fiber-optic-cable-manufacturing-facility-in-north-carolina",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117190839730903416"
+    },
+    {
+      "id": 41419,
+      "at": "2026-08-31T11:31:00-04:00",
+      "text": "Iran Risks Losing Key Economic Lifeline With UAE Halting Trade: https://www.bloomberg.com/news/articles/2026-08-19/iran-risks-losing-key-economic-lifeline-with-uae-halting-trade",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117190840659228982"
+    },
+    {
+      "id": 41424,
+      "at": "2026-08-31T11:30:00-04:00",
+      "text": "https://nypost.com/2026/08/18/us-news/trump-to-take-lap-of-honor-ahead-of-indycar-freedom-250-grand-prix-along-national-mall/",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117190835952782276"
+    },
+    {
+      "id": 41428,
+      "at": "2026-08-31T11:29:00-04:00",
+      "text": "CISA warnings expose America\u2019s election security gaps: https://www.washingtontimes.com/news/2026/aug/16/cisa-warnings-expose-americas-election-security-gaps/?srsltid=AfmBOooALWKcQVolAcsd47F8wcdEyntAM6sBV_u-Q5KuD8VlI4WiTCQt",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": true,
+      "url": "https://truthsocial.com/@realDonaldTrump/117190829695993949"
+    },
+    {
+      "id": 41427,
+      "at": "2026-08-31T11:29:00-04:00",
+      "text": "FBI had evidence Swalwell got illegal donations from suspected Chinese spy, bombshell memos show: https://justthenews.com/accountability/political-ethics/6amfbi-had-evidence-swalwell-got-illegal-donations-suspected",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117190830878092057"
+    },
+    {
+      "id": 41426,
+      "at": "2026-08-31T11:29:00-04:00",
+      "text": "Trump\u2019s policies meat the moment: National beef herd size stabilizes after years of decline: https://www.washingtonexaminer.com/news/washington-secrets/4689402/national-beef-herd-size-stabilizes-after-years-of-decline/",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117190831762974171"
+    },
+    {
+      "id": 41425,
+      "at": "2026-08-31T11:29:00-04:00",
+      "text": "He Bet Big on Trump. The Prize Could Be the Florida Governor\u2019s Mansion.https://www.nytimes.com/2026/08/19/us/elections/byron-donalds-profile-florida-governors-race.html",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117190832762214407"
+    },
+    {
+      "id": 41429,
+      "at": "2026-08-31T11:28:00-04:00",
+      "text": "DOJ Issues Grand Jury Subpoenas Whether \u201cOther Dan Sullivan\u201d Entered Race to CONFUSE VOTERS Against Republican Sen. Dan Sullivan: https://www.thegatewaypundit.com/2026/08/doj-issues-grand-jury-subpoenas-whether-other-dan/",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117190827830091749"
+    },
+    {
+      "id": 41411,
+      "at": "2026-08-31T09:59:35-04:00",
+      "text": "The only reason that communities throughout the U.S.A. should not want Data Centers is if they want to end up being backwards and poor. If they want to be successful and rich, with far lower taxes and jobs all over the place, let Data Reign. The good news is that there are plenty of other places that want them. If we kill the Golden Goose, you will only have yourselves to blame. China could not be happier with this anti Data Center movement. Actually, they can\u2019t believe it is happening! President DJT",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117190477440173795"
+    },
+    {
+      "id": 41410,
+      "at": "2026-08-31T08:09:07-04:00",
+      "text": "Iran is officially a Failed Nation. IT IS DEAD! They have no Navy, they have no Air Force, they have no currency, they are not paying their soldiers or police, Inflation is at 300%, and their leadership is in total disarray and incapable of properly representing the country. The only thing they have is FAKE NEWS from the USA, a willingness to kill their protesters (now over 100,000 people dead. They must be tried for war crimes against humanity!), and a good line of \u201cBULLSHIT.\u201d Thank you for your attention to this matter! President DONALD J.TRUMP",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117190043060363335"
+    },
+    {
+      "id": 41409,
+      "at": "2026-08-30T22:19:45-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117187725571191360"
+    },
+    {
+      "id": 41407,
+      "at": "2026-08-30T22:19:36-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117187725011060792"
+    },
+    {
+      "id": 41408,
+      "at": "2026-08-30T22:18:57-04:00",
+      "text": "Kharg Island being blown to smithereens!!! President DJT",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117187722429803464"
+    },
+    {
+      "id": 41406,
+      "at": "2026-08-30T21:18:19-04:00",
+      "text": "Being interviewed by Trey Gowdy, NOW!",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117187484009660027"
+    },
+    {
+      "id": 41405,
+      "at": "2026-08-30T20:26:05-04:00",
+      "text": "For many years, the USA has been losing more than 60 Billion Dollars a year with Canada. Why??? Our long ago stolen businesses are now coming back to America in order to avoid paying tariffs. They are lining up, just like the rest of the World!!! President DJT",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117187278603098753"
+    },
+    {
+      "id": 41404,
+      "at": "2026-08-30T20:18:14-04:00",
+      "text": "Governor Kathy Hochul just released 7000 hard core criminals onto the streets on New York. What is wrong with her? She is grossly incompetent and must be voted out of office! President DJT",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117187247747260967"
+    },
+    {
+      "id": 41403,
+      "at": "2026-08-30T19:56:46-04:00",
+      "text": "A wonderful new book by Ted Cruz, about a Great Supreme Court Justice, Clarence Thomas, is just out! It tells the true story about Justice Thomas\u2019s rise, and all of the wonderful things he has done for America. A MUST READ! Get your copy now: https://www.amazon.com/dp/B0GXNLZ6W8?lv=shuf&channelId=500&plpRedirect=mhFallback",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117187163336215939"
+    },
+    {
+      "id": 41402,
+      "at": "2026-08-30T19:03:57-04:00",
+      "text": "Kennedy Center is an old and decrepit building that is badly in need of a major construction and public relations fix before it can attain greatness and prestige, perhaps far greater than ever before. It has been losing a fortune for many years, and will continue to do so if the highly conflicted judge on the case doesn\u2019t allow us to do what has to be done!",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117186955648564622"
+    },
+    {
+      "id": 41401,
+      "at": "2026-08-30T18:48:48-04:00",
+      "text": "Look what VANDALS did to the grass connecting the vandalized World War II Monument and the vandalized Reflecting Pool, which will be opened again, and better than ever, shortly. Anybody who thinks the Reflecting Pool wasn\u2019t vandalized should go back to Law School! The grass is being replaced shortly, and the Reflecting Pool is almost completely fixed, including the various inflow and outflow pipes, which we were saving for the end of the year, but will do now. President DONALD J. TRUMP",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117186896081344697"
+    },
+    {
+      "id": 41400,
+      "at": "2026-08-30T17:36:15-04:00",
+      "text": "Google Maps changes Lake Ontario to \u2018Lake America\u2019 on US phones: https://thehill.com/policy/transportation/6059553-google-maps-renames-lake-america/",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117186610792493785"
+    },
+    {
+      "id": 41399,
+      "at": "2026-08-30T16:53:39-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": true,
+      "url": "https://truthsocial.com/@realDonaldTrump/117186443308687103"
+    },
+    {
+      "id": 41398,
+      "at": "2026-08-30T14:26:25-04:00",
+      "text": "Let all Canadian Companies that are doing business with America move to the United States, immediately. Many of them are Companies that moved out years ago due to stupid U.S. Leadership. When you move back, there are no TARIFFS! President DONALD J. TRUMP",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117185864353206503"
+    },
+    {
+      "id": 41397,
+      "at": "2026-08-30T14:16:09-04:00",
+      "text": "When I announced that I was running in the 2024 Presidential Election, right at the beginning, Ford was getting ready to close their Big Factory, in Detroit. Then, because I was leading in the Polls, they figured they would leave it open a little longer to see what happened. Now it\u2019s running 24/7, and it\u2019s one of the most profitable Car Plants in the World! There are many other examples, for both Ford, General Motors, and others. I\u2019ve revived, and indeed saved, the Automobile Business in our America. That\u2019s because of what I\u2019ve done with TARIFFS. One of the Worst Abusers is Canada. I don\u2019t wan",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117185823993660126"
+    },
+    {
+      "id": 41396,
+      "at": "2026-08-30T13:25:47.666667-04:00",
+      "text": "President Trump is the Greatest JOBS President in American History. He works tirelessly every day to create millions of high-paying Jobs, drive Trillions of Dollars in Investment, and reinvigorate our Economy. Just this week, President Trump and the Prime Minister of Bangladesh made another incredible Deal, with Bangladesh committing to spend Billions of Dollars to buy more Boeing Aircraft, significantly increasing their initial order. Our President is Making America, and our partners, Great Again!",
+      "is_retruth": true,
+      "source_handle": "@sergiogor",
+      "has_media": false,
+      "url": "https://truthsocial.com/@sergiogor/117185350159023559"
+    },
+    {
+      "id": 41395,
+      "at": "2026-08-30T12:35:26.333333-04:00",
+      "text": "RT @sergiogorPresident Trump is the Greatest JOBS President in American History. He works tirelessly every day to create millions of high-paying Jobs, drive Trillions of Dollars in Investment, and reinvigorate our Economy. Just this week, President Trump and the Prime Minister of Bangladesh made another incredible Deal, with Bangladesh committing to spend Billions of Dollars to buy more Boeing Aircraft, significantly increasing their initial order. Our President is Making America, and our partners, Great Again!",
+      "is_retruth": true,
+      "source_handle": "@sergiogorPresident",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117185403938534473"
+    },
+    {
+      "id": 41393,
+      "at": "2026-08-30T11:46:18-04:00",
+      "text": "Google Maps changes Lake Ontario to \u2018Lake America\u2019 on US phones: https://thehill.com/policy/transportation/6059553-google-maps-renames-lake-america/",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117185234758035541"
+    },
+    {
+      "id": 41394,
+      "at": "2026-08-30T11:45:05-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": true,
+      "url": "https://truthsocial.com/@realDonaldTrump/117185229994000348"
+    },
+    {
+      "id": 41391,
+      "at": "2026-08-30T10:10:20-04:00",
+      "text": "One of the things I am going to do with the Venezuelan Oil is fill up the Strategic National Reserves which, because of Sleepy Joe Biden, has been virtually emptied. The \u201ctopping out\u201d process will begin very shortly, and is a Gift from Venezuela to the People of the United States. Thank you! President DONALD J. TRUMP",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117184857420534704"
+    },
+    {
+      "id": 41392,
+      "at": "2026-08-30T10:04:07-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117184832932244590"
+    },
+    {
+      "id": 41389,
+      "at": "2026-08-30T09:59:40-04:00",
+      "text": "Congratulations to NASA Administrator Jared Isaacman, and the Great Patriots at NASA, on a successful launch. This is THE GOLDEN AGE OF AMERICA! President DONALD J. TRUMP",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117184815452316443"
+    },
+    {
+      "id": 41390,
+      "at": "2026-08-30T09:55:53-04:00",
+      "text": "Canadian businesses are pouring into the United States. We want to make our own cars, etc. That\u2019s what\u2019s going to happen. Canada has been ripping us off for years \u2014 NO LONGER! President DJT",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117184800571598811"
+    },
+    {
       "id": 41388,
-      "at": "2026-08-30T09:33:00-04:00",
+      "at": "2026-08-30T09:33:11-04:00",
       "text": "",
       "is_retruth": false,
       "source_handle": "@realDonaldTrump",
@@ -11,8 +425,17 @@
       "url": "https://truthsocial.com/@realDonaldTrump/117184711319343782"
     },
     {
+      "id": 41387,
+      "at": "2026-08-30T09:16:37-04:00",
+      "text": "RT @realDonaldTrumpTHE FAKE POLLS USED BY OUR CROOKED MEDIA ARE OUT OF CONTROL, AND SOMETHING MUST BE DONE ABOUT IT. FCC TO THE RESCUE! President DJT",
+      "is_retruth": true,
+      "source_handle": "@realDonaldTrumpTHE",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117184582195619149"
+    },
+    {
       "id": 41386,
-      "at": "2026-08-30T09:00:00-04:00",
+      "at": "2026-08-30T09:00:03-04:00",
       "text": "Kristen Welker, the Unpopular \u201cHostess\u201d of the once great Meet the Press, now considered Meet the Fake Press, just stated that Donald Trump has \u201cmixed results\u201d on his Endorsements of Candidates, when the recent WINS of Darline Graham and Mike Mazzei, stand at 100% for the U.S. Senate, and 98% for the U.S. House, recently and over the longterm. How can anyone be allowed to say this, working for freely given Public Airwaves? Results are attached. Because of this purposeful inaccuracy, she will be reported to the FCC for rebuke or punishment. Unfortunately, she is not the only one. The Radical Le",
       "is_retruth": false,
       "source_handle": "@realDonaldTrump",
@@ -117,429 +540,6 @@
       "source_handle": "@realDonaldTrump",
       "has_media": false,
       "url": "https://truthsocial.com/@realDonaldTrump/117182135157712268"
-    },
-    {
-      "id": 41374,
-      "at": "2026-08-29T17:36:35-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": true,
-      "url": "https://truthsocial.com/@realDonaldTrump/117180949829008293"
-    },
-    {
-      "id": 41373,
-      "at": "2026-08-29T14:43:49-04:00",
-      "text": "NASA Administrator Jared Isaacman, Secretary of Education Linda McMahon, Stephanie McMahon, and Triple H, at Kennedy Space Center! President DONALD J. TRUMP",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": true,
-      "url": "https://truthsocial.com/@realDonaldTrump/117180270499874239"
-    },
-    {
-      "id": 41372,
-      "at": "2026-08-29T14:10:12-04:00",
-      "text": "At the request of the PGA Tour, and its Great new Commissioner, Brian Rolapp, it is my Honor to accept being the Honorary Chairman of the upcoming Presidents Cup, which will take place at the Medinah Country Club in Chicago. This will be a particularly exciting event. Both teams are \u201cloaded\u201d with Talent. I look forward to being there, and greeting all of these fantastic athletes, on both teams! Thank you for your attention to this matter. See you in Chicago! President DONALD J. TRUMP",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117180138298064622"
-    },
-    {
-      "id": 41367,
-      "at": "2026-08-29T11:17:24-04:00",
-      "text": "Jared Isaacman, the Head of NASA, yesterday, at NASA Mission Control! President DONALD J. TRUMP",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117179458822974337"
-    },
-    {
-      "id": 41368,
-      "at": "2026-08-29T11:17:15-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117179458199513865"
-    },
-    {
-      "id": 41369,
-      "at": "2026-08-29T11:16:57-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117179457036471945"
-    },
-    {
-      "id": 41370,
-      "at": "2026-08-29T11:16:26-04:00",
-      "text": "NASA Mission Control yesterday! President DONALD J. TRUMP",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117179455037482321"
-    },
-    {
-      "id": 41371,
-      "at": "2026-08-29T11:16:10-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117179453982170906"
-    },
-    {
-      "id": 41365,
-      "at": "2026-08-29T10:50:44-04:00",
-      "text": "RT: https://truthsocial.com/users/realDonaldTrump/statuses/117179353254305954",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": true,
-      "url": "https://truthsocial.com/@realDonaldTrump/117179353983440485"
-    },
-    {
-      "id": 41366,
-      "at": "2026-08-29T10:50:33-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": true,
-      "url": "https://truthsocial.com/@realDonaldTrump/117179353254305954"
-    },
-    {
-      "id": 41364,
-      "at": "2026-08-29T10:12:58-04:00",
-      "text": "CNN is in a DEATH SPIRAL, and so is MSNOW, the new name for MSDNC \u2014 Literally, nobody is watching either Network! The best person on CNN is Pollster Harry Enten, because he was willing to show that Donald J. Trump is six times more popular than Abraham Lincoln, George Washington, or any other President \u2014 He\u2019s got Credibility (Don\u2019t fire him!). CNN can be turned around with new Leadership and Anchors (MSNOW cannot!), because a Great Brand can never truly be destroyed! President DONALD J. TRUMP",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117179205456937544"
-    },
-    {
-      "id": 41363,
-      "at": "2026-08-29T10:05:35-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117179176415838638"
-    },
-    {
-      "id": 41362,
-      "at": "2026-08-29T09:55:40-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117179137450053289"
-    },
-    {
-      "id": 41361,
-      "at": "2026-08-29T08:57:09-04:00",
-      "text": "Trump is winning the Iran war\u2014 stay the course: https://nypost.com/2026/08/23/opinion/trump-is-winning-the-iran-war-stay-the-course/",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117178907347016649"
-    },
-    {
-      "id": 41360,
-      "at": "2026-08-28T22:48:35-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": true,
-      "url": "https://truthsocial.com/@realDonaldTrump/117176514317841811"
-    },
-    {
-      "id": 41359,
-      "at": "2026-08-28T22:22:03-04:00",
-      "text": "Governor Kathy Hochul is for Canada, a Country that has been ripping off New York State for years, especially under her Administration, instead of the good \u2018ol U.S.A. Can you imagine her saying that she won\u2019t respect or acknowledge LAKE AMERICA. That\u2019s why the Dumocrats are so bad for our Country. Vote for Bruce Blakeman for Governor of New York. He has my Complete and Total Endorsement, and will never let you down! President DJT",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117176410033451497"
-    },
-    {
-      "id": 41358,
-      "at": "2026-08-28T21:45:49-04:00",
-      "text": "Very sad to hear about the passing of King Harald of Norway \u2014 A strong, proud, and greatly respected man. He loved his Country, and was truly loved and respected by his people. Our hearts are with the Royal Family, and all of Norway, during this difficult time. A truly BIG loss! President DONALD J. TRUMP",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117176267544455545"
-    },
-    {
-      "id": 41357,
-      "at": "2026-08-28T20:21:20-04:00",
-      "text": "Our deal with Venezuela is the biggest oil deal, by far, in World history! President DJT",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117175935338426953"
-    },
-    {
-      "id": 41356,
-      "at": "2026-08-28T18:47:42-04:00",
-      "text": "BREAKING NEWS: The United States of America has just entered into an Agreement with the Country of Venezuela on, THE BIGGEST OIL DEAL IN WORLD HISTORY! At my direction, Secretary of State Marco Rubio, and Secretary of War Pete Hegseth, working closely with Highly Respected Interim President of Venezuela, Delcy Rodriguez, and, through a partnership with private business, have secured majority U.S. control of more than 65 BILLION BARRELS of proven Oil Reserves in Venezuela, at no cost to the American Taxpayer. This Historic Transaction MORE THAN DOUBLES American Oil Reserves, greatly increases o",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117175567133618952"
-    },
-    {
-      "id": 41355,
-      "at": "2026-08-28T17:17:20-04:00",
-      "text": "Stupid Governor Kathy Hochul, who doesn\u2019t care about New York State, has announced that she is on the side of Canada, which has been ripping us off for decades on Trade and Tariffs, with a specific target of Hochul and her State. They\u2019re aiming at her because they consider her Weak and Ineffective \u2014 Not nice! She doesn\u2019t want us to use the name, \u201cLake America,\u201d she\u2019d rather have Canada get a win. That\u2019s the problem with Governor Hochul, and many other Dumocrats. She allows other Countries and States to take advantage of New York, which gets treated like \u201cgarbage.\u201d They laugh at us up and down ",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117175211787368815"
-    },
-    {
-      "id": 41354,
-      "at": "2026-08-28T17:03:39-04:00",
-      "text": "RT @realDonaldTrumpMaggot Hagerman, the Fake Reporter from The Failing New York Times, an unattractive person both inside and out, and who knows less about me than most reporters on the beat (She\u2019s a SCAMMER!), made up a story that on September 11th, I\u2019m not going to the World Trade Center, in New York City, because they won\u2019t let me make a speech, and I\u2019m going to the Pentagon in D.C., because I\u2019m a featured speaker. This is more Corrupt News, I\u2019ve been to New York many times over the years, and no one ever speaks, it\u2019s a \u201csolemn ceremony!\u201d I never even thought of what Maggot made up, and bes",
-      "is_retruth": true,
-      "source_handle": "@realDonaldTrumpMaggot",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117175085262374853"
-    },
-    {
-      "id": 41353,
-      "at": "2026-08-28T16:49:58-04:00",
-      "text": "RT @realDonaldTrump",
-      "is_retruth": true,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117175053361105962"
-    },
-    {
-      "id": 41352,
-      "at": "2026-08-28T16:36:17-04:00",
-      "text": "Maggot Hagerman, the Fake Reporter from The Failing New York Times, an unattractive person both inside and out, and who knows less about me than most reporters on the beat (She\u2019s a SCAMMER!), made up a story that on September 11th, I\u2019m not going to the World Trade Center, in New York City, because they won\u2019t let me make a speech, and I\u2019m going to the Pentagon in D.C., because I\u2019m a featured speaker. This is more Corrupt News, I\u2019ve been to New York many times over the years, and no one ever speaks, it\u2019s a \u201csolemn ceremony!\u201d I never even thought of what Maggot made up, and besides, I would love ",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117175050400064794"
-    },
-    {
-      "id": 41351,
-      "at": "2026-08-28T15:45:50-04:00",
-      "text": ".@realdonaldtrump did warn you...",
-      "is_retruth": true,
-      "source_handle": "@glennbeck",
-      "has_media": true,
-      "url": "https://truthsocial.com/@glennbeck/117173861158086662"
-    },
-    {
-      "id": 41350,
-      "at": "2026-08-28T14:55:23-04:00",
-      "text": "RT @glennbeck.@realdonaldtrump did warn you...",
-      "is_retruth": true,
-      "source_handle": "@glennbeck",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117174928460796449"
-    },
-    {
-      "id": 41329,
-      "at": "2026-08-28T14:07:55-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117174466973457410"
-    },
-    {
-      "id": 41330,
-      "at": "2026-08-28T14:07:47-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117174466495551220"
-    },
-    {
-      "id": 41331,
-      "at": "2026-08-28T14:07:40-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117174466024298642"
-    },
-    {
-      "id": 41332,
-      "at": "2026-08-28T14:07:32-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117174465508949453"
-    },
-    {
-      "id": 41333,
-      "at": "2026-08-28T14:07:23-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117174464930167770"
-    },
-    {
-      "id": 41334,
-      "at": "2026-08-28T14:07:10-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117174464054106173"
-    },
-    {
-      "id": 41335,
-      "at": "2026-08-28T14:07:05-04:00",
-      "text": "Laura Ingraham: \u201cYear-to-date, the goods and services deficit decreased $189.3 billion, or 33.8 percent, from the same period in 2025. Exports increased $198.3 billion or 11.7 percent. Imports increased $9.0 billion or 0.4 percent.\u201d SO MUCH FOR THE TARRIFFS dragging down the economy \u2014 they're doing precisely what they were intended to do \u2014 level the playing field so our manufacturing can compete fairly and thrive. EXCELLENT news! Exports from January to June of each year: Jan-June 2024: $1.599 trillionJan-June 2025: $1.693 trillionJan-June 2026: $1.891 trillionA tribute to HIM.\"",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117174463721226014"
-    },
-    {
-      "id": 41336,
-      "at": "2026-08-28T14:06:47-04:00",
-      "text": "Laura Ingraham: \u201cYear-to-date, the goods and services deficit decreased $189.3 billion, or 33.8 percent, from the same period in 2025. Exports increased $198.3 billion or 11.7 percent. Imports increased $9.0 billion or 0.4 percent. Where are all the experts who claimed that the tariffs would kill our exports? GOOD NEWS TUESDAY\u2026IN ADDITION TO THE DOW AND OIL DOWN....The trade deficit is going down, and exports are up for the year so far.\"",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117174462557932061"
-    },
-    {
-      "id": 41337,
-      "at": "2026-08-28T14:06:23-04:00",
-      "text": "White House to Announce New Drug Pricing Deals With Biotechs: https://www.bloomberg.com/news/articles/2026-08-26/white-house-to-announce-new-drug-pricing-deals-with-biotechs",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117174460985063252"
-    },
-    {
-      "id": 41338,
-      "at": "2026-08-28T14:06:13-04:00",
-      "text": "Trump declares Palestine Action a global terror group: https://www.telegraph.co.uk/us/news/2026/08/26/palestine-action-usa-proscribed-terror-group-donald-trump/",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117174460287995644"
-    },
-    {
-      "id": 41339,
-      "at": "2026-08-28T14:06:04-04:00",
-      "text": "EXCLUSIVE: A First Look Inside Donald Trump\u2019s Dallas Midterm Convention: https://www.dailywire.com/news/exclusive-a-first-look-inside-donald-trumps-dallas-midterm-convention",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117174459750102004"
-    },
-    {
-      "id": 41340,
-      "at": "2026-08-28T14:05:59-04:00",
-      "text": "EXCLUSIVE: State Dept reveals Portland Antifa connection to Hamas, Iran\u2019s IRGC in sweeping terror action: https://www.foxnews.com/politics/exclusive-state-dept-reveals-portland-antifa-connection-hamas-irans-irgc-sweeping-terror-action",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117174459387909497"
-    },
-    {
-      "id": 41341,
-      "at": "2026-08-28T14:05:52-04:00",
-      "text": "Exclusive: Trump\u2019s new affordability push runs on highways, rail: https://www.semafor.com/article/08/26/2026/trumps-new-affordability-push-runs-on-highways-rail",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117174458936816336"
-    },
-    {
-      "id": 41342,
-      "at": "2026-08-28T14:05:46-04:00",
-      "text": "FBI Shuts Down Sprawling China-Linked Hacking Network: https://www.wsj.com/tech/cybersecurity/fbi-shuts-down-sprawling-china-linked-hacking-network-61eade59",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117174458540297380"
-    },
-    {
-      "id": 41343,
-      "at": "2026-08-28T14:05:37-04:00",
-      "text": "Judge lifts nationwide block on Trump's mail voting order: https://www.axios.com/2026/08/26/trump-mail-voting-rules-nationwide-injunction",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117174457961184014"
-    },
-    {
-      "id": 41344,
-      "at": "2026-08-28T14:05:30-04:00",
-      "text": "Trump Moves to Ban Some Foreign Energy Equipment From Grid: https://www.bloomberg.com/news/articles/2026-08-26/trump-signs-order-to-ban-some-foreign-energy-equipment-from-grid",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117174457516746267"
-    },
-    {
-      "id": 41345,
-      "at": "2026-08-28T14:05:24-04:00",
-      "text": "Trump picks new leader of agency overseeing construction of White House ballroom, DC arch: https://nypost.com/2026/08/26/us-news/trump-picks-new-leader-of-agency-overseeing-construction-of-white-house-ballroom-dc-arch/",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117174457093511261"
-    },
-    {
-      "id": 41346,
-      "at": "2026-08-28T14:05:16-04:00",
-      "text": "50K ICE Arrests in July, Highest for Trump's 2nd Term: https://www.newsmax.com/us/border-immigration-customs-enforcement-data-statistics/2026/08/25/id/1267268/",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117174456592000281"
-    },
-    {
-      "id": 41347,
-      "at": "2026-08-28T14:05:10-04:00",
-      "text": "\u2018Watershed Moment\u2019: Trump Clears Hormuz Mines, Breaks Iran\u2019s Grip \u2014 \u2018Now the U.S. Controls It\u2019: https://www.breitbart.com/politics/2026/08/26/watershed-moment-trump-clears-hormuz-mines-breaks-irans-grip-now-the-u-s-controls-it/",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117174456213403361"
-    },
-    {
-      "id": 41348,
-      "at": "2026-08-28T14:05:04-04:00",
-      "text": "Democrats Fight to Keep Unqualified Illegal Alien Truckers on the Road: https://amac.us/newsline/democrats-fight-to-keep-unqualified-illegal-alien-truckers-on-the-road",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117174455782176210"
-    },
-    {
-      "id": 41349,
-      "at": "2026-08-28T14:04:56-04:00",
-      "text": "Trump mourns Dolly Parton, orders US flags lowered nationwide after country music icon dies: https://www.foxnews.com/politics/trump-mourns-dolly-parton-orders-us-flags-lowered-nationwide-country-music-icon-dies",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117174455268168941"
-    },
-    {
-      "id": 41328,
-      "at": "2026-08-28T14:04:49-04:00",
-      "text": "Trump-endorsed Sen. Darline Graham wins South Carolina special Republican primary: https://heartlandernews.com/trump-endorsed-sen-darline-graham-wins-south-carolina-special-republican-primary/",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117174454822645997"
     }
   ]
 }
