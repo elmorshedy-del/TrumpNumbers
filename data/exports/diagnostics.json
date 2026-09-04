@@ -1,25 +1,25 @@
 {
   "window": {
     "start": "2025-01-20",
-    "end": "2026-09-03",
-    "days": 592
+    "end": "2026-09-04",
+    "days": 593
   },
   "ingest_lag": {
     "available": true,
-    "n": 1024,
-    "median_minutes": 42.8,
-    "p90_minutes": 175.1,
+    "n": 1034,
+    "median_minutes": 43.5,
+    "p90_minutes": 179.3,
     "max_minutes": 601.5,
     "note": "Post timestamp to the moment this pipeline stored it: Truth Social publishing, trumpstruth.org crawling, and our poll interval combined. Only the poll interval is ours to shorten; the rest is the floor."
   },
   "dispersion": {
-    "n": 592,
-    "mean": 19.623,
+    "n": 593,
+    "mean": 19.61,
     "median": 15.0,
-    "variance": 301.054,
-    "sd": 17.351,
-    "dispersion_ratio": 15.34,
-    "chi2": 9066.9,
+    "variance": 300.718,
+    "sd": 17.341,
+    "dispersion_ratio": 15.33,
+    "chi2": 9078.1,
     "p_value": 0.0,
     "poisson_plausible": false,
     "poisson_sd": 4.43,
@@ -33,14 +33,14 @@
     ],
     "actual_range_95": [
       3.0,
-      63.22500000000002
+      63.19999999999993
     ]
   },
   "conditional_dispersion": {
     "available": true,
-    "raw": 15.34,
+    "raw": 15.33,
     "by_weekday": 14.3,
-    "by_weekday_and_level": 15.23,
+    "by_weekday_and_level": 15.22,
     "note": "Pearson chi-square per degree of freedom. A well-specified Poisson model sits near 1. The raw ratio compares against a single fixed rate, which the weekly cycle refutes on its own; these two compare against what a Poisson GLM actually assumes."
   },
   "tail": {
@@ -57,7 +57,7 @@
       "0.75": 24.0,
       "0.9": 37.0,
       "0.95": 50.0,
-      "0.99": 85.17000000000041
+      "0.99": 85.04000000000053
     }
   },
   "day_of_week": {
@@ -68,7 +68,7 @@
         "mean": 26.24,
         "median": 20.0,
         "sd": 26.04,
-        "index_vs_overall": 1.337
+        "index_vs_overall": 1.338
       },
       {
         "day": "Tue",
@@ -76,7 +76,7 @@
         "mean": 22.41,
         "median": 18.0,
         "sd": 14.1,
-        "index_vs_overall": 1.142
+        "index_vs_overall": 1.143
       },
       {
         "day": "Wed",
@@ -89,18 +89,18 @@
       {
         "day": "Thu",
         "n": 85,
-        "mean": 18.75,
+        "mean": 18.88,
         "median": 15.0,
-        "sd": 17.82,
-        "index_vs_overall": 0.956
+        "sd": 17.74,
+        "index_vs_overall": 0.963
       },
       {
         "day": "Fri",
-        "n": 84,
-        "mean": 19.55,
+        "n": 85,
+        "mean": 19.33,
         "median": 15.0,
-        "sd": 17.12,
-        "index_vs_overall": 0.996
+        "sd": 17.14,
+        "index_vs_overall": 0.986
       },
       {
         "day": "Sat",
@@ -108,7 +108,7 @@
         "mean": 15.73,
         "median": 11.0,
         "sd": 13.92,
-        "index_vs_overall": 0.801
+        "index_vs_overall": 0.802
       },
       {
         "day": "Sun",
@@ -116,10 +116,10 @@
         "mean": 17.39,
         "median": 12.5,
         "sd": 15.92,
-        "index_vs_overall": 0.886
+        "index_vs_overall": 0.887
       }
     ],
-    "overall_mean": 19.62
+    "overall_mean": 19.61
   },
   "autocorrelation": {
     "lags": [
@@ -148,77 +148,77 @@
     ],
     "acf": [
       1.0,
-      0.1087,
-      0.0362,
-      -0.0045,
-      -0.0399,
-      0.052,
-      0.0624,
-      0.0323,
-      0.0567,
-      0.0852,
-      -0.0709,
-      0.0807,
-      -0.0085,
-      0.0645,
-      0.0578,
-      -0.0205,
-      -0.03,
-      0.0175,
-      -0.0088,
-      -0.0008,
-      0.069,
-      0.0131
+      0.1084,
+      0.0386,
+      -0.0057,
+      -0.0385,
+      0.0514,
+      0.0643,
+      0.0298,
+      0.057,
+      0.0814,
+      -0.0708,
+      0.079,
+      -0.0089,
+      0.07,
+      0.0509,
+      -0.0206,
+      -0.0275,
+      0.0153,
+      -0.0089,
+      -0.0011,
+      0.0711,
+      0.0097
     ],
     "pacf": [
       1.0,
-      0.1087,
-      0.0247,
-      -0.0111,
-      -0.0397,
-      0.0618,
-      0.0537,
-      0.0162,
-      0.0476,
-      0.0802,
-      -0.0911,
-      0.0922,
-      -0.0227,
-      0.064,
-      0.0245,
-      -0.0287,
-      -0.0347,
-      0.0222,
-      -0.0172,
-      -0.0053,
-      0.0459,
-      0.0188
+      0.1084,
+      0.0271,
+      -0.0128,
+      -0.0381,
+      0.061,
+      0.056,
+      0.0128,
+      0.0484,
+      0.0763,
+      -0.0902,
+      0.0896,
+      -0.0218,
+      0.0684,
+      0.0175,
+      -0.0283,
+      -0.0302,
+      0.0186,
+      -0.0161,
+      -0.0066,
+      0.0507,
+      0.0131
     ],
     "acf_raw_with_weekly_cycle": [
       1.0,
-      0.1104,
-      0.0205,
-      -0.0006,
-      -0.0452,
-      0.0212,
-      0.0533,
-      0.0603,
-      0.0659,
-      0.0473,
-      -0.067,
-      0.0843,
-      -0.0263,
-      0.0517,
-      0.0963,
-      -0.0029,
-      -0.0494,
-      0.019,
-      -0.004,
-      -0.0294,
-      0.0538,
-      0.0529
+      0.1102,
+      0.023,
+      -0.0023,
+      -0.0456,
+      0.0203,
+      0.0556,
+      0.0573,
+      0.066,
+      0.045,
+      -0.0671,
+      0.0818,
+      -0.0266,
+      0.0564,
+      0.0901,
+      -0.003,
+      -0.0468,
+      0.0165,
+      -0.0059,
+      -0.0298,
+      0.0557,
+      0.05
     ],
-    "conf": 0.0806,
+    "conf": 0.0805,
     "note": "ACF/PACF computed after removing the weekly cycle; the raw series is shown for contrast."
   },
   "structural_breaks": {
@@ -252,7 +252,7 @@
         "start": "2026-08-08",
         "end": "2026-09-05",
         "weeks": 5,
-        "mean_posts_per_day": 31.01
+        "mean_posts_per_day": 30.65
       }
     ],
     "breaks": [
@@ -262,7 +262,7 @@
       "2026-08-08"
     ],
     "n_breaks_penalized": 1,
-    "penalty": 0.9602,
+    "penalty": 0.9577,
     "note": "The segment list comes from a search told in advance how many breaks to find, so its count is a setting, not a result. `n_breaks_penalized` lets the data choose instead: if it is 0, the segmentation above is a partition of noise."
   },
   "window_vs_breaks": {
@@ -361,11 +361,11 @@
       "sample_posts": [
         {
           "text": "",
-          "id": 35160
+          "id": 35159
         },
         {
           "text": "",
-          "id": 35159
+          "id": 35160
         },
         {
           "text": "",
@@ -392,15 +392,15 @@
       "sample_posts": [
         {
           "text": "",
+          "id": 34791
+        },
+        {
+          "text": "",
           "id": 34790
         },
         {
           "text": "",
           "id": 34789
-        },
-        {
-          "text": "",
-          "id": 34791
         }
       ]
     },
@@ -454,15 +454,15 @@
       "sample_posts": [
         {
           "text": "",
-          "id": 35002
-        },
-        {
-          "text": "",
           "id": 35001
         },
         {
           "text": "",
-          "id": 35000
+          "id": 35002
+        },
+        {
+          "text": "",
+          "id": 34997
         }
       ]
     },
@@ -733,11 +733,11 @@
       "sample_posts": [
         {
           "text": "",
-          "id": 38881
+          "id": 38882
         },
         {
           "text": "",
-          "id": 38882
+          "id": 38881
         },
         {
           "text": "Can you imagine? A Barack Hussein Obama Judge named Christopher Cooper has stopped a magnificent structural and aesthetic rebuilding of The Trump Kennedy Center where Millions of Dollars of material, marble, furniture, steel, air conditioning, heating, and so much else was ordere",
@@ -860,12 +860,12 @@
           "id": 37052
         },
         {
-          "text": "",
-          "id": 37054
-        },
-        {
           "text": "Deranged Jack Smith should be brought to Justice, NOW!!!",
           "id": 37053
+        },
+        {
+          "text": "",
+          "id": 37054
         }
       ]
     },
@@ -1051,7 +1051,7 @@
         },
         {
           "text": "",
-          "id": 35795
+          "id": 35797
         }
       ]
     }
@@ -1064,26 +1064,26 @@
     107,
     233,
     446,
-    1004,
+    1005,
     1142,
     1452,
-    1945,
-    2458,
+    1947,
+    2459,
     2035,
     2025,
     2235,
     2229,
     2273,
     2191,
-    2090,
-    1830,
-    1514,
-    2044,
-    1673,
+    2091,
+    1832,
+    1515,
+    2047,
+    1674,
     1608
   ],
   "retruths": {
-    "total": 261,
+    "total": 263,
     "share_of_all_posts": 0.022,
     "counted_in_series": true,
     "note": "ReTruths are counted, on the day Trump reshared rather than the day the original ran. The mirror files them under the ORIGINAL author's timestamp, so counting them as filed would credit activity to days on which nothing happened; the mirror's own ingest order brackets the real reshare moment and recovers it to within hours."
