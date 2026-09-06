@@ -1,31 +1,31 @@
 {
   "window": {
     "start": "2025-01-20",
-    "end": "2026-09-04",
-    "days": 593
+    "end": "2026-09-05",
+    "days": 594
   },
   "ingest_lag": {
     "available": true,
-    "n": 1055,
-    "median_minutes": 44.5,
-    "p90_minutes": 180.5,
+    "n": 1056,
+    "median_minutes": 44.6,
+    "p90_minutes": 183.7,
     "max_minutes": 601.5,
     "note": "Post timestamp to the moment this pipeline stored it: Truth Social publishing, trumpstruth.org crawling, and our poll interval combined. Only the poll interval is ours to shorten; the rest is the floor."
   },
   "dispersion": {
-    "n": 593,
-    "mean": 19.651,
+    "n": 594,
+    "mean": 19.62,
     "median": 15.0,
-    "variance": 300.18,
-    "sd": 17.326,
-    "dispersion_ratio": 15.28,
-    "chi2": 9043.2,
+    "variance": 300.26,
+    "sd": 17.328,
+    "dispersion_ratio": 15.3,
+    "chi2": 9075.3,
     "p_value": 0.0,
     "poisson_plausible": false,
     "poisson_sd": 4.43,
     "poisson_range_95": [
       11,
-      29
+      28
     ],
     "actual_range": [
       0,
@@ -33,14 +33,14 @@
     ],
     "actual_range_95": [
       3.0,
-      63.19999999999993
+      63.174999999999955
     ]
   },
   "conditional_dispersion": {
     "available": true,
-    "raw": 15.28,
-    "by_weekday": 14.24,
-    "by_weekday_and_level": 15.17,
+    "raw": 15.3,
+    "by_weekday": 14.26,
+    "by_weekday_and_level": 15.18,
     "note": "Pearson chi-square per degree of freedom. A well-specified Poisson model sits near 1. The raw ratio compares against a single fixed rate, which the weekly cycle refutes on its own; these two compare against what a Poisson GLM actually assumes."
   },
   "tail": {
@@ -57,7 +57,7 @@
       "0.75": 24.0,
       "0.9": 37.0,
       "0.95": 50.0,
-      "0.99": 85.04000000000053
+      "0.99": 84.91000000000065
     }
   },
   "day_of_week": {
@@ -68,7 +68,7 @@
         "mean": 26.24,
         "median": 20.0,
         "sd": 26.04,
-        "index_vs_overall": 1.335
+        "index_vs_overall": 1.337
       },
       {
         "day": "Tue",
@@ -76,7 +76,7 @@
         "mean": 22.41,
         "median": 18.0,
         "sd": 14.1,
-        "index_vs_overall": 1.14
+        "index_vs_overall": 1.142
       },
       {
         "day": "Wed",
@@ -84,7 +84,7 @@
         "mean": 17.22,
         "median": 15.0,
         "sd": 10.63,
-        "index_vs_overall": 0.876
+        "index_vs_overall": 0.878
       },
       {
         "day": "Thu",
@@ -92,7 +92,7 @@
         "mean": 18.88,
         "median": 15.0,
         "sd": 17.74,
-        "index_vs_overall": 0.961
+        "index_vs_overall": 0.962
       },
       {
         "day": "Fri",
@@ -100,15 +100,15 @@
         "mean": 19.61,
         "median": 15.0,
         "sd": 17.03,
-        "index_vs_overall": 0.998
+        "index_vs_overall": 1.0
       },
       {
         "day": "Sat",
-        "n": 84,
-        "mean": 15.73,
+        "n": 85,
+        "mean": 15.55,
         "median": 11.0,
         "sd": 13.92,
-        "index_vs_overall": 0.8
+        "index_vs_overall": 0.793
       },
       {
         "day": "Sun",
@@ -116,10 +116,10 @@
         "mean": 17.39,
         "median": 12.5,
         "sd": 15.92,
-        "index_vs_overall": 0.885
+        "index_vs_overall": 0.887
       }
     ],
-    "overall_mean": 19.65
+    "overall_mean": 19.62
   },
   "autocorrelation": {
     "lags": [
@@ -148,77 +148,77 @@
     ],
     "acf": [
       1.0,
-      0.1078,
-      0.0374,
-      -0.0036,
-      -0.0386,
-      0.053,
-      0.0653,
-      0.0349,
-      0.0603,
-      0.0873,
-      -0.0698,
-      0.081,
-      -0.0092,
-      0.0682,
-      0.0595,
-      -0.0207,
+      0.1066,
+      0.038,
+      -0.0024,
+      -0.0402,
+      0.0523,
+      0.0636,
+      0.0342,
+      0.0555,
+      0.0855,
+      -0.0739,
+      0.0798,
+      -0.0106,
+      0.0684,
+      0.06,
+      -0.0274,
       -0.0281,
-      0.0193,
-      -0.0078,
-      -0.0001,
-      0.072,
-      0.0155
+      0.0195,
+      -0.0112,
+      -0.0011,
+      0.0715,
+      0.0146
     ],
     "pacf": [
       1.0,
-      0.1078,
-      0.0261,
-      -0.0105,
-      -0.0386,
-      0.0624,
-      0.0566,
-      0.0182,
-      0.0505,
-      0.0816,
-      -0.0904,
-      0.0915,
-      -0.0235,
-      0.067,
+      0.1066,
+      0.027,
+      -0.0094,
+      -0.0405,
+      0.0619,
+      0.0554,
+      0.0179,
+      0.0456,
+      0.0807,
+      -0.0938,
+      0.0909,
+      -0.0246,
+      0.0685,
+      0.0254,
+      -0.0365,
+      -0.0313,
       0.0251,
-      -0.0305,
-      -0.0332,
-      0.023,
-      -0.0167,
-      -0.0061,
-      0.0488,
-      0.02
+      -0.0205,
+      -0.0054,
+      0.0489,
+      0.021
     ],
     "acf_raw_with_weekly_cycle": [
       1.0,
-      0.1097,
-      0.0216,
-      0.0007,
-      -0.0443,
-      0.0216,
-      0.0557,
-      0.0626,
-      0.0683,
-      0.0492,
-      -0.0653,
-      0.0848,
-      -0.0272,
-      0.055,
-      0.098,
-      -0.0032,
-      -0.0474,
-      0.0213,
-      -0.0031,
-      -0.0292,
-      0.056,
-      0.0546
+      0.1089,
+      0.0222,
+      0.0019,
+      -0.0466,
+      0.0204,
+      0.0547,
+      0.0624,
+      0.0642,
+      0.0474,
+      -0.0683,
+      0.0831,
+      -0.0294,
+      0.0553,
+      0.0991,
+      -0.0092,
+      -0.0472,
+      0.0217,
+      -0.0068,
+      -0.0313,
+      0.0554,
+      0.0543
     ],
-    "conf": 0.0805,
+    "conf": 0.0804,
     "note": "ACF/PACF computed after removing the weekly cycle; the raw series is shown for contrast."
   },
   "structural_breaks": {
@@ -252,7 +252,7 @@
         "start": "2026-08-08",
         "end": "2026-09-05",
         "weeks": 5,
-        "mean_posts_per_day": 31.45
+        "mean_posts_per_day": 30.77
       }
     ],
     "breaks": [
@@ -262,7 +262,7 @@
       "2026-08-08"
     ],
     "n_breaks_penalized": 1,
-    "penalty": 0.9646,
+    "penalty": 0.9584,
     "note": "The segment list comes from a search told in advance how many breaks to find, so its count is a setting, not a result. `n_breaks_penalized` lets the data choose instead: if it is 0, the segmentation above is a partition of noise."
   },
   "window_vs_breaks": {
@@ -1077,7 +1077,7 @@
     2191,
     2098,
     1832,
-    1515,
+    1516,
     2047,
     1681,
     1608
