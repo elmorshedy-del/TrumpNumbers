@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-10T12:56:56.931793+00:00",
+  "generated_at": "2026-09-11T12:52:32.883705+00:00",
   "leaderboard": [
     {
       "model": "hier-dow-eb",
@@ -367,7 +367,7 @@
       "crps": 28.4,
       "crps_skill_vs_climatology": 0.106,
       "log_score": 5.224,
-      "pinball": 9.011,
+      "pinball": 9.01,
       "width80": 75.4,
       "coverage80": 0.536,
       "coverage95": 0.946,
