@@ -1,25 +1,25 @@
 {
   "window": {
     "start": "2025-01-20",
-    "end": "2026-09-10",
-    "days": 599
+    "end": "2026-09-12",
+    "days": 601
   },
   "ingest_lag": {
     "available": true,
-    "n": 1208,
-    "median_minutes": 49.3,
-    "p90_minutes": 191.4,
+    "n": 1220,
+    "median_minutes": 49.8,
+    "p90_minutes": 191.2,
     "max_minutes": 601.5,
     "note": "Post timestamp to the moment this pipeline stored it: Truth Social publishing, trumpstruth.org crawling, and our poll interval combined. Only the poll interval is ours to shorten; the rest is the floor."
   },
   "dispersion": {
-    "n": 599,
-    "mean": 19.718,
+    "n": 601,
+    "mean": 19.672,
     "median": 15.0,
-    "variance": 301.985,
-    "sd": 17.378,
-    "dispersion_ratio": 15.32,
-    "chi2": 9158.6,
+    "variance": 301.687,
+    "sd": 17.369,
+    "dispersion_ratio": 15.34,
+    "chi2": 9201.4,
     "p_value": 0.0,
     "poisson_plausible": false,
     "poisson_sd": 4.44,
@@ -38,16 +38,16 @@
   },
   "conditional_dispersion": {
     "available": true,
-    "raw": 15.32,
-    "by_weekday": 14.28,
-    "by_weekday_and_level": 15.15,
+    "raw": 15.34,
+    "by_weekday": 14.29,
+    "by_weekday_and_level": 15.16,
     "note": "Pearson chi-square per degree of freedom. A well-specified Poisson model sits near 1. The raw ratio compares against a single fixed rate, which the weekly cycle refutes on its own; these two compare against what a Poisson GLM actually assumes."
   },
   "tail": {
     "mean_over_median": 1.31,
     "max_over_median": 11.1,
     "skewness": 3.18,
-    "top_1pct_share_of_all_posts": 0.054,
+    "top_1pct_share_of_all_posts": 0.062,
     "zero_days": 2,
     "zero_share": 0.003,
     "quantiles": {
@@ -57,7 +57,7 @@
       "0.75": 24.0,
       "0.9": 37.0,
       "0.95": 50.0,
-      "0.99": 84.25999999999976
+      "0.99": 84.0
     }
   },
   "day_of_week": {
@@ -68,7 +68,7 @@
         "mean": 26.38,
         "median": 20.0,
         "sd": 25.93,
-        "index_vs_overall": 1.338
+        "index_vs_overall": 1.341
       },
       {
         "day": "Tue",
@@ -76,7 +76,7 @@
         "mean": 22.41,
         "median": 18.5,
         "sd": 14.02,
-        "index_vs_overall": 1.136
+        "index_vs_overall": 1.139
       },
       {
         "day": "Wed",
@@ -84,7 +84,7 @@
         "mean": 17.1,
         "median": 15.0,
         "sd": 10.63,
-        "index_vs_overall": 0.867
+        "index_vs_overall": 0.869
       },
       {
         "day": "Thu",
@@ -92,23 +92,23 @@
         "mean": 18.95,
         "median": 15.0,
         "sd": 17.65,
-        "index_vs_overall": 0.961
+        "index_vs_overall": 0.963
       },
       {
         "day": "Fri",
-        "n": 85,
-        "mean": 19.61,
+        "n": 86,
+        "mean": 19.51,
         "median": 15.0,
-        "sd": 17.03,
-        "index_vs_overall": 0.995
+        "sd": 16.96,
+        "index_vs_overall": 0.992
       },
       {
         "day": "Sat",
-        "n": 85,
-        "mean": 15.55,
+        "n": 86,
+        "mean": 15.38,
         "median": 11.0,
-        "sd": 13.92,
-        "index_vs_overall": 0.789
+        "sd": 13.93,
+        "index_vs_overall": 0.782
       },
       {
         "day": "Sun",
@@ -116,10 +116,10 @@
         "mean": 17.94,
         "median": 13.0,
         "sd": 16.62,
-        "index_vs_overall": 0.91
+        "index_vs_overall": 0.912
       }
     ],
-    "overall_mean": 19.72
+    "overall_mean": 19.67
   },
   "autocorrelation": {
     "lags": [
@@ -149,76 +149,76 @@
     "acf": [
       1.0,
       0.1012,
-      0.0372,
-      -0.006,
-      -0.0386,
-      0.056,
-      0.0656,
-      0.0382,
-      0.0545,
-      0.097,
-      -0.0655,
-      0.0919,
-      -0.0077,
-      0.0715,
-      0.0571,
-      -0.0293,
-      -0.0107,
-      0.0231,
-      -0.0114,
-      0.0037,
-      0.0785,
-      0.0158
+      0.037,
+      -0.0045,
+      -0.0385,
+      0.0521,
+      0.0607,
+      0.0401,
+      0.0535,
+      0.0981,
+      -0.065,
+      0.0896,
+      -0.0089,
+      0.0698,
+      0.054,
+      -0.0347,
+      -0.0147,
+      0.0183,
+      -0.013,
+      0.0028,
+      0.0797,
+      0.0136
     ],
     "pacf": [
       1.0,
       0.1012,
-      0.0272,
-      -0.0126,
-      -0.0382,
-      0.065,
-      0.0571,
-      0.0218,
-      0.0445,
-      0.0935,
-      -0.0867,
-      0.1003,
-      -0.0237,
-      0.0705,
-      0.0221,
-      -0.0387,
-      -0.0154,
-      0.0231,
-      -0.0277,
-      -0.0003,
-      0.0539,
-      0.0202
+      0.0271,
+      -0.011,
+      -0.0384,
+      0.061,
+      0.0529,
+      0.025,
+      0.0431,
+      0.0939,
+      -0.0863,
+      0.0988,
+      -0.0248,
+      0.0701,
+      0.0196,
+      -0.0437,
+      -0.019,
+      0.0205,
+      -0.0288,
+      0.0007,
+      0.0555,
+      0.0177
     ],
     "acf_raw_with_weekly_cycle": [
       1.0,
-      0.1072,
+      0.1076,
       0.0204,
-      -0.0018,
-      -0.0465,
-      0.0235,
-      0.0592,
-      0.0658,
-      0.0626,
-      0.0562,
-      -0.0596,
-      0.0919,
-      -0.0247,
-      0.0617,
-      0.0974,
-      -0.0123,
-      -0.0348,
-      0.028,
-      -0.0066,
-      -0.0271,
-      0.0652,
-      0.0576
+      -0.0006,
+      -0.0475,
+      0.0193,
+      0.0554,
+      0.0673,
+      0.0622,
+      0.0572,
+      -0.0594,
+      0.0889,
+      -0.0261,
+      0.0606,
+      0.0953,
+      -0.017,
+      -0.0379,
+      0.0241,
+      -0.0091,
+      -0.029,
+      0.0661,
+      0.0559
     ],
-    "conf": 0.0801,
+    "conf": 0.08,
     "note": "ACF/PACF computed after removing the weekly cycle; the raw series is shown for contrast."
   },
   "structural_breaks": {
@@ -252,7 +252,7 @@
         "start": "2026-08-08",
         "end": "2026-09-12",
         "weeks": 6,
-        "mean_posts_per_day": 30.88
+        "mean_posts_per_day": 29.67
       }
     ],
     "breaks": [
@@ -262,7 +262,7 @@
       "2026-08-08"
     ],
     "n_breaks_penalized": 1,
-    "penalty": 0.9761,
+    "penalty": 0.9564,
     "note": "The segment list comes from a search told in advance how many breaks to find, so its count is a setting, not a result. `n_breaks_penalized` lets the data choose instead: if it is 0, the segmentation above is a partition of noise."
   },
   "window_vs_breaks": {
@@ -275,7 +275,7 @@
       "2026-08-08"
     ],
     "most_recent_break": "2026-08-08",
-    "weeks_since_most_recent_break": 4,
+    "weeks_since_most_recent_break": 5,
     "n_breaks_penalized": 1,
     "note": "Every model here is fitted from the window start, across any break listed above. That is the practice the window exists to avoid. Whether it matters depends on whether the breaks are real \u2014 see n_breaks_penalized, which is what the data says when it is not told how many to find."
   },
@@ -333,8 +333,8 @@
           "id": 30020
         },
         {
-          "text": "https://www.breitbart.com/border/2025/02/24/trump-effect-single-day-migrant-apprehension-numbers-on-southwest-border-fall-below-200/",
-          "id": 30040
+          "text": "https://www.foxnews.com/politics/trump-calls-company-building-keystone-xl-pipeline-return-america-get-built",
+          "id": 30038
         },
         {
           "text": "https://amgreatness.com/2025/02/25/no-trumps-tariffs-will-not-cause-inflation/",
@@ -392,15 +392,15 @@
       "sample_posts": [
         {
           "text": "",
-          "id": 34791
-        },
-        {
-          "text": "",
           "id": 34790
         },
         {
           "text": "",
           "id": 34789
+        },
+        {
+          "text": "",
+          "id": 34791
         }
       ]
     },
@@ -462,7 +462,7 @@
         },
         {
           "text": "",
-          "id": 34997
+          "id": 35000
         }
       ]
     },
@@ -578,11 +578,11 @@
       "sample_posts": [
         {
           "text": "",
-          "id": 34854
+          "id": 34855
         },
         {
           "text": "",
-          "id": 34855
+          "id": 34854
         },
         {
           "text": "",
@@ -612,12 +612,12 @@
           "id": 33546
         },
         {
-          "text": "https://nypost.com/2025/11/01/us-news/rep-nicole-malliotakis-rips-gerrymandering-lawsuit-for-staten-island-house-seat-as-nonsensical-power-grab/",
-          "id": 33548
-        },
-        {
           "text": "https://dailycaller.com/2025/11/01/opinion-arctic-frost-accountability-starts-with-impeaching-judge-boasberg-dave-bossie/",
           "id": 33547
+        },
+        {
+          "text": "https://nypost.com/2025/11/01/us-news/rep-nicole-malliotakis-rips-gerrymandering-lawsuit-for-staten-island-house-seat-as-nonsensical-power-grab/",
+          "id": 33548
         }
       ]
     },
@@ -798,12 +798,12 @@
           "id": 33634
         },
         {
-          "text": "Congressman Gus Bilirakis is a Tremendous Champion for Florida\u2019s 12th Congressional District! As a Senior Member of the POWERFUL House Energy and Commerce Committee, Gus is working tirelessly to Advance American Energy DOMINANCE, Create GREAT Jobs, Cut Taxes and Regulations, Prom",
-          "id": 33635
-        },
-        {
           "text": "Scott Franklin is a fantastic Representative for the Great People of Florida\u2019s 18th Congressional District! A U.S. Naval Academy Graduate and retired Navy Commander, Scott knows the Wisdom and Courage that is required to Defend our Country, Support our incredible Military/Veteran",
           "id": 33633
+        },
+        {
+          "text": "Congressman Gus Bilirakis is a Tremendous Champion for Florida\u2019s 12th Congressional District! As a Senior Member of the POWERFUL House Energy and Commerce Committee, Gus is working tirelessly to Advance American Energy DOMINANCE, Create GREAT Jobs, Cut Taxes and Regulations, Prom",
+          "id": 33635
         }
       ]
     },
@@ -950,11 +950,11 @@
       "sample_posts": [
         {
           "text": "",
-          "id": 40252
+          "id": 40251
         },
         {
           "text": "",
-          "id": 40251
+          "id": 40252
         },
         {
           "text": "",
@@ -1062,7 +1062,7 @@
     296,
     135,
     107,
-    233,
+    234,
     446,
     1008,
     1162,
@@ -1070,17 +1070,17 @@
     1968,
     2462,
     2038,
-    2036,
-    2254,
-    2240,
-    2279,
+    2038,
+    2255,
+    2242,
+    2281,
     2199,
     2100,
     1847,
     1538,
     2054,
-    1687,
-    1608
+    1689,
+    1610
   ],
   "retruths": {
     "total": 271,
