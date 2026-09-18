@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-17T13:28:28.147152+00:00",
+  "generated_at": "2026-09-18T12:59:53.926275+00:00",
   "leaderboard": [
     {
       "model": "hier-dow-eb",
@@ -364,11 +364,11 @@
       "model": "log-sarima",
       "family": "dynamics",
       "n_forecasts": 56,
-      "crps": 29.33,
-      "crps_skill_vs_climatology": 0.085,
+      "crps": 29.31,
+      "crps_skill_vs_climatology": 0.086,
       "log_score": 5.261,
-      "pinball": 9.291,
-      "width80": 77.5,
+      "pinball": 9.287,
+      "width80": 77.4,
       "coverage80": 0.5,
       "coverage95": 0.929,
       "pit_p_value": 0.0,
@@ -1185,8 +1185,8 @@
     },
     "log-sarima": {
       "-1": 30.97,
-      "0": 29.19,
-      "1": 21.57,
+      "0": 29.17,
+      "1": 21.56,
       "2": 19.36,
       "3": 16.65,
       "4": 12.03,
@@ -1550,7 +1550,7 @@
     "log-sarima": {
       "-1": 0.036,
       "0": 0.011,
-      "1": 0.047,
+      "1": 0.048,
       "2": 0.034,
       "3": 0.036,
       "4": 0.041,
@@ -1708,8 +1708,8 @@
         "n": 413,
         "histogram": [
           51,
-          47,
-          32,
+          46,
+          33,
           33,
           31,
           33,
@@ -1719,8 +1719,8 @@
           81
         ],
         "expected_per_bin": 41.3,
-        "chi2": 54.19,
-        "p_value": 1.736167847951193e-08,
+        "chi2": 53.51,
+        "p_value": 2.335721349036489e-08,
         "calibrated": false
       },
       "coverage": {
