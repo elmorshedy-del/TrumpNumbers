@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-25T13:45:47.093931+00:00",
+  "generated_at": "2026-09-26T13:03:28.247925+00:00",
   "leaderboard": [
     {
       "model": "hier-dow-eb",
@@ -25,7 +25,7 @@
       "crps": 18.03,
       "crps_skill_vs_climatology": 0.014,
       "log_score": 4.699,
-      "pinball": 6.318,
+      "pinball": 6.317,
       "width80": 61.4,
       "coverage80": 0.709,
       "coverage95": 0.915,
@@ -378,6 +378,23 @@
       "fails_when": "Volume is trending, or last week was itself an outlier."
     },
     {
+      "model": "log-sarima",
+      "family": "dynamics",
+      "n_forecasts": 56,
+      "crps": 29.84,
+      "crps_skill_vs_climatology": 0.063,
+      "log_score": 5.275,
+      "pinball": 9.444,
+      "width80": 79.5,
+      "coverage80": 0.518,
+      "coverage95": 0.929,
+      "pit_p_value": 0.0,
+      "pit_calibrated": false,
+      "description": "SARIMA(1,0,1)x(1,0,1,7) on log1p(counts).",
+      "assumptions": "Log counts are approximately Gaussian with weekly seasonality.",
+      "fails_when": "Zeros and extreme spikes \u2014 log1p tames them but does not make them Gaussian."
+    },
+    {
       "model": "hawkes",
       "family": "self-exciting",
       "n_forecasts": 56,
@@ -393,23 +410,6 @@
       "description": "Hawkes process with exponential kernel and a circadian background.",
       "assumptions": "Posts trigger further posts; the effect decays exponentially.",
       "fails_when": "Bursts are actually driven by outside events \u2014 indistinguishable here."
-    },
-    {
-      "model": "log-sarima",
-      "family": "dynamics",
-      "n_forecasts": 56,
-      "crps": 29.95,
-      "crps_skill_vs_climatology": 0.059,
-      "log_score": 5.278,
-      "pinball": 9.471,
-      "width80": 79.7,
-      "coverage80": 0.518,
-      "coverage95": 0.929,
-      "pit_p_value": 0.0,
-      "pit_calibrated": false,
-      "description": "SARIMA(1,0,1)x(1,0,1,7) on log1p(counts).",
-      "assumptions": "Log counts are approximately Gaussian with weekly seasonality.",
-      "fails_when": "Zeros and extreme spikes \u2014 log1p tames them but does not make them Gaussian."
     },
     {
       "model": "poisson-hmm",
@@ -723,10 +723,10 @@
       "model": "log-sarima",
       "family": "dynamics",
       "n_forecasts": 420,
-      "crps": 19.62,
-      "crps_skill_vs_climatology": 0.023,
+      "crps": 19.61,
+      "crps_skill_vs_climatology": 0.024,
       "log_score": 4.776,
-      "pinball": 6.738,
+      "pinball": 6.734,
       "width80": 63.8,
       "coverage80": 0.683,
       "coverage95": 0.917,
@@ -1034,10 +1034,10 @@
     "candidates": [
       {
         "rule": "headline-top3-pool",
-        "crps": 21.93,
+        "crps": 21.92,
         "coverage80": 0.67,
         "width80": 68.1,
-        "crps_skill_vs_climatology": 0.028,
+        "crps_skill_vs_climatology": 0.029,
         "deployed": false
       },
       {
@@ -1050,7 +1050,7 @@
       },
       {
         "rule": "headline-top3",
-        "crps": 21.97,
+        "crps": 21.96,
         "coverage80": 0.667,
         "width80": 67.7,
         "crps_skill_vs_climatology": 0.027,
@@ -1066,7 +1066,7 @@
       }
     ],
     "best_rule": "headline-top3-pool",
-    "crps": 21.97,
+    "crps": 21.96,
     "coverage80": 0.667,
     "width80": 67.7,
     "crps_skill_vs_climatology": 0.027,
@@ -1184,9 +1184,9 @@
       "5": 8.94
     },
     "log-sarima": {
-      "-1": 30.98,
-      "0": 29.1,
-      "1": 21.64,
+      "-1": 30.95,
+      "0": 29.05,
+      "1": 21.61,
       "2": 19.25,
       "3": 16.51,
       "4": 11.95,
@@ -1548,9 +1548,9 @@
       "5": -0.136
     },
     "log-sarima": {
-      "-1": 0.026,
-      "0": 0.003,
-      "1": 0.036,
+      "-1": 0.027,
+      "0": 0.005,
+      "1": 0.037,
       "2": 0.028,
       "3": 0.033,
       "4": 0.037,
@@ -1681,8 +1681,8 @@
         "n": 420,
         "histogram": [
           52,
-          50,
-          33,
+          49,
+          34,
           35,
           31,
           33,
@@ -1692,8 +1692,8 @@
           81
         ],
         "expected_per_bin": 42.0,
-        "chi2": 53.57,
-        "p_value": 2.277126892522824e-08,
+        "chi2": 52.81,
+        "p_value": 3.176294021228216e-08,
         "calibrated": false
       },
       "coverage": {
