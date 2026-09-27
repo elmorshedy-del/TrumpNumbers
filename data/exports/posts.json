@@ -1,6 +1,447 @@
 {
-  "generated_at": "2026-09-26T13:01:05.450801+00:00",
+  "generated_at": "2026-09-27T13:53:27.086898+00:00",
   "posts": [
+    {
+      "id": 41979,
+      "at": "2026-09-27T09:06:00-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": true,
+      "url": "https://truthsocial.com/@realDonaldTrump/117343152138358246"
+    },
+    {
+      "id": 41978,
+      "at": "2026-09-27T09:06:00-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": true,
+      "url": "https://truthsocial.com/@realDonaldTrump/117343152769130235"
+    },
+    {
+      "id": 41976,
+      "at": "2026-09-27T08:09:39-04:00",
+      "text": "More people working in the United States right now than at any point in the History of our Country! President DJT",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117342927581199006"
+    },
+    {
+      "id": 41973,
+      "at": "2026-09-26T20:59:56-04:00",
+      "text": "We have the BEST FINANCIAL NUMBERS EVER, and the FAKE NEWS MEDIA refuses to report them!!! President DJT",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117340294147897033"
+    },
+    {
+      "id": 41970,
+      "at": "2026-09-26T18:28:09-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117339697268234753"
+    },
+    {
+      "id": 41971,
+      "at": "2026-09-26T18:27:19-04:00",
+      "text": "A 5000 Dollar Dividend to all adults if Republicans WIN! Dumocrats can\u2019t do this!",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117339693977416746"
+    },
+    {
+      "id": 41972,
+      "at": "2026-09-26T18:27:16-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117339693821962863"
+    },
+    {
+      "id": 41969,
+      "at": "2026-09-26T18:22:10-04:00",
+      "text": "RT @realDonaldTrump",
+      "is_retruth": true,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117339672558278827"
+    },
+    {
+      "id": 41968,
+      "at": "2026-09-26T18:16:11-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117339650202836763"
+    },
+    {
+      "id": 41965,
+      "at": "2026-09-26T18:12:14-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117339634674669231"
+    },
+    {
+      "id": 41966,
+      "at": "2026-09-26T18:11:30-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117339631831278857"
+    },
+    {
+      "id": 41967,
+      "at": "2026-09-26T18:11:27-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117339631612858977"
+    },
+    {
+      "id": 41952,
+      "at": "2026-09-26T18:03:53-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": true,
+      "url": "https://truthsocial.com/@realDonaldTrump/117339601866366888"
+    },
+    {
+      "id": 41953,
+      "at": "2026-09-26T18:03:15-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": true,
+      "url": "https://truthsocial.com/@realDonaldTrump/117339599342443326"
+    },
+    {
+      "id": 41954,
+      "at": "2026-09-26T18:03:05-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": true,
+      "url": "https://truthsocial.com/@realDonaldTrump/117339598713942230"
+    },
+    {
+      "id": 41955,
+      "at": "2026-09-26T18:02:55-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": true,
+      "url": "https://truthsocial.com/@realDonaldTrump/117339598059843086"
+    },
+    {
+      "id": 41956,
+      "at": "2026-09-26T18:02:44-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": true,
+      "url": "https://truthsocial.com/@realDonaldTrump/117339597349471940"
+    },
+    {
+      "id": 41957,
+      "at": "2026-09-26T18:02:33-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": true,
+      "url": "https://truthsocial.com/@realDonaldTrump/117339596643861955"
+    },
+    {
+      "id": 41958,
+      "at": "2026-09-26T18:02:23-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": true,
+      "url": "https://truthsocial.com/@realDonaldTrump/117339595987738159"
+    },
+    {
+      "id": 41959,
+      "at": "2026-09-26T18:02:14-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": true,
+      "url": "https://truthsocial.com/@realDonaldTrump/117339595344002712"
+    },
+    {
+      "id": 41960,
+      "at": "2026-09-26T18:02:02-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": true,
+      "url": "https://truthsocial.com/@realDonaldTrump/117339594579276473"
+    },
+    {
+      "id": 41961,
+      "at": "2026-09-26T18:01:50-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": true,
+      "url": "https://truthsocial.com/@realDonaldTrump/117339593802451277"
+    },
+    {
+      "id": 41962,
+      "at": "2026-09-26T18:01:36-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": true,
+      "url": "https://truthsocial.com/@realDonaldTrump/117339592897068385"
+    },
+    {
+      "id": 41963,
+      "at": "2026-09-26T18:01:20-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": true,
+      "url": "https://truthsocial.com/@realDonaldTrump/117339591851529041"
+    },
+    {
+      "id": 41964,
+      "at": "2026-09-26T18:01:04-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": true,
+      "url": "https://truthsocial.com/@realDonaldTrump/117339590790417891"
+    },
+    {
+      "id": 41950,
+      "at": "2026-09-26T17:47:27-04:00",
+      "text": "https://www.washingtonpost.com/politics/2026/09/23/after-publicly-criticizing-trump-rep-mara-elvira-salazar-faces-backlash/",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": true,
+      "url": "https://truthsocial.com/@realDonaldTrump/117339537275478198"
+    },
+    {
+      "id": 41951,
+      "at": "2026-09-26T17:46:16-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": true,
+      "url": "https://truthsocial.com/@realDonaldTrump/117339532573237378"
+    },
+    {
+      "id": 41949,
+      "at": "2026-09-26T15:14:48-04:00",
+      "text": "BIG DAY FOR AMERICAN AUTO WORKERS AND CAR BUYERS! I have just approved new Fuel Economy Standards that TERMINATE Sleepy Joe Biden and Pete Boot-EDGE-EDGE's ridiculous EV Mandate. The Dumocrats cost our Great Auto Manufacturers $Billions, forced Americans into cars they never wanted, and wasted Billions on Chargers that were never built.These new Standards will take the waste out of building cars in America. That means LOWER PRICES, saving families thousands on a new, beautiful, and safe car \u2014 Far better than the Environmental Monsters that we were building heretofore. Every Manufacturer, from ",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117338936999613227"
+    },
+    {
+      "id": 41947,
+      "at": "2026-09-26T14:58:36-04:00",
+      "text": "The American People elected me to deliver HISTORIC Economic Results, and now, I have a new responsibility, reporting our incredible results because the Fake News refuses to do it. S&P Global reported this week that U.S. Business Growth is at its HIGHEST LEVEL IN MORE THAN FIVE YEARS and, if you take out the distorted COVID Reopening figures, the mark goes back even further. What does that mean? MORE ORDERS, MORE OUTPUT, MORE AMERICAN WORKERS BEING HIRED. Manufacturing is growing, Businesses are expanding, and Demand is STRONG. And there\u2019s more: U.S. REAL MEDIAN HOUSEHOLD INCOME is now the HIGH",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117338873310369293"
+    },
+    {
+      "id": 41948,
+      "at": "2026-09-26T14:58:22-04:00",
+      "text": "At the Tennessee vs. Texas Game! President DONALD J. TRUMP",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": true,
+      "url": "https://truthsocial.com/@realDonaldTrump/117338872385629287"
+    },
+    {
+      "id": 41946,
+      "at": "2026-09-26T14:44:30-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": true,
+      "url": "https://truthsocial.com/@realDonaldTrump/117338817881626356"
+    },
+    {
+      "id": 41945,
+      "at": "2026-09-26T11:58:59-04:00",
+      "text": "Another Fake Story is that a very close friend of mine, a man I endorsed very early, Byron Donalds, is taking me off his website and Campaign materials. I won Florida by Millions of Votes, getting the Highest Vote Tally in History \u2014 Three times! My numbers are better now than they were at the Election. The story started with the Woke and Dying USA Today, and then, of course, it permeated to CNN, The Washington Post, The Guardian, Newsweek, The New York Times, ABC, NBC, Forbes, and others \u2014 and I am more popular in Florida today, even more than I was in the last Record Breaking Election! This i",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": true,
+      "url": "https://truthsocial.com/@realDonaldTrump/117338166998410817"
+    },
+    {
+      "id": 41941,
+      "at": "2026-09-26T09:25:28-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117337563385196014"
+    },
+    {
+      "id": 41942,
+      "at": "2026-09-26T09:25:20-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117337562817997862"
+    },
+    {
+      "id": 41943,
+      "at": "2026-09-26T09:25:09-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117337562138904273"
+    },
+    {
+      "id": 41944,
+      "at": "2026-09-26T09:25:01-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117337561585606406"
+    },
+    {
+      "id": 41933,
+      "at": "2026-09-26T09:23:27-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117337555438970724"
+    },
+    {
+      "id": 41934,
+      "at": "2026-09-26T09:23:21-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117337555068452986"
+    },
+    {
+      "id": 41935,
+      "at": "2026-09-26T09:23:19-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117337554905327419"
+    },
+    {
+      "id": 41936,
+      "at": "2026-09-26T09:23:09-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117337554252680986"
+    },
+    {
+      "id": 41937,
+      "at": "2026-09-26T09:22:46-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117337552716803527"
+    },
+    {
+      "id": 41938,
+      "at": "2026-09-26T09:20:53-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117337545332163657"
+    },
+    {
+      "id": 41939,
+      "at": "2026-09-26T09:20:37-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117337544317575633"
+    },
+    {
+      "id": 41940,
+      "at": "2026-09-26T09:19:50-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117337541233609775"
+    },
+    {
+      "id": 41929,
+      "at": "2026-09-26T09:19:14-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117337538836314073"
+    },
+    {
+      "id": 41930,
+      "at": "2026-09-26T09:19:03-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117337538123089885"
+    },
+    {
+      "id": 41931,
+      "at": "2026-09-26T09:18:47-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117337537057603991"
+    },
+    {
+      "id": 41932,
+      "at": "2026-09-26T09:18:16-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117337535044080608"
+    },
+    {
+      "id": 41928,
+      "at": "2026-09-26T09:13:15-04:00",
+      "text": "",
+      "is_retruth": false,
+      "source_handle": "@realDonaldTrump",
+      "has_media": false,
+      "url": "https://truthsocial.com/@realDonaldTrump/117337515298516566"
+    },
     {
       "id": 41926,
       "at": "2026-09-26T08:22:53-04:00",
@@ -99,447 +540,6 @@
       "source_handle": "@realDonaldTrump",
       "has_media": false,
       "url": "https://truthsocial.com/@realDonaldTrump/117336873800272630"
-    },
-    {
-      "id": 41914,
-      "at": "2026-09-26T06:28:36-04:00",
-      "text": "Justice Department charges four aliens in Pennsylvania with election fraud: https://justthenews.com/government/federal-agencies/justice-department-charges-four-migrants-pennsylvania-election-fraud",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117336867875974840"
-    },
-    {
-      "id": 41915,
-      "at": "2026-09-26T06:28:17-04:00",
-      "text": "Two-tiered justice: Local DAs shield noncitizens from immigration consequences: https://justthenews.com/nation/crime/two-tiered-justice-local-das-shield-noncitizens-immigration-consequences",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117336866629561228"
-    },
-    {
-      "id": 41916,
-      "at": "2026-09-26T06:27:52-04:00",
-      "text": "A big WIN for Republicans!!!Trump stacks wins: SCOTUS unleashes voter citizenship checks while feds put machines on leash: https://justthenews.com/government/white-house/supreme-court-cisa",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117336865039856065"
-    },
-    {
-      "id": 41913,
-      "at": "2026-09-25T23:26:18-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117335207360789365"
-    },
-    {
-      "id": 41911,
-      "at": "2026-09-25T23:07:35-04:00",
-      "text": "RT: https://truthsocial.com/users/realDonaldTrump/statuses/117335132934731885",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117335133781136092"
-    },
-    {
-      "id": 41912,
-      "at": "2026-09-25T23:07:23-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117335132934731885"
-    },
-    {
-      "id": 41910,
-      "at": "2026-09-25T22:34:26.250000-04:00",
-      "text": "RT @DanScavinoA beautiful evening at last nights incredible State Dinner hosted by President @realDonaldTrump and First Lady @MelaniaTrump. CONGRATS POTUS & FLOTUS\ud83c\uddfa\ud83c\uddf8\ud83e\udd85\ud83d\ude80 Hallelujah!!!",
-      "is_retruth": true,
-      "source_handle": "@DanScavinoA",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117335134484713012"
-    },
-    {
-      "id": 41909,
-      "at": "2026-09-25T22:01:17.500000-04:00",
-      "text": "A beautiful evening at last nights incredible State Dinner hosted by President @realDonaldTrump and First Lady @MelaniaTrump. CONGRATS POTUS & FLOTUS\ud83c\uddfa\ud83c\uddf8\ud83e\udd85\ud83d\ude80 Hallelujah!!!",
-      "is_retruth": true,
-      "source_handle": "@DanScavino",
-      "has_media": false,
-      "url": "https://truthsocial.com/@DanScavino/117335091912879320"
-    },
-    {
-      "id": 41908,
-      "at": "2026-09-25T21:28:08.750000-04:00",
-      "text": "RT @DanScavinoA beautiful evening at last nights incredible State Dinner hosted by President @realDonaldTrump and First Lady @MelaniaTrump. CONGRATS POTUS & FLOTUS\ud83c\uddfa\ud83c\uddf8\ud83e\udd85\ud83d\ude80 Hallelujah!!!",
-      "is_retruth": true,
-      "source_handle": "@DanScavinoA",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117335096216476204"
-    },
-    {
-      "id": 41901,
-      "at": "2026-09-25T20:56:03-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": true,
-      "url": "https://truthsocial.com/@realDonaldTrump/117334616518733576"
-    },
-    {
-      "id": 41902,
-      "at": "2026-09-25T20:55:53-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": true,
-      "url": "https://truthsocial.com/@realDonaldTrump/117334615895357863"
-    },
-    {
-      "id": 41903,
-      "at": "2026-09-25T20:55:42-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": true,
-      "url": "https://truthsocial.com/@realDonaldTrump/117334615137251467"
-    },
-    {
-      "id": 41904,
-      "at": "2026-09-25T20:55:33-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": true,
-      "url": "https://truthsocial.com/@realDonaldTrump/117334614580064997"
-    },
-    {
-      "id": 41905,
-      "at": "2026-09-25T20:55:24-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": true,
-      "url": "https://truthsocial.com/@realDonaldTrump/117334613964287437"
-    },
-    {
-      "id": 41906,
-      "at": "2026-09-25T20:55:04-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": true,
-      "url": "https://truthsocial.com/@realDonaldTrump/117334612644472968"
-    },
-    {
-      "id": 41907,
-      "at": "2026-09-25T20:55:00-04:00",
-      "text": "This is where we send our Killers, Drug Dealers, and Thugs. It\u2019s why Murder, and other Crimes in America, is at Record Lows! President DONALD J. TRUMP",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": true,
-      "url": "https://truthsocial.com/@realDonaldTrump/117334612403862517"
-    },
-    {
-      "id": 41898,
-      "at": "2026-09-25T20:53:50-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": true,
-      "url": "https://truthsocial.com/@realDonaldTrump/117334607798644557"
-    },
-    {
-      "id": 41899,
-      "at": "2026-09-25T20:52:06-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": true,
-      "url": "https://truthsocial.com/@realDonaldTrump/117334600981102955"
-    },
-    {
-      "id": 41900,
-      "at": "2026-09-25T20:51:18-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": true,
-      "url": "https://truthsocial.com/@realDonaldTrump/117334597869715991"
-    },
-    {
-      "id": 41896,
-      "at": "2026-09-25T20:49:59-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": true,
-      "url": "https://truthsocial.com/@realDonaldTrump/117334592653744426"
-    },
-    {
-      "id": 41897,
-      "at": "2026-09-25T20:48:15-04:00",
-      "text": "This is where we send our Killers, Drug Dealers, and Thugs. It\u2019s why Murder, and other Crimes in America, is at Record Lows! President DONALD J. TRUMP",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": true,
-      "url": "https://truthsocial.com/@realDonaldTrump/117334585893103406"
-    },
-    {
-      "id": 41894,
-      "at": "2026-09-25T20:47:05-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": true,
-      "url": "https://truthsocial.com/@realDonaldTrump/117334581279782762"
-    },
-    {
-      "id": 41895,
-      "at": "2026-09-25T20:44:48-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": true,
-      "url": "https://truthsocial.com/@realDonaldTrump/117334572312502332"
-    },
-    {
-      "id": 41892,
-      "at": "2026-09-25T20:39:58-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": true,
-      "url": "https://truthsocial.com/@realDonaldTrump/117334553306774218"
-    },
-    {
-      "id": 41893,
-      "at": "2026-09-25T20:36:50-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": true,
-      "url": "https://truthsocial.com/@realDonaldTrump/117334540969398393"
-    },
-    {
-      "id": 41890,
-      "at": "2026-09-25T20:36:31-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": true,
-      "url": "https://truthsocial.com/@realDonaldTrump/117334539738676098"
-    },
-    {
-      "id": 41891,
-      "at": "2026-09-25T20:35:42-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": true,
-      "url": "https://truthsocial.com/@realDonaldTrump/117334536526706403"
-    },
-    {
-      "id": 41889,
-      "at": "2026-09-25T18:43:01-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": true,
-      "url": "https://truthsocial.com/@realDonaldTrump/117334093403653279"
-    },
-    {
-      "id": 41888,
-      "at": "2026-09-25T14:11:59-04:00",
-      "text": "Congratulations to America First Patriot, Jerry Kassar, who I very strongly supported, on his unanimous Re-Election as Chairman of the Conservative Party of New York State. Jerry is MAGA all the way, and has dedicated his life to the Conservative Party, and the ONCE GREAT STATE OF NEW YORK (IT CAN BE GREAT AGAIN!). I know Jerry will continue to do a fantastic job, and secure many Victories for New York Conservatives and Republicans in the 2026 Midterm Elections, and beyond. THANK YOU NEW YORK \u2014 MAGA2026! President DONALD J. TRUMP",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117333027652824076"
-    },
-    {
-      "id": 41887,
-      "at": "2026-09-25T13:17:16-04:00",
-      "text": "President Xi and Madam Peng have just left D.C., heading for China. The meeting was one of Friendship, Strength, and Success, for both China and the U.S.A. We will be meeting again in November, in China, and then at the G20 in December, in Miami, Florida. Much has been, and will be, accomplished. I look forward to our next meeting! President DONALD J. TRUMP",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117332812545704813"
-    },
-    {
-      "id": 41886,
-      "at": "2026-09-25T12:49:50-04:00",
-      "text": "Scott Bessent will not be going to be Super Intelligence (SI) Czar. Number One, he doesn\u2019t want to. Number Two, he\u2019s doing such a great job at Treasury, and that\u2019s where I want to keep him! Why would I ever make such a change? Just more Fake News! President DONALD J. TRUMP",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117332704655075384"
-    },
-    {
-      "id": 41885,
-      "at": "2026-09-25T08:46:52-04:00",
-      "text": "Very productive meeting with President Xi for both the U.S.A. and China. Tremendous things will be happening. Like almost everyone else, he seemed to like calling the poorly and inaccurately named Artificial Intelligence to a far more accurate and important name, SUPER INTELLIGENCE. That would be \u201cSUPER!\u201d Everyone last night agreed, also. President DJT",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117331749278785253"
-    },
-    {
-      "id": 41884,
-      "at": "2026-09-25T07:57:40-04:00",
-      "text": "https://www.census.gov/newsroom/press-releases/2026/income-poverty-health-insurance-coverage.html",
-      "is_retruth": true,
-      "source_handle": "@Schoenlaw",
-      "has_media": false,
-      "url": "https://truthsocial.com/@Schoenlaw/117329471295010416"
-    },
-    {
-      "id": 41883,
-      "at": "2026-09-25T07:08:28-04:00",
-      "text": "RT @Schoenlawhttps://www.census.gov/newsroom/press-releases/2026/income-poverty-health-insurance-coverage.html",
-      "is_retruth": true,
-      "source_handle": "@Schoenlawhttps",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117331365166932627"
-    },
-    {
-      "id": 41882,
-      "at": "2026-09-25T06:19:16-04:00",
-      "text": "God bless American Patriot and Warrior, James Copenhaver, and his incredible family. May he rest in peace!!! President DONALD J. TRUMP",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117331168888375355"
-    },
-    {
-      "id": 41881,
-      "at": "2026-09-24T19:09:52-04:00",
-      "text": "Jim Copenhaver, a true American Patriot, has passed away \u2014 A tremendous loss! More than two years ago in Butler, Pennsylvania, a crazed gunman attempted to stifle our America First Movement. Instead, Jim and so many other wonderful Patriots who love our Country, stood united in defense of our shared values of Freedom, Liberty, and Justice. After being wounded while protecting his family, Jim showed tremendous bravery, courageously continuing to FIGHT, FIGHT, FIGHT, and maintaining a positive spirit despite unimaginable hardships. His indelible legacy of love and devotion will forever endure. O",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117328536706468024"
-    },
-    {
-      "id": 41880,
-      "at": "2026-09-24T16:50:34-04:00",
-      "text": "CNN and MSDNC\u2019s Ratings have dropped considerably. The primary reason is NO CREDIBILITY! They only write badly about a man who won the Election IN A GIANT LANDSLIDE, winning all 7 Swing States, the Popular Vote, and 86% of the Counties, etc., and whose Popularity has grown because of the unprecedented SUCCESS our Country is having on both the World Stage, and at home. CNN and MSDNC, to show you how fake they are, today refused to cover one of the Biggest and Most Beautiful Events to take place in many years, the arrival at the White House of the Highly Respected President of China, Xi Jinping,",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117327988960070739"
-    },
-    {
-      "id": 41879,
-      "at": "2026-09-24T15:32:20-04:00",
-      "text": "President Trump Gives the President of China a Tour of Marine One and the South Lawn Helipad: https://www.youtube.com/watch?v=Oh05NJy_SaM",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117327681306671844"
-    },
-    {
-      "id": 41874,
-      "at": "2026-09-24T15:23:35-04:00",
-      "text": "",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117327646948735900"
-    },
-    {
-      "id": 41875,
-      "at": "2026-09-24T15:23:04-04:00",
-      "text": "Military Review with the President of China and Madame Peng: https://www.youtube.com/watch?v=lUe8vwhnjbk",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117327644914730355"
-    },
-    {
-      "id": 41876,
-      "at": "2026-09-24T15:22:53-04:00",
-      "text": "Silent Drill Platoon Review with the President of China and Madame Peng: https://www.youtube.com/watch?v=LliHi0rYUY0",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117327644146401995"
-    },
-    {
-      "id": 41877,
-      "at": "2026-09-24T15:22:40-04:00",
-      "text": "President Trump and the President of China Deliver Remarks: https://www.youtube.com/watch?v=KroMEOZ8oFo",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117327643319552969"
-    },
-    {
-      "id": 41878,
-      "at": "2026-09-24T15:22:25-04:00",
-      "text": "President Trump and the First Lady Greet the President of China and Madame Peng: https://www.youtube.com/watch?v=EWdAEh9NeOs",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117327642327005783"
-    },
-    {
-      "id": 41873,
-      "at": "2026-09-24T09:18:56-04:00",
-      "text": "Victor Davis Hanson on Canada \u2014 A MUST SEE! President DONALD J. TRUMP",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": true,
-      "url": "https://truthsocial.com/@realDonaldTrump/117326213046216794"
-    },
-    {
-      "id": 41871,
-      "at": "2026-09-24T08:36:46-04:00",
-      "text": "This is a survey of people in business \u2014 the S&P Flash Survey \u2014 of purchasing, manufacturing and hiring. Guess what? The report shows impressive Growth. Composite Index \u2014 Services + Manufacturing, 62 month high! Manufacturing \u2014 53 month high! Services \u2014 52 month high! This is the \u201cHOTTEST\u201d Economy in the World \u2014 and the Media is working overtime for the Democrats to convince Voters that the opposite is true. For working people, a \u201cHOT\u201d Economy is good because it gives them more wage leverage, and more flexibility to get better jobs. The Media is trying to cover up how well things are going bef",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117326047233268228"
-    },
-    {
-      "id": 41872,
-      "at": "2026-09-24T08:36:10-04:00",
-      "text": "Midterm Fact Check: Don\u2019t believe the economic doomers: https://www.foxnews.com/video/6405515361112",
-      "is_retruth": false,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117326044871082645"
-    },
-    {
-      "id": 41870,
-      "at": "2026-09-24T08:34:46.166667-04:00",
-      "text": "RT @realDonaldTrumpThe Dumocrats make up lie after lie. The new one is that I want Ford\u2019s Theater named after me. That\u2019s where Abraham Lincoln was assassinated. Who would want that? I don\u2019t! It is FAKE NEWS started by MSDNC AND CNN.",
-      "is_retruth": true,
-      "source_handle": "@realDonaldTrumpThe",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117326051069666611"
-    },
-    {
-      "id": 41869,
-      "at": "2026-09-24T08:32:46.333333-04:00",
-      "text": "RT @realDonaldTrumpThe Ford\u2019s Theatre Lie is just another example of how the Fake News Media and the Dumocrats conspire together to make up false stories about \u201cPresident Donald J. Trump.\u201d Shouldn\u2019t be allowed to happen. Our Country is desperately seeking a Free and Fair Press! President DJT",
-      "is_retruth": true,
-      "source_handle": "@realDonaldTrumpThe",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117326051384402820"
-    },
-    {
-      "id": 41868,
-      "at": "2026-09-24T08:30:46.500000-04:00",
-      "text": "RT @realDonaldTrump",
-      "is_retruth": true,
-      "source_handle": "@realDonaldTrump",
-      "has_media": false,
-      "url": "https://truthsocial.com/@realDonaldTrump/117326051816460015"
     }
   ]
 }
