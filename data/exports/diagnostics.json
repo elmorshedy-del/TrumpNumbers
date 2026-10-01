@@ -1,25 +1,25 @@
 {
   "window": {
     "start": "2025-01-20",
-    "end": "2026-09-29",
-    "days": 618
+    "end": "2026-10-01",
+    "days": 620
   },
   "ingest_lag": {
     "available": true,
-    "n": 1529,
-    "median_minutes": 53.6,
-    "p90_minutes": 201.8,
+    "n": 1559,
+    "median_minutes": 54.4,
+    "p90_minutes": 209.3,
     "max_minutes": 601.5,
     "note": "Post timestamp to the moment this pipeline stored it: Truth Social publishing, trumpstruth.org crawling, and our poll interval combined. Only the poll interval is ours to shorten; the rest is the floor."
   },
   "dispersion": {
-    "n": 618,
-    "mean": 19.657,
+    "n": 620,
+    "mean": 19.648,
     "median": 15.0,
-    "variance": 298.232,
-    "sd": 17.269,
+    "variance": 298.018,
+    "sd": 17.263,
     "dispersion_ratio": 15.17,
-    "chi2": 9361.0,
+    "chi2": 9388.7,
     "p_value": 0.0,
     "poisson_plausible": false,
     "poisson_sd": 4.43,
@@ -33,20 +33,20 @@
     ],
     "actual_range_95": [
       3.0,
-      63.57499999999993
+      63.52499999999998
     ]
   },
   "conditional_dispersion": {
     "available": true,
     "raw": 15.17,
-    "by_weekday": 14.2,
-    "by_weekday_and_level": 15.08,
+    "by_weekday": 14.21,
+    "by_weekday_and_level": 15.09,
     "note": "Pearson chi-square per degree of freedom. A well-specified Poisson model sits near 1. The raw ratio compares against a single fixed rate, which the weekly cycle refutes on its own; these two compare against what a Poisson GLM actually assumes."
   },
   "tail": {
     "mean_over_median": 1.31,
     "max_over_median": 11.1,
-    "skewness": 3.17,
+    "skewness": 3.16,
     "top_1pct_share_of_all_posts": 0.061,
     "zero_days": 2,
     "zero_share": 0.003,
@@ -57,7 +57,7 @@
       "0.75": 24.0,
       "0.9": 37.0,
       "0.95": 50.0,
-      "0.99": 83.83000000000004
+      "0.99": 83.80999999999995
     }
   },
   "day_of_week": {
@@ -80,19 +80,19 @@
       },
       {
         "day": "Wed",
-        "n": 88,
-        "mean": 16.98,
+        "n": 89,
+        "mean": 17.15,
         "median": 15.0,
-        "sd": 10.54,
-        "index_vs_overall": 0.864
+        "sd": 10.6,
+        "index_vs_overall": 0.873
       },
       {
         "day": "Thu",
-        "n": 88,
-        "mean": 19.03,
+        "n": 89,
+        "mean": 18.84,
         "median": 15.0,
-        "sd": 17.46,
-        "index_vs_overall": 0.968
+        "sd": 17.45,
+        "index_vs_overall": 0.959
       },
       {
         "day": "Fri",
@@ -108,7 +108,7 @@
         "mean": 15.77,
         "median": 11.0,
         "sd": 14.61,
-        "index_vs_overall": 0.802
+        "index_vs_overall": 0.803
       },
       {
         "day": "Sun",
@@ -116,10 +116,10 @@
         "mean": 17.88,
         "median": 12.5,
         "sd": 16.37,
-        "index_vs_overall": 0.909
+        "index_vs_overall": 0.91
       }
     ],
-    "overall_mean": 19.66
+    "overall_mean": 19.65
   },
   "autocorrelation": {
     "lags": [
@@ -148,77 +148,77 @@
     ],
     "acf": [
       1.0,
-      0.1086,
-      0.0372,
-      -0.0094,
-      -0.0418,
-      0.0472,
-      0.0576,
-      0.0379,
-      0.0583,
-      0.0917,
-      -0.063,
-      0.0854,
-      -0.0082,
-      0.0611,
-      0.0462,
-      -0.0391,
-      -0.0195,
-      0.0174,
-      -0.0153,
-      0.0049,
-      0.0897,
-      0.0081
+      0.1053,
+      0.0377,
+      -0.0084,
+      -0.0377,
+      0.0418,
+      0.0568,
+      0.0363,
+      0.0567,
+      0.0926,
+      -0.0631,
+      0.0846,
+      -0.0065,
+      0.0606,
+      0.0453,
+      -0.0396,
+      -0.0179,
+      0.0168,
+      -0.0167,
+      0.0058,
+      0.0904,
+      0.0059
     ],
     "pacf": [
       1.0,
-      0.1086,
-      0.0257,
-      -0.0164,
-      -0.0406,
-      0.0576,
-      0.05,
-      0.0224,
-      0.0485,
-      0.0863,
-      -0.0839,
-      0.0967,
-      -0.0224,
-      0.0601,
-      0.0149,
-      -0.0469,
-      -0.021,
-      0.0198,
-      -0.0281,
-      0.0022,
-      0.0695,
-      0.0071
+      0.1053,
+      0.027,
+      -0.0153,
+      -0.0368,
+      0.0509,
+      0.0505,
+      0.0217,
+      0.0473,
+      0.0867,
+      -0.0834,
+      0.0952,
+      -0.0199,
+      0.059,
+      0.0163,
+      -0.049,
+      -0.0175,
+      0.0174,
+      -0.0287,
+      0.0043,
+      0.0699,
+      0.0042
     ],
     "acf_raw_with_weekly_cycle": [
       1.0,
-      0.1111,
-      0.02,
-      -0.0033,
-      -0.0477,
-      0.0159,
-      0.0525,
-      0.0667,
-      0.0648,
-      0.0512,
-      -0.0574,
-      0.0879,
-      -0.0269,
-      0.0546,
-      0.089,
-      -0.0225,
-      -0.044,
-      0.0255,
-      -0.0091,
-      -0.0256,
-      0.0723,
-      0.0505
+      0.1087,
+      0.0213,
+      -0.0029,
+      -0.0454,
+      0.0128,
+      0.0515,
+      0.0656,
+      0.0643,
+      0.0526,
+      -0.0579,
+      0.0876,
+      -0.025,
+      0.0539,
+      0.0881,
+      -0.0224,
+      -0.0422,
+      0.0241,
+      -0.0096,
+      -0.0243,
+      0.0733,
+      0.0491
     ],
-    "conf": 0.0788,
+    "conf": 0.0787,
     "note": "ACF/PACF computed after removing the weekly cycle; the raw series is shown for contrast."
   },
   "structural_breaks": {
@@ -333,12 +333,12 @@
           "id": 30020
         },
         {
-          "text": "https://www.foxnews.com/politics/trump-calls-company-building-keystone-xl-pipeline-return-america-get-built",
-          "id": 30038
+          "text": "https://www.breitbart.com/border/2025/02/24/trump-effect-single-day-migrant-apprehension-numbers-on-southwest-border-fall-below-200/",
+          "id": 30040
         },
         {
-          "text": "https://www.washingtontimes.com/news/2025/feb/25/trump-rebuilding-domestic-manufacturing-fighting-american-aluminum/",
-          "id": 30041
+          "text": "https://amgreatness.com/2025/02/25/no-trumps-tariffs-will-not-cause-inflation/",
+          "id": 30039
         }
       ]
     },
@@ -392,15 +392,15 @@
       "sample_posts": [
         {
           "text": "",
-          "id": 34791
-        },
-        {
-          "text": "",
           "id": 34790
         },
         {
           "text": "",
           "id": 34789
+        },
+        {
+          "text": "",
+          "id": 34791
         }
       ]
     },
@@ -454,11 +454,11 @@
       "sample_posts": [
         {
           "text": "",
-          "id": 35001
+          "id": 35002
         },
         {
           "text": "",
-          "id": 35002
+          "id": 35001
         },
         {
           "text": "",
@@ -612,12 +612,12 @@
           "id": 33546
         },
         {
-          "text": "https://dailycaller.com/2025/11/01/opinion-arctic-frost-accountability-starts-with-impeaching-judge-boasberg-dave-bossie/",
-          "id": 33547
-        },
-        {
           "text": "https://nypost.com/2025/11/01/us-news/rep-nicole-malliotakis-rips-gerrymandering-lawsuit-for-staten-island-house-seat-as-nonsensical-power-grab/",
           "id": 33548
+        },
+        {
+          "text": "https://dailycaller.com/2025/11/01/opinion-arctic-frost-accountability-starts-with-impeaching-judge-boasberg-dave-bossie/",
+          "id": 33547
         }
       ]
     },
@@ -818,23 +818,23 @@
         "energy",
         "american",
         "down",
-        "congressman",
         "district",
         "complete",
-        "total"
+        "total",
+        "congressman"
       ],
       "sample_posts": [
         {
-          "text": "Congressman Gus Bilirakis is a Tremendous Champion for Florida\u2019s 12th Congressional District! As a Senior Member of the POWERFUL House Energy and Commerce Committee, Gus is working tirelessly to Advance American Energy DOMINANCE, Create GREAT Jobs, Cut Taxes and Regulations, Prom",
-          "id": 33635
+          "text": "Scott Franklin is a fantastic Representative for the Great People of Florida\u2019s 18th Congressional District! A U.S. Naval Academy Graduate and retired Navy Commander, Scott knows the Wisdom and Courage that is required to Defend our Country, Support our incredible Military/Veteran",
+          "id": 33633
         },
         {
           "text": "Congressman Vern Buchanan, who has been with us from the very beginning, is a Fantastic Advocate of Florida\u2019s 16th Congressional District! As a very successful Businessman, and the Vice Chairman of the POWERFUL House Ways & Means Committee, Vern understands the America First Poli",
           "id": 33634
         },
         {
-          "text": "Scott Franklin is a fantastic Representative for the Great People of Florida\u2019s 18th Congressional District! A U.S. Naval Academy Graduate and retired Navy Commander, Scott knows the Wisdom and Courage that is required to Defend our Country, Support our incredible Military/Veteran",
-          "id": 33633
+          "text": "Congressman Gus Bilirakis is a Tremendous Champion for Florida\u2019s 12th Congressional District! As a Senior Member of the POWERFUL House Energy and Commerce Committee, Gus is working tirelessly to Advance American Energy DOMINANCE, Create GREAT Jobs, Cut Taxes and Regulations, Prom",
+          "id": 33635
         }
       ]
     },
@@ -1012,11 +1012,11 @@
       "sample_posts": [
         {
           "text": "",
-          "id": 40251
+          "id": 40252
         },
         {
           "text": "",
-          "id": 40252
+          "id": 40251
         },
         {
           "text": "",
@@ -1057,7 +1057,7 @@
     }
   ],
   "hourly_profile": [
-    1298,
+    1299,
     751,
     296,
     135,
@@ -1067,24 +1067,24 @@
     1025,
     1185,
     1490,
-    1970,
+    1972,
     2474,
-    2044,
-    2047,
+    2046,
+    2048,
     2284,
-    2262,
+    2263,
     2300,
     2215,
     2136,
-    1854,
-    1567,
-    2061,
-    1702,
-    1628
+    1859,
+    1568,
+    2065,
+    1716,
+    1631
   ],
   "retruths": {
-    "total": 287,
-    "share_of_all_posts": 0.023,
+    "total": 291,
+    "share_of_all_posts": 0.024,
     "counted_in_series": true,
     "note": "ReTruths are counted, on the day Trump reshared rather than the day the original ran. The mirror files them under the ORIGINAL author's timestamp, so counting them as filed would credit activity to days on which nothing happened; the mirror's own ingest order brackets the real reshare moment and recovers it to within hours."
   },
