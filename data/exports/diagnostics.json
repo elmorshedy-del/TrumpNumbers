@@ -1,28 +1,28 @@
 {
   "window": {
     "start": "2025-01-20",
-    "end": "2026-10-02",
-    "days": 621
+    "end": "2026-10-03",
+    "days": 622
   },
   "ingest_lag": {
     "available": true,
-    "n": 1579,
-    "median_minutes": 54.8,
-    "p90_minutes": 209.4,
+    "n": 1614,
+    "median_minutes": 55.5,
+    "p90_minutes": 213.8,
     "max_minutes": 601.5,
     "note": "Post timestamp to the moment this pipeline stored it: Truth Social publishing, trumpstruth.org crawling, and our poll interval combined. Only the poll interval is ours to shorten; the rest is the floor."
   },
   "dispersion": {
-    "n": 621,
-    "mean": 19.651,
+    "n": 622,
+    "mean": 19.675,
     "median": 15.0,
-    "variance": 297.386,
-    "sd": 17.245,
-    "dispersion_ratio": 15.13,
-    "chi2": 9382.9,
+    "variance": 296.642,
+    "sd": 17.223,
+    "dispersion_ratio": 15.08,
+    "chi2": 9362.8,
     "p_value": 0.0,
     "poisson_plausible": false,
-    "poisson_sd": 4.43,
+    "poisson_sd": 4.44,
     "poisson_range_95": [
       11,
       29
@@ -33,14 +33,14 @@
     ],
     "actual_range_95": [
       3.0,
-      63.5
+      63.47500000000002
     ]
   },
   "conditional_dispersion": {
     "available": true,
-    "raw": 15.13,
-    "by_weekday": 14.17,
-    "by_weekday_and_level": 15.05,
+    "raw": 15.08,
+    "by_weekday": 14.11,
+    "by_weekday_and_level": 15.0,
     "note": "Pearson chi-square per degree of freedom. A well-specified Poisson model sits near 1. The raw ratio compares against a single fixed rate, which the weekly cycle refutes on its own; these two compare against what a Poisson GLM actually assumes."
   },
   "tail": {
@@ -57,7 +57,7 @@
       "0.75": 24.0,
       "0.9": 37.0,
       "0.95": 50.0,
-      "0.99": 83.79999999999995
+      "0.99": 83.78999999999996
     }
   },
   "day_of_week": {
@@ -68,7 +68,7 @@
         "mean": 26.26,
         "median": 20.0,
         "sd": 25.5,
-        "index_vs_overall": 1.336
+        "index_vs_overall": 1.335
       },
       {
         "day": "Tue",
@@ -76,7 +76,7 @@
         "mean": 21.85,
         "median": 18.0,
         "sd": 14.1,
-        "index_vs_overall": 1.112
+        "index_vs_overall": 1.111
       },
       {
         "day": "Wed",
@@ -84,7 +84,7 @@
         "mean": 17.15,
         "median": 15.0,
         "sd": 10.6,
-        "index_vs_overall": 0.873
+        "index_vs_overall": 0.871
       },
       {
         "day": "Thu",
@@ -92,23 +92,23 @@
         "mean": 19.02,
         "median": 15.0,
         "sd": 17.36,
-        "index_vs_overall": 0.968
+        "index_vs_overall": 0.967
       },
       {
         "day": "Fri",
         "n": 89,
-        "mean": 19.56,
-        "median": 15.0,
-        "sd": 16.8,
-        "index_vs_overall": 0.995
+        "mean": 19.79,
+        "median": 16.0,
+        "sd": 16.74,
+        "index_vs_overall": 1.006
       },
       {
         "day": "Sat",
-        "n": 88,
-        "mean": 15.77,
+        "n": 89,
+        "mean": 15.76,
         "median": 11.0,
-        "sd": 14.61,
-        "index_vs_overall": 0.803
+        "sd": 14.53,
+        "index_vs_overall": 0.801
       },
       {
         "day": "Sun",
@@ -116,10 +116,10 @@
         "mean": 17.88,
         "median": 12.5,
         "sd": 16.37,
-        "index_vs_overall": 0.91
+        "index_vs_overall": 0.909
       }
     ],
-    "overall_mean": 19.65
+    "overall_mean": 19.68
   },
   "autocorrelation": {
     "lags": [
@@ -148,77 +148,77 @@
     ],
     "acf": [
       1.0,
-      0.107,
-      0.0351,
-      -0.007,
-      -0.0357,
-      0.0471,
-      0.053,
-      0.0365,
-      0.0556,
-      0.0915,
-      -0.0617,
-      0.0842,
-      -0.0071,
-      0.0625,
-      0.0448,
-      -0.0405,
-      -0.0183,
-      0.0183,
-      -0.0169,
-      0.0047,
-      0.0917,
-      0.0073
+      0.1068,
+      0.0373,
+      -0.0092,
+      -0.0365,
+      0.0477,
+      0.0595,
+      0.0371,
+      0.0567,
+      0.091,
+      -0.064,
+      0.0839,
+      -0.0078,
+      0.0607,
+      0.0454,
+      -0.0403,
+      -0.0195,
+      0.0166,
+      -0.0171,
+      0.0038,
+      0.0896,
+      0.0068
     ],
     "pacf": [
       1.0,
-      0.107,
-      0.024,
-      -0.0134,
-      -0.0348,
-      0.0558,
-      0.045,
-      0.0228,
-      0.0466,
-      0.0858,
-      -0.0829,
-      0.0952,
-      -0.0218,
-      0.0617,
-      0.0145,
-      -0.048,
-      -0.0197,
-      0.0207,
-      -0.0309,
-      0.0038,
-      0.0723,
-      0.005
+      0.1068,
+      0.0262,
+      -0.0161,
+      -0.0353,
+      0.0568,
+      0.0517,
+      0.0216,
+      0.0474,
+      0.0855,
+      -0.0847,
+      0.0945,
+      -0.0219,
+      0.0585,
+      0.0154,
+      -0.0492,
+      -0.0195,
+      0.018,
+      -0.0295,
+      0.002,
+      0.0703,
+      0.0059
     ],
     "acf_raw_with_weekly_cycle": [
       1.0,
-      0.11,
-      0.0191,
-      -0.0018,
-      -0.0449,
-      0.0159,
-      0.0494,
-      0.0651,
-      0.0633,
-      0.0519,
-      -0.0567,
-      0.0868,
-      -0.0256,
-      0.0556,
-      0.0877,
-      -0.0232,
-      -0.0425,
-      0.0257,
-      -0.0109,
-      -0.0253,
-      0.074,
-      0.0502
+      0.1098,
+      0.0205,
+      -0.0036,
+      -0.0446,
+      0.0165,
+      0.0537,
+      0.0654,
+      0.0636,
+      0.051,
+      -0.0582,
+      0.0873,
+      -0.0266,
+      0.0543,
+      0.0888,
+      -0.0234,
+      -0.0435,
+      0.0247,
+      -0.0098,
+      -0.0264,
+      0.0723,
+      0.0498
     ],
-    "conf": 0.0787,
+    "conf": 0.0786,
     "note": "ACF/PACF computed after removing the weekly cycle; the raw series is shown for contrast."
   },
   "structural_breaks": {
@@ -252,7 +252,7 @@
         "start": "2026-04-25",
         "end": "2026-10-03",
         "weeks": 24,
-        "mean_posts_per_day": 24.06
+        "mean_posts_per_day": 24.16
       }
     ],
     "breaks": [
@@ -262,7 +262,7 @@
       "2026-04-25"
     ],
     "n_breaks_penalized": 1,
-    "penalty": 0.939,
+    "penalty": 0.9393,
     "note": "The segment list comes from a search told in advance how many breaks to find, so its count is a setting, not a result. `n_breaks_penalized` lets the data choose instead: if it is 0, the segmentation above is a partition of noise."
   },
   "window_vs_breaks": {
@@ -275,7 +275,7 @@
       "2026-04-25"
     ],
     "most_recent_break": "2026-04-25",
-    "weeks_since_most_recent_break": 22,
+    "weeks_since_most_recent_break": 23,
     "n_breaks_penalized": 1,
     "note": "Every model here is fitted from the window start, across any break listed above. That is the practice the window exists to avoid. Whether it matters depends on whether the breaks are real \u2014 see n_breaks_penalized, which is what the data says when it is not told how many to find."
   },
@@ -324,8 +324,8 @@
         "foxnews",
         "breitbart",
         "president",
-        "news",
-        "politics"
+        "politics",
+        "news"
       ],
       "sample_posts": [
         {
@@ -333,8 +333,8 @@
           "id": 30020
         },
         {
-          "text": "https://amgreatness.com/2025/02/25/no-trumps-tariffs-will-not-cause-inflation/",
-          "id": 30039
+          "text": "https://www.foxnews.com/politics/trump-calls-company-building-keystone-xl-pipeline-return-america-get-built",
+          "id": 30038
         },
         {
           "text": "https://www.washingtontimes.com/news/2025/feb/25/trump-rebuilding-domestic-manufacturing-fighting-american-aluminum/",
@@ -361,11 +361,11 @@
       "sample_posts": [
         {
           "text": "",
-          "id": 35160
+          "id": 35159
         },
         {
           "text": "",
-          "id": 35159
+          "id": 35160
         },
         {
           "text": "",
@@ -392,15 +392,15 @@
       "sample_posts": [
         {
           "text": "",
+          "id": 34791
+        },
+        {
+          "text": "",
           "id": 34790
         },
         {
           "text": "",
           "id": 34789
-        },
-        {
-          "text": "",
-          "id": 34791
         }
       ]
     },
@@ -578,11 +578,11 @@
       "sample_posts": [
         {
           "text": "",
-          "id": 34855
+          "id": 34854
         },
         {
           "text": "",
-          "id": 34854
+          "id": 34855
         },
         {
           "text": "",
@@ -818,12 +818,16 @@
         "energy",
         "american",
         "down",
+        "congressman",
         "district",
         "complete",
-        "total",
-        "congressman"
+        "total"
       ],
       "sample_posts": [
+        {
+          "text": "Congressman Gus Bilirakis is a Tremendous Champion for Florida\u2019s 12th Congressional District! As a Senior Member of the POWERFUL House Energy and Commerce Committee, Gus is working tirelessly to Advance American Energy DOMINANCE, Create GREAT Jobs, Cut Taxes and Regulations, Prom",
+          "id": 33635
+        },
         {
           "text": "Scott Franklin is a fantastic Representative for the Great People of Florida\u2019s 18th Congressional District! A U.S. Naval Academy Graduate and retired Navy Commander, Scott knows the Wisdom and Courage that is required to Defend our Country, Support our incredible Military/Veteran",
           "id": 33633
@@ -831,10 +835,6 @@
         {
           "text": "Congressman Vern Buchanan, who has been with us from the very beginning, is a Fantastic Advocate of Florida\u2019s 16th Congressional District! As a very successful Businessman, and the Vice Chairman of the POWERFUL House Ways & Means Committee, Vern understands the America First Poli",
           "id": 33634
-        },
-        {
-          "text": "Congressman Gus Bilirakis is a Tremendous Champion for Florida\u2019s 12th Congressional District! As a Senior Member of the POWERFUL House Energy and Commerce Committee, Gus is working tirelessly to Advance American Energy DOMINANCE, Create GREAT Jobs, Cut Taxes and Regulations, Prom",
-          "id": 33635
         }
       ]
     },
@@ -985,11 +985,11 @@
         },
         {
           "text": "",
-          "id": 37866
+          "id": 37867
         },
         {
           "text": "",
-          "id": 37867
+          "id": 37866
         }
       ]
     },
@@ -1064,23 +1064,23 @@
     107,
     236,
     458,
-    1025,
-    1186,
+    1036,
+    1190,
     1490,
     1973,
     2477,
     2047,
     2051,
-    2289,
+    2291,
     2263,
     2300,
-    2216,
-    2136,
+    2218,
+    2137,
     1861,
     1569,
     2065,
-    1716,
-    1631
+    1726,
+    1636
   ],
   "retruths": {
     "total": 292,

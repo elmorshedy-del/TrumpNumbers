@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-02T14:47:13.662854+00:00",
+  "generated_at": "2026-10-03T13:23:17.911210+00:00",
   "leaderboard": [
     {
       "model": "hier-dow-eb",
@@ -378,6 +378,23 @@
       "fails_when": "Volume is trending, or last week was itself an outlier."
     },
     {
+      "model": "log-sarima",
+      "family": "dynamics",
+      "n_forecasts": 56,
+      "crps": 30.96,
+      "crps_skill_vs_climatology": 0.076,
+      "log_score": 5.369,
+      "pinball": 9.856,
+      "width80": 80.7,
+      "coverage80": 0.482,
+      "coverage95": 0.911,
+      "pit_p_value": 0.0,
+      "pit_calibrated": false,
+      "description": "SARIMA(1,0,1)x(1,0,1,7) on log1p(counts).",
+      "assumptions": "Log counts are approximately Gaussian with weekly seasonality.",
+      "fails_when": "Zeros and extreme spikes \u2014 log1p tames them but does not make them Gaussian."
+    },
+    {
       "model": "hawkes",
       "family": "self-exciting",
       "n_forecasts": 56,
@@ -393,23 +410,6 @@
       "description": "Hawkes process with exponential kernel and a circadian background.",
       "assumptions": "Posts trigger further posts; the effect decays exponentially.",
       "fails_when": "Bursts are actually driven by outside events \u2014 indistinguishable here."
-    },
-    {
-      "model": "log-sarima",
-      "family": "dynamics",
-      "n_forecasts": 56,
-      "crps": 31.08,
-      "crps_skill_vs_climatology": 0.073,
-      "log_score": 5.373,
-      "pinball": 9.887,
-      "width80": 80.9,
-      "coverage80": 0.482,
-      "coverage95": 0.911,
-      "pit_p_value": 0.0,
-      "pit_calibrated": false,
-      "description": "SARIMA(1,0,1)x(1,0,1,7) on log1p(counts).",
-      "assumptions": "Log counts are approximately Gaussian with weekly seasonality.",
-      "fails_when": "Zeros and extreme spikes \u2014 log1p tames them but does not make them Gaussian."
     },
     {
       "model": "poisson-hmm",
@@ -723,10 +723,10 @@
       "model": "log-sarima",
       "family": "dynamics",
       "n_forecasts": 427,
-      "crps": 19.79,
-      "crps_skill_vs_climatology": 0.028,
+      "crps": 19.77,
+      "crps_skill_vs_climatology": 0.029,
       "log_score": 4.793,
-      "pinball": 6.789,
+      "pinball": 6.785,
       "width80": 64.1,
       "coverage80": 0.679,
       "coverage95": 0.916,
@@ -1042,23 +1042,23 @@
       },
       {
         "rule": "headline-top3-pool",
-        "crps": 22.07,
+        "crps": 22.06,
         "coverage80": 0.665,
         "width80": 68.3,
-        "crps_skill_vs_climatology": 0.034,
+        "crps_skill_vs_climatology": 0.035,
         "deployed": false
       },
       {
         "rule": "headline-top3",
-        "crps": 22.11,
+        "crps": 22.1,
         "coverage80": 0.662,
         "width80": 67.9,
-        "crps_skill_vs_climatology": 0.032,
+        "crps_skill_vs_climatology": 0.033,
         "deployed": true
       },
       {
         "rule": "headline-top5",
-        "crps": 22.15,
+        "crps": 22.14,
         "coverage80": 0.659,
         "width80": 66.6,
         "crps_skill_vs_climatology": 0.031,
@@ -1066,10 +1066,10 @@
       }
     ],
     "best_rule": "headline-top1",
-    "crps": 22.11,
+    "crps": 22.1,
     "coverage80": 0.662,
     "width80": 67.9,
-    "crps_skill_vs_climatology": 0.032,
+    "crps_skill_vs_climatology": 0.033,
     "best_single_model_on_same_weeks": "negbin-glm-trend",
     "best_single_model_crps": 21.43,
     "note": "The rule the front page deploys, and the alternatives it was never measured against, each replayed week by week with the ranking recomputed from earlier weeks only \u2014 so no rule selects using the week it is graded on. Compared here against every model over exactly the same weeks. A combination is not entitled to its members' scores."
@@ -1184,9 +1184,9 @@
       "5": 9.38
     },
     "log-sarima": {
-      "-1": 30.68,
-      "0": 28.88,
-      "1": 21.61,
+      "-1": 30.65,
+      "0": 28.83,
+      "1": 21.58,
       "2": 19.52,
       "3": 16.95,
       "4": 12.44,
@@ -1548,9 +1548,9 @@
       "5": -0.122
     },
     "log-sarima": {
-      "-1": 0.03,
-      "0": 0.008,
-      "1": 0.042,
+      "-1": 0.031,
+      "0": 0.01,
+      "1": 0.043,
       "2": 0.034,
       "3": 0.039,
       "4": 0.042,
@@ -1708,19 +1708,19 @@
         "n": 427,
         "histogram": [
           52,
-          50,
-          33,
+          49,
+          34,
           35,
           31,
           34,
-          41,
-          38,
+          42,
+          37,
           28,
           85
         ],
         "expected_per_bin": 42.7,
-        "chi2": 59.39,
-        "p_value": 1.754421017289911e-09,
+        "chi2": 58.83,
+        "p_value": 2.2503125846842884e-09,
         "calibrated": false
       },
       "coverage": {
